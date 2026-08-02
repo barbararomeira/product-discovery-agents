@@ -139,8 +139,13 @@ From the worked example in this repo — five calls in one week:
 talk time. Held for a full year, that is **140 hours — 17.6 working days of customer conversation
 read for you.** (Starting in August, the remaining 22 weeks of 2026 come to 58 hours, or 7.3 days.)
 
-Double the call volume and you double the number: a team doing 10 customer calls a week is at
-**35 working days a year**, and 20 a week is **70**. That is not an estimate of how long you *might* have spent reviewing calls; it is
+The number scales with how much your team talks to customers, so it is worth reading against your
+headcount: 10 calls a week is **35 working days a year**, 20 a week is **70**, and a team of five
+customer-facing people running 30+ calls a week is comfortably past **95**. Hiring one more
+account executive moves this number the same week they start.
+
+Calls under five minutes are excluded — a no-show is not a conversation anyone would have sat
+through, and counting it is the kind of small dishonesty that makes a whole number suspect. That is not an estimate of how long you *might* have spent reviewing calls; it is
 the measured length of calls somebody would otherwise have had to sit through to get the same
 signal, and almost nobody does, which is exactly why the signal is normally lost.
 

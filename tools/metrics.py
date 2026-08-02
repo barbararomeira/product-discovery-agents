@@ -22,6 +22,7 @@ import sys
 from openpyxl import load_workbook
 
 DEFAULT_MINUTES_PER_CALL = 15  # fallback ONLY for calls whose real length is unknown
+MIN_REAL_CALL_MINUTES = 5      # shorter than this is a no-show, not a conversation
 
 
 def read_config(path):
@@ -128,8 +129,20 @@ def compute(matrix_path, minutes_per_call, scope="week", today=None):
         except (TypeError, ValueError):
             return float(minutes_per_call), False
 
-    scoped_minutes = [minutes(r) for r in in_scope]
-    all_minutes = [minutes(r) for r in ledger]
+    # A three-minute "call" is a no-show or a cancellation. Counting it as time you
+    # were spared is the kind of small dishonesty that makes a whole number suspect.
+    def real(rows):
+        kept, dropped = [], 0
+        for r in rows:
+            v, measured = minutes(r)
+            if measured and v < MIN_REAL_CALL_MINUTES:
+                dropped += 1
+                continue
+            kept.append((v, measured))
+        return kept, dropped
+
+    scoped_minutes, noshows = real(in_scope)
+    all_minutes, noshows_all = real(ledger)
     measured_scope = sum(1 for _, m in scoped_minutes if m)
     measured_all = sum(1 for _, m in all_minutes if m)
     mins_scope = sum(v for v, _ in scoped_minutes)
@@ -148,12 +161,13 @@ def compute(matrix_path, minutes_per_call, scope="week", today=None):
     new_this_scope = sum(1 for r in ranked if (d := as_date(r[10])) and d >= start)
     touched = sum(1 for r in ranked if (d := as_date(r[11])) and d >= start)
 
-    calls = len(in_scope)
+    calls = len(scoped_minutes)
     pct = lambda n, d: round(100 * n / d) if d else 0
     return {
         "scope": scope,
         "since": start.isoformat() if start != dt.date.min else "all time",
         "calls": calls,
+        "noshows": noshows,
         "prospect": by_type.get("Prospect", 0),
         "implementation": by_type.get("Implementation", 0),
         "customer": by_type.get("Customer", 0),
@@ -169,7 +183,7 @@ def compute(matrix_path, minutes_per_call, scope="week", today=None):
         "accounts": len(all_accounts),
         "pct_consequence": pct(with_consequence, len(ranked)),
         "pct_no_roadmap_home": pct(no_home, len(ranked)),
-        "calls_all_time": len(ledger),
+        "calls_all_time": len(all_minutes),
         "hours_saved_all_time": round(mins_all / 60, 1),
         "measured_all": measured_all,
         # Rate is measured over the period the calls actually span, not since the
@@ -191,6 +205,8 @@ def render(m, company):
     per_week = m["hours_saved_all_time"] / m["weeks_elapsed"] if m["weeks_elapsed"] else 0
     calls_per_week = m["calls_all_time"] / m["weeks_elapsed"] if m["weeks_elapsed"] else 0
     to_year_end = per_week * m["weeks_to_year_end"]
+    noshow_note = (f"; {m['noshows']} no-show(s) under {MIN_REAL_CALL_MINUTES} min excluded"
+                   if m["noshows"] else "")
     caveat = ("every call measured" if not m["estimated"]
               else f"{m['measured']} measured, {m['estimated']} estimated at {m['minutes_per_call']} min "
                    f"(length not recorded)")
@@ -203,7 +219,7 @@ Coverage
 Time you did not spend listening
   This {m['scope']}:      {m['hours_saved']} h  ({m['minutes_total']} min of talk time, average call {m['avg_call_minutes']} min)
   All time:               {m['hours_saved_all_time']} h
-  Basis:                  {caveat}
+  Basis:                  {caveat}{noshow_note}
 
   In working days:        {m['hours_saved']/8:.1f} d this {m['scope']} ({m['hours_saved_all_time']/8:.1f} d all time), at 8 h a day
 
