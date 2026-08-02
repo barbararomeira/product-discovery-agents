@@ -268,8 +268,8 @@ self-healing rather than fragile.
 
 ## Setup
 
-**Requirements:** [Claude Code](https://claude.com/claude-code), Python 3 with `openpyxl`, and a
-Chrome/Chromium for PDF rendering.
+**Requirements:** [Claude Code](https://claude.com/claude-code), Python 3 with `openpyxl`
+(`pip3 install -r requirements.txt`), and a Chrome/Chromium for PDF rendering.
 
 ```bash
 git clone https://github.com/barbararomeira/product-discovery-agents.git
