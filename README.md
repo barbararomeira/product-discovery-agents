@@ -161,18 +161,40 @@ a call that nobody wrote down.
 
 Four actors. Three are automated; the fourth is you, and the system is built so that stays true.
 
-| | Runs | Purpose | Reads | Produces |
-|---|---|---|---|---|
-| **Agent 1 — Discovery** *(coordinator)* | daily | Turn yesterday's conversations into evidence. Classifies each call, decides what each signal *is* against your roadmap, and merges it into the backlog. | the ledger, your roadmap, and the helpers' findings — **never a transcript directly** | rows in the **signal matrix**, the **daily briefing**, and any open question in **needs-review.md** |
-| **Transcript helpers** *(one per call, in parallel)* | inside each daily run | Read one call and come back with facts. Translate if needed, pull the signals, the stated importance and one verbatim quote each. | exactly one transcript | structured findings handed back to the coordinator — they write nothing themselves |
-| **Agent 2 — Synthesis** | weekly | Turn accumulated evidence into decisions. Compares against last week, spots what crossed the evidence threshold, and says what needs deciding. | the matrix, the week's briefings, last week's snapshot, your roadmap | the **weekly digest**, **opportunity briefs**, and this week's **snapshot** |
-| **You** | 2 min daily · 30 min Friday | Decide. Resolve what the agents refused to guess, promote or park briefs, and forward the questions to the people already talking to customers. | the briefing and the digest | decisions, edits to the matrix (**final — never overwritten**), and next week's questions |
+| | Runs | Model | Purpose | Reads | Produces |
+|---|---|---|---|---|---|
+| **Agent 1 — Discovery** *(coordinator)* | daily | **Opus 5** | Turn yesterday's conversations into evidence. Classifies each call, decides what each signal *is* against your roadmap, and merges it into the backlog. | the ledger, your roadmap, and the helpers' findings — **never a transcript directly** | rows in the **signal matrix**, the **daily briefing**, and any open question in **needs-review.md** |
+| **Transcript helpers** *(one per call, in parallel)* | inside each daily run | **Sonnet 5** | Read one call and come back with facts. Translate if needed, pull the signals, the stated importance and one verbatim quote each. | exactly one transcript | structured findings handed back to the coordinator — they write nothing themselves |
+| **Agent 2 — Synthesis** | weekly | **Opus 5** | Turn accumulated evidence into decisions. Compares against last week, spots what crossed the evidence threshold, and says what needs deciding. | the matrix, the week's briefings, last week's snapshot, your roadmap | the **weekly digest**, **opportunity briefs**, and this week's **snapshot** |
+| **You** | 2 min daily · 30 min Friday | — | Decide. Resolve what the agents refused to guess, promote or park briefs, and forward the questions to the people already talking to customers. | the briefing and the digest | decisions, edits to the matrix (**final — never overwritten**), and next week's questions |
 
-Why split it this way: reading transcripts is mechanical and expensive, so it fans out to a cheap
-model in parallel. Deciding what a signal *means* — and especially whether it is the same need as an
-existing row — is neither, so it stays with one strong model that never gets handed a transcript to
-wade through. And synthesis needs a different altitude than capture, which is why it waits for the
-week rather than running daily.
+**Why the split, and why those models.** Reading a transcript is high-volume and mechanical: long
+input, a well-specified extraction, no judgement. That is exactly what a fast, cheap model is good
+at, so it fans out — one helper per call, five at a time. Deciding what a signal *means* is the
+opposite: it needs your roadmap in context, and the merge decision ("is this the same need as that
+existing row?") is the one step that can silently corrupt the evidence base. So the coordinator runs
+on the strongest model available and is never handed a transcript to wade through.
+
+The weekly agent is also the strong model, for a different reason: writing "promote / park / resolve
+this conflict" is a judgement call someone will act on, and drafting a brief that argues honestly
+against its own weak evidence is not a template-filling job.
+
+The economics follow the same logic. The daily run happens ~250 times a year and the weekly ~52, so
+keeping the bulk transcript reading cheap is where the saving lives — while the two decisions that
+are hard to undo get the better model. All three are set in `config.yml` under `models:`, so you can
+move any of them:
+
+```yaml
+models:
+  coordinator: "claude-opus-5"        # classification + the irreversible merge
+  transcript_helper: "claude-sonnet-5" # volume reading, runs in parallel
+  weekly: "claude-opus-5"              # decisions, briefs, judgement calls
+  max_concurrent_helpers: 5
+```
+
+If you are watching cost, the honest experiment is to move the *coordinator* down and watch for
+near-duplicate rows appearing in the matrix — that is the failure mode a weaker model produces here,
+and it is visible within a week.
 
 ## How it works
 
