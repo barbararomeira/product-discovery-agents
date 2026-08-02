@@ -1,6 +1,7 @@
 ---
 date: 2026-03-05
 title: Acme Foods — pilot review (live account, second line)
+duration_min: 24
 ran_by: Sam Whitfield
 participants:
   - sam.whitfield@northwind.example (Northwind Robotics)

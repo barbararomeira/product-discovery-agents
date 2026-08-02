@@ -5,8 +5,8 @@
 <title>Northwind Robotics · Opportunity brief — Act on a stop from the phone</title>
 <style>
   :root{
-    --accent:#3D5A80;
-    --accent2:#4C8577;
+    --accent:#47809E;
+    --accent2:#75905A;
     --ink:#1c2126;
     --mid:#5b6672;
     --line:#dfe4ea;
@@ -147,6 +147,13 @@
     margin-top:6mm; padding-top:2.2mm; border-top:.8pt solid var(--line);
     display:flex; justify-content:space-between; font-size:7.2pt; color:var(--mid);
   }
+
+/* --- brand type: serif headlines, sans body, mono stamps (all with local fallbacks) --- */
+h1,h2,h3,.brand,.org,.mast .left .org,.mast .right .wk,.kpi .v,.tile .v,.n{
+  font-family:"Playfair Display",Georgia,"Times New Roman",serif !important; letter-spacing:-.2px; }
+.badge,.stamp,th,.foot,.kpi .l,.tile .k,.l,footer{
+  font-family:"Space Mono",ui-monospace,Menlo,Consolas,monospace !important; }
+body{ font-family:Inter,-apple-system,"Helvetica Neue",Helvetica,Arial,sans-serif; color:#23252B; }
 </style>
 </head>
 <body>
@@ -403,7 +410,7 @@
 
   <div class="sec">
     <h2>Recommendation<span class="sub">one line of why</span></h2>
-    <p style="font-size:11pt; font-weight:700; color:#4C8577; margin-bottom:2.5mm">
+    <p style="font-size:11pt; font-weight:700; color:#75905A; margin-bottom:2.5mm">
       <span class="chip disc">RUN DISCOVERY</span> &nbsp; Do not promote to PRD yet.
     </p>
     <p>

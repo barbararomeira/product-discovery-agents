@@ -1,6 +1,7 @@
 ---
 date: 2026-03-03
 title: Halden Pumps — rollout planning (contract signed)
+duration_min: 28
 ran_by: Priya Nair
 participants:
   - priya.nair@northwind.example (Northwind Robotics)

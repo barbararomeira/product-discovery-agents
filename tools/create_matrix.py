@@ -31,10 +31,11 @@ THEME_HEADERS = [("Date", 12), ("Theme", 55), ("Calls", 8), ("Customers", 40)]
 LEDGER_HEADERS = [
     ("Call date", 12), ("Call title / customer", 60), ("Ran by", 18),
     ("Call id / link", 45), ("Processed on", 13), ("Call type", 14),
+    ("Duration (min)", 14),
 ]
 METRIC_HEADERS = [
     ("Date", 12), ("Scope", 10), ("Calls processed", 15), ("Prospect", 10),
-    ("Implementation", 14), ("Customer", 10), ("Est. review time saved (h)", 24),
+    ("Implementation", 14), ("Customer", 10), ("Listening time saved (h)", 24),
     ("Signals new", 12), ("Signals merged", 14), ("Signals tracked", 15),
     ("Accounts represented", 20), ("% with consequence", 18),
     ("% no roadmap home", 18), ("Open questions", 14),
@@ -51,8 +52,9 @@ SIGNAL_LEGEND = (
 )
 METRIC_LEGEND = (
     "Written by tools/metrics.py from the matrix and the ledger — nothing tracked by hand. "
-    "'Est. review time saved' = calls x minutes_per_call_review from config; it is an assumption, "
-    "not a measurement, and reports always print it as such. "
+    "'Listening time saved' is MEASURED: it is the summed real duration of the calls the system read "
+    "for you, taken from the ledger. Only calls whose length was never recorded fall back to the "
+    "minutes_per_call_review estimate in config, and reports say how many. "
     "'% with consequence' = share of ranked signals where at least one customer attached a "
     "consequence (importance 2) — the check that ranking follows real customer problems."
 )

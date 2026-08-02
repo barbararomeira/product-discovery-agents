@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Northwind Robotics · Weekly PM Digest 2026-W31</title>
+<style>
+  :root{
+    --accent:#47809E;
+    --accent2:#75905A;
+    --ink:#1c2126;
+    --mid:#5b6672;
+    --line:#dfe4ea;
+    --wash:#f4f6f8;
+    --risk:#9c3b2e;
+  }
+  @page{ size:A4; margin:0; }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    font-family:-apple-system,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    color:var(--ink); font-size:9.4pt; line-height:1.42;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  .sheet{
+    width:210mm; min-height:297mm; padding:13mm 14mm 10mm 14mm;
+    display:flex; flex-direction:column; break-after:page; page-break-after:always;
+    position:relative;
+  }
+  .sheet:last-child{ break-after:auto; page-break-after:auto; }
+
+  /* ---------- masthead ---------- */
+  .mast{ display:flex; justify-content:space-between; align-items:flex-start;
+         border-bottom:2.5pt solid var(--accent); padding-bottom:2.5mm; margin-bottom:5mm; }
+  .mast .left .org{ font-size:12.5pt; font-weight:700; color:var(--accent); letter-spacing:.2pt; }
+  .mast .left .badge{
+    display:inline-block; margin-top:2mm; background:var(--accent); color:#fff;
+    font-size:7.2pt; font-weight:700; letter-spacing:1.1pt; padding:1.4mm 2.6mm; border-radius:1.2mm;
+  }
+  .mast .right{ text-align:right; }
+  .mast .right .wk{ font-size:12.5pt; font-weight:700; color:var(--accent); }
+  .mast .right .rng{ font-size:8.2pt; color:var(--mid); margin-top:.8mm; }
+  .mast .right .for{ font-size:8.2pt; color:var(--mid); margin-top:.4mm; }
+  .mast.slim{ padding-bottom:1.8mm; margin-bottom:4mm; border-bottom-width:1.2pt; }
+  .mast.slim .org{ font-size:9.5pt; }
+  .mast.slim .wk{ font-size:9.5pt; }
+
+  /* ---------- structure ---------- */
+  .body{ flex:1 1 auto; }
+  h2{
+    font-size:10.5pt; margin:0 0 2.5mm 0; color:var(--accent);
+    border-bottom:.8pt solid var(--line); padding-bottom:1.2mm;
+  }
+  h2 .n{ display:inline-block; width:5.5mm; color:var(--accent2); font-weight:700; }
+  h2 .sub{ float:right; font-size:7.6pt; font-weight:400; color:var(--mid); padding-top:1pt; }
+  .sec{ margin-bottom:4mm; break-inside:avoid; page-break-inside:avoid; }
+  p{ margin:0 0 2mm 0; }
+  .lede{ color:var(--mid); font-size:8.6pt; margin-bottom:3mm; }
+
+  /* ---------- stat tiles ---------- */
+  .tiles{ display:flex; flex-wrap:wrap; gap:2.5mm; }
+  .tile{
+    flex:1 1 30%; min-width:52mm; border:.8pt solid var(--line); border-top:2.2pt solid var(--accent);
+    border-radius:1.2mm; padding:2.6mm 3mm; background:#fff;
+    break-inside:avoid; page-break-inside:avoid;
+  }
+  .tile.alt{ border-top-color:var(--accent2); }
+  .tile .k{ font-size:7.2pt; text-transform:uppercase; letter-spacing:.6pt; color:var(--mid); }
+  .tile .v{ font-size:17pt; font-weight:700; color:var(--accent); line-height:1.1; margin:.8mm 0 .6mm; }
+  .tile.alt .v{ color:var(--accent2); }
+  .tile .v small{ font-size:9pt; font-weight:600; }
+  .tile .d{ font-size:7.6pt; color:var(--mid); line-height:1.35; }
+
+  /* ---------- tables ---------- */
+  table{ width:100%; border-collapse:collapse; font-size:8.4pt; }
+  thead{ display:table-header-group; }
+  th{
+    text-align:left; background:var(--accent); color:#fff; font-size:7.2pt;
+    text-transform:uppercase; letter-spacing:.5pt; padding:1.8mm 2mm; font-weight:700;
+    vertical-align:bottom;
+  }
+  td{ padding:1.8mm 2mm; border-bottom:.6pt solid var(--line); vertical-align:top; }
+  tr{ break-inside:avoid; page-break-inside:avoid; }
+  tbody tr:nth-child(even){ background:var(--wash); }
+  td.sig{ font-weight:600; }
+  td .aud{ display:block; font-size:7.2pt; color:var(--mid); font-weight:400; margin-top:.5mm; }
+  .num{ text-align:center; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  table.tight{ font-size:8.1pt; }
+  table.tight td{ padding:1.5mm 2mm; }
+
+  /* ---------- chips ---------- */
+  .chip{
+    display:inline-block; font-size:7pt; font-weight:700; letter-spacing:.4pt;
+    padding:.7mm 1.6mm; border-radius:1mm; white-space:nowrap;
+  }
+  .chip.prd{ background:var(--accent); color:#fff; }
+  .chip.disc{ background:var(--accent2); color:#fff; }
+  .chip.conf{ background:#e8eef4; color:var(--accent); }
+  .chip.park{ background:#e9ecef; color:var(--mid); }
+  .chip.risk{ background:var(--risk); color:#fff; }
+  .chip.pull{ background:var(--accent2); color:#fff; }
+  .chip.stale{ background:var(--risk); color:#fff; }
+
+  /* ---------- cards / callouts ---------- */
+  .card{
+    border:.8pt solid var(--line); border-left:2.6pt solid var(--accent2);
+    border-radius:1.2mm; padding:2.8mm 3.2mm; background:#fff; margin-bottom:2.5mm;
+    break-inside:avoid; page-break-inside:avoid;
+  }
+  .card.flat{ border-left-color:var(--accent); }
+  .card h3{ font-size:8.8pt; margin:0 0 1.4mm 0; color:var(--accent); }
+  .card h3 .meta{ float:right; font-size:7.4pt; font-weight:400; color:var(--mid); }
+  .card ul{ margin:0; padding-left:4.5mm; }
+  .card li{ margin-bottom:1.1mm; }
+  .card li:last-child{ margin-bottom:0; }
+  .verdict{
+    background:var(--wash); border-left:2.6pt solid var(--accent); padding:2.4mm 3mm;
+    margin-top:3mm; font-size:8.6pt; break-inside:avoid; page-break-inside:avoid;
+  }
+  .verdict b{ color:var(--accent); }
+  .note{ font-size:7.8pt; color:var(--mid); margin-top:2mm; }
+  .attn{ display:flex; gap:2.5mm; align-items:baseline; padding:1.4mm 0; border-bottom:.6pt solid var(--line); break-inside:avoid; }
+  .attn:last-child{ border-bottom:none; }
+  .attn .tag{ flex:0 0 27mm; font-size:7.4pt; font-weight:700; color:var(--accent2); text-transform:uppercase; letter-spacing:.4pt; }
+  .attn .txt{ flex:1 1 auto; font-size:8.4pt; }
+  .attn .age{ flex:0 0 20mm; text-align:right; font-size:7.4pt; color:var(--mid); }
+
+  /* ---------- footer ---------- */
+  .foot{
+    flex:0 0 auto; margin-top:auto; padding-top:2.2mm; border-top:.8pt solid var(--line);
+    display:flex; justify-content:space-between; font-size:7.2pt; color:var(--mid);
+  }
+  .foot .pg{ font-weight:700; color:var(--accent); }
+  .sources{ font-size:7.6pt; color:var(--mid); line-height:1.5; }
+  .sources b{ color:var(--ink); }
+
+/* --- brand type: serif headlines, sans body, mono stamps (all with local fallbacks) --- */
+h1,h2,h3,.brand,.org,.mast .left .org,.mast .right .wk,.kpi .v,.tile .v,.n{
+  font-family:"Playfair Display",Georgia,"Times New Roman",serif !important; letter-spacing:-.2px; }
+.badge,.stamp,th,.foot,.kpi .l,.tile .k,.l,footer{
+  font-family:"Space Mono",ui-monospace,Menlo,Consolas,monospace !important; }
+body{ font-family:Inter,-apple-system,"Helvetica Neue",Helvetica,Arial,sans-serif; color:#23252B; }
+</style>
+</head>
+<body>
+
+<!-- ============================ PAGE 1 ============================ -->
+<div class="sheet">
+  <div class="mast">
+    <div class="left">
+      <div class="org">Northwind Robotics · Product Discovery</div>
+      <div class="badge">WEEKLY PM DIGEST</div>
+    </div>
+    <div class="right">
+      <div class="wk">2026-W31</div>
+      <div class="rng">27 Jul – 2 Aug 2026</div>
+      <div class="for">for Alex Kim</div>
+    </div>
+  </div>
+
+  <div class="body">
+
+    <div class="sec">
+      <h2><span class="n">1</span>By the numbers<span class="sub">source: Run metrics sheet · 2026-08-02</span></h2>
+      <div class="tiles">
+        <div class="tile">
+          <div class="k">Calls processed</div>
+          <div class="v">5</div>
+          <div class="d">2 prospect · 1 implementation · 2 customer</div>
+        </div>
+        <div class="tile alt">
+          <div class="k">Est. review time saved</div>
+          <div class="v">1.2 <small>h</small></div>
+          <div class="d">Assumption: 15 min to review one call by hand (set in config — an estimate, not a measurement)</div>
+        </div>
+        <div class="tile">
+          <div class="k">Signals added / merged</div>
+          <div class="v">19 <small>/ 4</small></div>
+          <div class="d">19 rows created; 4 took a second mention instead of becoming duplicate rows</div>
+        </div>
+        <div class="tile alt">
+          <div class="k">Consequence attached</div>
+          <div class="v">68<small>%</small></div>
+          <div class="d">13 of 19 ranked signals have ≥1 customer at importance 2 — ranking follows real problems, not enthusiasm</div>
+        </div>
+        <div class="tile">
+          <div class="k">Distinct accounts</div>
+          <div class="v">4</div>
+          <div class="d">Acme Foods · Vertex Motors · Halden Pumps · Lumen Devices</div>
+        </div>
+        <div class="tile alt">
+          <div class="k">Demand with no roadmap home</div>
+          <div class="v">47<small>%</small></div>
+          <div class="d">9 of 19 ranked signals are Not planned, Deferred, or awaiting your ruling</div>
+        </div>
+        <div class="tile">
+          <div class="k">Open questions</div>
+          <div class="v">5</div>
+          <div class="d">Median 0 days open — all raised by this week's first run. Nothing stale yet.</div>
+        </div>
+        <div class="tile alt">
+          <div class="k">Briefs drafted / updated</div>
+          <div class="v">0</div>
+          <div class="d">No signal met both threshold conditions this week — see section 7</div>
+        </div>
+        <div class="tile">
+          <div class="k">Signals tracked</div>
+          <div class="v">19</div>
+          <div class="d">0 rows closed as out of scope; 2 are bugs and never trigger briefs</div>
+        </div>
+      </div>
+
+      <div class="verdict">
+        <b>Verdict.</b> Five calls became nineteen evidence-backed rows across four accounts, two-thirds of them carrying
+        a stated consequence rather than a wish — the backlog is driven by customer problems, not by volume. The number to
+        sit with is <b>47%</b>: nearly half of ranked demand has nowhere to live on the roadmap, and the heaviest
+        concentration of it comes from accounts that already pay you. The constraint this week is <i>breadth</i> — every
+        unplanned item is carried by a single account, which is why nothing has crossed the brief threshold yet.
+      </div>
+    </div>
+
+    <div class="sec">
+      <h2><span class="n">2</span>Movers<span class="sub">rank rises and falls vs. last week</span></h2>
+      <div class="card flat">
+        <h3>No previous snapshot — movements skipped this week<span class="meta">looked for snapshots/matrix-2026-W30.json</span></h3>
+        <p style="margin-bottom:1.5mm">
+          This is the first weekly run against this matrix, so there is no prior state to compare ranks against.
+          Nothing here is a rise or a fall; every rank below is a starting position.
+        </p>
+        <p style="margin-bottom:0">
+          <b>snapshots/matrix-2026-W31.json</b> has been written with all 19 ranked signals
+          (signal, rank, mentions, priority, type, audience, roadmap status). Next week's digest will report real movers
+          against it. Snapshot retention: 1 of 8 kept — nothing to prune.
+        </p>
+      </div>
+      <table>
+        <thead>
+          <tr><th class="num" style="width:12mm">Rank</th><th>Signal</th><th style="width:38mm">Audience</th>
+              <th class="num" style="width:16mm">Mentions</th><th class="num" style="width:16mm">Priority</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="num">1</td><td class="sig">Read-only view of line status on a phone</td><td>Prospect, Customer</td><td class="num">2</td><td class="num">8</td></tr>
+          <tr><td class="num">2</td><td class="sig">Surface recurring stop patterns automatically</td><td>Prospect, Customer</td><td class="num">2</td><td class="num">4</td></tr>
+          <tr><td class="num">3</td><td class="sig">Let customers edit the downtime reason-code list</td><td>Prospect, Customer</td><td class="num">2</td><td class="num">4</td></tr>
+          <tr><td class="num">4</td><td class="sig">Alerts delivered into the chat tool people use on shift</td><td>Customer</td><td class="num">1</td><td class="num">2</td></tr>
+          <tr><td class="num">5–19</td><td class="sig">Eleven rows at priority 2, then four at priority 1</td><td>mixed</td><td class="num">1–2</td><td class="num">2 → 1</td></tr>
+        </tbody>
+      </table>
+      <div class="note">Baseline only — full row-level state is in the snapshot JSON and in signal-matrix.xlsx.</div>
+    </div>
+
+  </div>
+
+  <div class="foot">
+    <div>Northwind Robotics · Product Discovery · Weekly PM Digest · 2026-W31</div>
+    <div class="pg">Page 1 of 6</div>
+  </div>
+</div>
+
+<!-- ============================ PAGE 2 ============================ -->
+<div class="sheet">
+  <div class="mast slim">
+    <div class="left"><div class="org">Northwind Robotics · Product Discovery</div></div>
+    <div class="right"><div class="wk">2026-W31 · WEEKLY PM DIGEST</div></div>
+  </div>
+
+  <div class="body">
+    <div class="sec">
+      <h2><span class="n">3</span>Decisions for you<span class="sub">the punchline — 11 items · part 1 of 2</span></h2>
+      <p class="lede">
+        <span class="chip risk">RETENTION RISK</span> marks a New feature or Enhancement — Gap raised
+        <i>only</i> by accounts that already pay you. That is qualitatively different from prospect demand: a prospect
+        asking is upside; a live customer asking is something you already sold them living without.
+        Ordered by what it costs you to leave undecided, not by rank.
+      </p>
+      <table class="tight">
+        <thead>
+          <tr>
+            <th style="width:45mm">Signal</th>
+            <th style="width:27mm">Recommended action</th>
+            <th>Why — one line</th>
+            <th style="width:21mm">Brief</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="sig">Read-only view of line status on a phone<span class="aud">Prospect + Customer · Acme 2, Vertex 2 · rank 1, priority 8</span></td>
+            <td><span class="chip prd">Resolve roadmap conflict</span></td>
+            <td>Your highest-ranked row is validating <b>Mobile layout (Q3)</b>, which is read-only — but Acme's pilot success criterion is supervisors <i>acting</i> during the shift. If Q3 is view-only, the top of your backlog is only half-covered, and the open half clears the brief threshold on the spot (importance 2 from two accounts).</td>
+            <td>none — split first</td>
+          </tr>
+          <tr>
+            <td class="sig">Let customers edit the downtime reason-code list<span class="aud">Customer (live) · Acme 2 · rank 3, priority 4</span></td>
+            <td><span class="chip disc">Run discovery</span> <span class="chip risk">RETENTION RISK</span></td>
+            <td>Acme says they will struggle to defend the renewal if the list stays frozen, and their CI lead has asked three times. Status is <b>Not planned</b>. Highest-ranked item on the board with no roadmap home at all.</td>
+            <td>none — 1 account</td>
+          </tr>
+          <tr>
+            <td class="sig">In-product screen showing what personal data is stored<span class="aud">Implementation · Halden Pumps 2 · priority 2</span></td>
+            <td><span class="chip prd">Promote to PRD</span></td>
+            <td>"This is the condition the whole rollout hangs on." Contract signed, and the works council will not accept a policy document. <b>Not planned</b>. One account, but it gates revenue you have already booked — the only item here I would write up despite failing the evidence threshold.</td>
+            <td>none — 1 account</td>
+          </tr>
+          <tr>
+            <td class="sig">Separate planned maintenance from unplanned downtime<span class="aud">Customer (live) · Lumen Devices 2 · priority 2</span></td>
+            <td><span class="chip disc">Run discovery</span> <span class="chip risk">RETENTION RISK</span></td>
+            <td>The availability number reads wrong, so Lumen cannot show the dashboard in their factory meeting — a paid product currently unusable where it matters. Sits under <b>Maintenance-system integration (discovery)</b>; decide whether excluding planned stops can ship without the integration.</td>
+            <td>none — 1 account</td>
+          </tr>
+          <tr>
+            <td class="sig">Alerts delivered into the chat tool people use on shift<span class="aud">Customer (live) · Lumen Devices 2 · rank 4, priority 2</span></td>
+            <td><span class="chip prd">Resolve roadmap conflict</span> <span class="chip risk">RETENTION RISK</span></td>
+            <td>Blocked on a ruling only you can make: does the committed <b>Real-time alerts (Q2)</b> scope include chat delivery, or email only? Email-only alerts are alerts nobody on the floor sees.</td>
+            <td>none — status unclear</td>
+          </tr>
+          <tr>
+            <td class="sig">Flag numbers that look implausible<span class="aud">Customer (live) · Acme Foods 2 · priority 2</span></td>
+            <td><span class="chip disc">Run discovery</span> <span class="chip risk">RETENTION RISK</span></td>
+            <td>"A wrong number I trust is worse than no number" — said in the same review as a real double-counting bug that ran for a full day. <b>Not planned</b>. This is trust in the product, not a feature.</td>
+            <td>none — 1 account</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="note">Continued overleaf — five further decisions, including two promises made to customers that the roadmap does not back.</div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div>Northwind Robotics · Product Discovery · Weekly PM Digest · 2026-W31</div>
+    <div class="pg">Page 2 of 6</div>
+  </div>
+</div>
+
+<!-- ============================ PAGE 3 ============================ -->
+<div class="sheet">
+  <div class="mast slim">
+    <div class="left"><div class="org">Northwind Robotics · Product Discovery</div></div>
+    <div class="right"><div class="wk">2026-W31 · WEEKLY PM DIGEST</div></div>
+  </div>
+
+  <div class="body">
+    <div class="sec">
+      <h2><span class="n">3</span>Decisions for you <span style="font-weight:400;color:#5b6672">— continued</span><span class="sub">part 2 of 2 · includes promises the roadmap does not back</span></h2>
+      <table class="tight">
+        <thead>
+          <tr>
+            <th style="width:45mm">Signal</th>
+            <th style="width:27mm">Recommended action</th>
+            <th>Why — one line</th>
+            <th style="width:21mm">Brief</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="sig">Create and remove users in bulk<span class="aud">Implementation · Halden Pumps 2 · priority 2</span></td>
+            <td><span class="chip prd">Resolve roadmap conflict</span></td>
+            <td>Fifty-two users by hand at seven lines. Whether this is a problem at all depends on whether <b>SSO/SAML (Q3)</b> brings SCIM directory sync — if it is authentication only, Halden needs unplanned work before rollout.</td>
+            <td>none — status unclear</td>
+          </tr>
+          <tr>
+            <td class="sig">Scheduled data feed into the customer's own warehouse<span class="aud">Prospect · Vertex Motors 2 · priority 2</span></td>
+            <td><span class="chip prd">Resolve roadmap conflict</span></td>
+            <td><b>Public API is deferred</b> until three customers commit to building against it. Vertex is asking for exactly that on an open deal — count them as commitment #1, and note that the parking rule is now being tested by a live opportunity.</td>
+            <td>none — 1 account</td>
+          </tr>
+          <tr>
+            <td class="sig">Promise: shift comparison "in April"<span class="aud">Customer (live) · Lumen Devices — made on call 1004</span></td>
+            <td><span class="chip prd">Resolve roadmap conflict</span></td>
+            <td>Lumen told their plant manager April; the roadmap says <b>Shift comparison view, Q2</b>. April sits inside Q2 but is a tighter date than you have committed to, and your own account manager confirmed the month on the call. Either back the date or correct it this week.</td>
+            <td>none — validation row</td>
+          </tr>
+          <tr>
+            <td class="sig">Promise: multi-site "coming later this year"<span class="aud">Prospect + Customer · Acme Foods — made on call 1005</span></td>
+            <td><span class="chip prd">Resolve roadmap conflict</span></td>
+            <td>Acme's plant manager told his boss multi-site was coming this year. <b>Multi-site rollup is discovery only, no date.</b> He was corrected on the call — make sure that correction survives contact with his boss, because his boss is the one asking.</td>
+            <td>none — validation row</td>
+          </tr>
+          <tr>
+            <td class="sig">Weekly report legibility at A3 · weekly report schedule<span class="aud">Customer (live) Lumen 1 · Implementation Halden 1 · priority 1 each</span></td>
+            <td><span class="chip park">Park</span> <span class="chip risk">RETENTION RISK</span></td>
+            <td>Both are real and both are cheap, but neither customer attached a consequence — "not a big deal", in their own words. Flagged under the standing lens because they come only from paying accounts; parked because nothing hangs on them.</td>
+            <td>none — importance 1</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="verdict">
+        <b>If you only do one thing.</b> Four of these eleven are blocked on a scope ruling that costs you a sentence each
+        — mobile "act vs. view", chat delivery in Q2 alerts, SCIM in Q3 SSO, and whether April is a date you can stand
+        behind. Answer those four and five matrix rows re-classify themselves, one of them straight into an opportunity
+        brief. Everything else on this list needs work; those four only need a decision.
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div>Northwind Robotics · Product Discovery · Weekly PM Digest · 2026-W31</div>
+    <div class="pg">Page 3 of 6</div>
+  </div>
+</div>
+
+<!-- ============================ PAGE 4 ============================ -->
+<div class="sheet">
+  <div class="mast slim">
+    <div class="left"><div class="org">Northwind Robotics · Product Discovery</div></div>
+    <div class="right"><div class="wk">2026-W31 · WEEKLY PM DIGEST</div></div>
+  </div>
+
+  <div class="body">
+    <div class="sec">
+      <h2><span class="n">4</span>Roadmap validation this week<span class="sub">planned items customers confirmed without being asked</span></h2>
+      <table class="tight">
+        <thead>
+          <tr>
+            <th style="width:42mm">Planned item</th>
+            <th style="width:15mm" class="num">Accounts</th>
+            <th style="width:33mm">Confirmed by</th>
+            <th>What they said it decides</th>
+            <th style="width:24mm">Verdict</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="sig">Mobile layout — committed Q3</td>
+            <td class="num">2</td>
+            <td>Vertex Motors (2)<br>Acme Foods (2)</td>
+            <td>Two accounts, two mentions, both at importance 2 — the strongest evidence in the matrix. Supervisors with no workstation never see the line in time to act.</td>
+            <td><span class="chip pull">PULL FORWARD</span><div class="note" style="margin-top:1.2mm">scope question open — §5</div></td>
+          </tr>
+          <tr>
+            <td class="sig">Single sign-on / SAML — committed Q3</td>
+            <td class="num">1</td>
+            <td>Vertex Motors (2)</td>
+            <td>"It is a gate, not a wish." A security-review gate on an open deal, not a preference.</td>
+            <td><span class="chip pull">PULL FORWARD</span><div class="note" style="margin-top:1.2mm">gates a deal in flight</div></td>
+          </tr>
+          <tr>
+            <td class="sig">Root-cause suggestions — discovery</td>
+            <td class="num">2</td>
+            <td>Vertex Motors (1)<br>Acme Foods (1)</td>
+            <td>Raised unprompted by two accounts in one week — one describing a stop pattern that ran three days before anyone noticed. No consequence yet: interest, not condition.</td>
+            <td><span class="chip conf">COMMIT CANDIDATE</span><div class="note" style="margin-top:1.2mm">2 accounts, no date</div></td>
+          </tr>
+          <tr>
+            <td class="sig">Real-time alerts — committed Q2</td>
+            <td class="num">1</td>
+            <td>Acme Foods (2)</td>
+            <td>"The difference between us running a pilot and us not running a pilot." A pilot condition — the commitment doing exactly the job it was made for.</td>
+            <td><span class="chip conf">CONFIRMED</span></td>
+          </tr>
+          <tr>
+            <td class="sig">Shift comparison view — committed Q2</td>
+            <td class="num">1</td>
+            <td>Lumen Devices (2)</td>
+            <td>Confirmed, and already promised onward: "I told the plant manager we'd have them in April." Validation and exposure in the same sentence.</td>
+            <td><span class="chip conf">CONFIRMED</span><div class="note" style="margin-top:1.2mm">date promised — §3</div></td>
+          </tr>
+          <tr>
+            <td class="sig">Maintenance-system integration — discovery</td>
+            <td class="num">1</td>
+            <td>Lumen Devices (2, 1 — two rows)</td>
+            <td>One account, but the strongest consequence in the discovery set: the availability figure is wrong, so the dashboard cannot be shown to plant leadership.</td>
+            <td><span class="chip conf">CONFIRMED</span><div class="note" style="margin-top:1.2mm">1 account — hold</div></td>
+          </tr>
+          <tr>
+            <td class="sig">Multi-site rollup — discovery</td>
+            <td class="num">1</td>
+            <td>Acme Foods (1)</td>
+            <td>Mentioned in both Acme calls, but explicitly not a condition — "he will ask", not "we need it".</td>
+            <td><span class="chip park">HOLD</span><div class="note" style="margin-top:1.2mm">but a promise was made</div></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="note">
+        Parking lot holding: <b>On-premise deployment</b> and <b>Custom report builder</b> drew no mention at all.
+        <b>Public API</b> drew one, from Vertex Motors.
+      </div>
+    </div>
+
+    <div class="sec">
+      <h2><span class="n">5</span>Needs your attention<span class="sub">median 0 days open · nothing stale yet</span></h2>
+      <p class="lede">
+        Three of these block a field in the matrix — the agent refused to guess rather than mis-classify a row quietly.
+        All raised 2026-08-02. needs-review.md itemises four; Run metrics counts five — the difference is the promise below.
+      </p>
+
+      <div class="attn">
+        <div class="tag">Matrix · rank 1</div>
+        <div class="txt"><b>Does Mobile layout (Q3) include acting, or only viewing?</b> If view-only, the top-ranked row
+          splits — and the open half qualifies for a brief immediately.</div>
+        <div class="age">0 days</div>
+      </div>
+      <div class="attn">
+        <div class="tag">Matrix · rank 4</div>
+        <div class="txt"><b>Does the Q2 Real-time alerts scope include chat delivery, or email only?</b> Inside the
+          commitment this is a validation row; outside it, unplanned work for a live customer.</div>
+        <div class="age">0 days</div>
+      </div>
+      <div class="attn">
+        <div class="tag">Matrix · rank 8</div>
+        <div class="txt"><b>Is SCIM / directory sync inside the Q3 SSO scope?</b> If yes, Halden's problem disappears in Q3;
+          if SAML is authentication only, bulk import is unplanned work needed <i>before</i> rollout.</div>
+        <div class="age">0 days</div>
+      </div>
+      <div class="attn">
+        <div class="tag">Merge question</div>
+        <div class="txt"><b>Are ranks 13 and 18 one row or two?</b> Same account, same call, same discovery item; kept
+          apart per the close-calls rule. Merged, priority becomes 3.</div>
+        <div class="age">0 days</div>
+      </div>
+      <div class="attn">
+        <div class="tag">Promise · Lumen</div>
+        <div class="txt"><b>Is April a date you can stand behind for shift comparison?</b> The only open thread carrying an external commitment — see §3.</div>
+        <div class="age">0 days</div>
+      </div>
+      <div class="note">
+        Nothing is <span class="chip stale">STALE — DECIDE OR DROP</span> yet; that flag applies at 2 weeks open.
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div>Northwind Robotics · Product Discovery · Weekly PM Digest · 2026-W31</div>
+    <div class="pg">Page 4 of 6</div>
+  </div>
+</div>
+
+<!-- ============================ PAGE 5 ============================ -->
+<div class="sheet">
+  <div class="mast slim">
+    <div class="left"><div class="org">Northwind Robotics · Product Discovery</div></div>
+    <div class="right"><div class="wk">2026-W31 · WEEKLY PM DIGEST</div></div>
+  </div>
+
+  <div class="body">
+    <div class="sec">
+      <h2><span class="n">6</span>Questions for the next calls<span class="sub">5 threads · send to the account owner before their next call</span></h2>
+      <p class="lede">
+        Every unplanned item in this digest is carried by exactly one account. The fastest way to change that is not more
+        calls — it is asking the same question in two more rooms. These are the five threads where an answer would move a
+        row, close a gap, or cross a threshold.
+      </p>
+
+      <div class="card">
+        <h3>Acme Foods — reason-code editing &amp; the renewal<span class="meta">owner: Sam Whitfield · retention</span></h3>
+        <ul>
+          <li>How many stops landed in "other" last month, and which reason codes are missing that would have caught them?</li>
+          <li>If your CI lead could edit the list herself, who signs off on a change — her alone, or does it need plant approval?</li>
+          <li>What specifically has to be true at renewal for you to defend this internally? Name the two things.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Vertex Motors &amp; Acme Foods — the phone: viewing vs. acting<span class="meta">owners: Tom Becker, Sam Whitfield · unblocks rank 1</span></h3>
+        <ul>
+          <li>On the phone, what is the <i>first thing</i> a supervisor does after seeing the line is down — is looking enough, or do they need to tag the stop right there?</li>
+          <li>Which two numbers must be on that screen for it to be worth unlocking a phone for?</li>
+          <li>(Vertex) How many of your supervisors have no workstation at all — and (Acme) would line one's supervisor use it during the shift, or after it?</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Halden Pumps — works council &amp; provisioning<span class="meta">owner: Priya Nair · gates a signed rollout</span></h3>
+        <ul>
+          <li>What exactly must the transparency screen show the works council — the list of fields collected, or a live per-person record they can open?</li>
+          <li>Does your identity provider support SCIM? If directory sync existed, would the 52-user problem disappear entirely, or only shrink?</li>
+          <li>What rollout date does the works-council sign-off currently block, and what is the cost of missing it?</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Lumen Devices — planned maintenance &amp; the alert channel<span class="meta">owner: Marc Olsen · retention</span></h3>
+        <ul>
+          <li>If we simply excluded planned stops from the availability figure — no maintenance-system integration — would the number be right enough to show in the factory meeting?</li>
+          <li>How are planned stops recorded today: a work order in the maintenance system, or someone's judgement after the fact?</li>
+          <li>Which Teams channel would alerts land in, who is actually in it on the night shift, and what would they do with an alert at 02:00?</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Vertex Motors — the warehouse feed and the API rule<span class="meta">owner: Tom Becker · tests a parked decision</span></h3>
+        <ul>
+          <li>What system consumes the nightly pull, and which fields does it need on day one?</li>
+          <li>Would a scheduled push to your storage be acceptable, or does it have to be an endpoint you call?</li>
+          <li>Is this a condition of signature, or a year-one requirement? The answer decides whether Public API stays parked.</li>
+        </ul>
+      </div>
+
+      <div class="note">
+        Capped at the 5 most valuable threads. Three further discovery gaps are open and did not make the cut this week:
+        the weekly-report schedule (Halden), A3 print legibility (Lumen), and what "implausible" should mean numerically (Acme).
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div>Northwind Robotics · Product Discovery · Weekly PM Digest · 2026-W31</div>
+    <div class="pg">Page 5 of 6</div>
+  </div>
+</div>
+
+<!-- ============================ PAGE 6 ============================ -->
+<div class="sheet">
+  <div class="mast slim">
+    <div class="left"><div class="org">Northwind Robotics · Product Discovery</div></div>
+    <div class="right"><div class="wk">2026-W31 · WEEKLY PM DIGEST</div></div>
+  </div>
+
+  <div class="body">
+    <div class="sec">
+      <h2><span class="n">7</span>Briefs drafted or updated this week<span class="sub">0 drafted · 0 updated</span></h2>
+      <div class="card flat">
+        <h3>Nothing crossed the threshold — and that is a finding, not a gap</h3>
+        <p style="margin-bottom:1.8mm">
+          A brief is drafted only when <b>both</b> tests pass: (a) the signal has no roadmap home — type
+          <i>New feature</i> or <i>Enhancement — Gap</i>, status <i>Not planned</i>, <i>Deferred</i>, or a shipped feature
+          with a material gap; and (b) it is carried by <b>3+ accounts</b>, or at importance 2 by <b>2+ accounts</b>.
+          Nineteen ranked rows were tested. Six passed (a). One passed (b). None passed both.
+        </p>
+        <p style="margin-bottom:0">
+          The pattern is unambiguous: <b>every unplanned request in the matrix is carried by exactly one account.</b>
+          You do not have a prioritisation problem this week, you have a corroboration problem — which is what §6 is for.
+          Ask the Acme reason-code question at Lumen, and the Halden data-transparency question at Vertex, and two of the
+          rows below cross on their own.
+        </p>
+      </div>
+
+      <table class="tight">
+        <thead>
+          <tr><th style="width:50mm">Nearest miss</th><th style="width:25mm">Passes (a)?</th><th style="width:26mm">Passes (b)?</th><th>What would tip it</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="sig">Read-only view of line status on a phone</td><td>No — Roadmap validation</td><td><b>Yes</b> — imp. 2 × 2 accounts</td><td>The only row with the evidence. It needs your §5 ruling: if Mobile layout Q3 is view-only, the "act on the floor" half becomes an Enhancement — Gap with no home, and drafts immediately.</td></tr>
+          <tr><td class="sig">Let customers edit the downtime reason-code list</td><td><b>Yes</b> — Not planned</td><td>No — 1 account</td><td>One more account at any importance, or a second at importance 2. Likeliest source: Lumen or Halden.</td></tr>
+          <tr><td class="sig">In-product personal-data screen</td><td><b>Yes</b> — Not planned</td><td>No — 1 account</td><td>Any second account with a works council. Recommended for a PRD anyway (§3) — it blocks signed revenue.</td></tr>
+          <tr><td class="sig">Flag numbers that look implausible</td><td><b>Yes</b> — Not planned</td><td>No — 1 account</td><td>A second account describing a bad reading they acted on.</td></tr>
+          <tr><td class="sig">Scheduled data feed into own warehouse</td><td><b>Yes</b> — Deferred (Public API)</td><td>No — 1 account</td><td>Two more accounts committing — precisely the rule that parked it. Vertex is #1 of 3.</td></tr>
+          <tr><td class="sig">Weekly report schedule · A3 legibility</td><td><b>Yes</b> — Not planned</td><td>No — 1 account, imp. 1</td><td>Nothing yet. Neither has a consequence attached; parked.</td></tr>
+        </tbody>
+      </table>
+      <div class="note">
+        <b>Opportunity briefs/</b> is empty by design this week. No existing brief was overwritten, and no human edit was touched.
+      </div>
+    </div>
+
+    <div class="sec">
+      <h2><span class="n">8</span>Sources</h2>
+      <div class="sources">
+        <p style="margin-bottom:1.2mm"><b>Matrix</b> — signal-matrix.xlsx, all four sheets (Prioritized Signals · Cross-call themes · Processed calls · Run metrics), as at 2026-08-02.</p>
+        <p style="margin-bottom:1.2mm"><b>Calls</b> — 5 transcripts, 2026-03-02 → 2026-03-05: Acme Foods discovery (1001) · Vertex Motors demo (1002) · Halden Pumps rollout planning (1003) · Lumen Devices weekly, in German (1004) · Acme Foods pilot review (1005).</p>
+        <p style="margin-bottom:1.2mm"><b>This week's briefings and logs</b> — Daily briefing/briefing-2026-08-02.pdf · logs/run-2026-08-02.log · logs/weekly-2026-08-02.log.</p>
+        <p style="margin-bottom:1.2mm"><b>Product knowledge</b> — knowledge/product.md, refreshed 2026-08-02.</p>
+        <p style="margin-bottom:1.2mm"><b>Open questions</b> — needs-review.md, entries dated 2026-08-02.</p>
+        <p style="margin-bottom:1.2mm"><b>Snapshots</b> — written: snapshots/matrix-2026-W31.json (19 signals). Compared against: none — snapshots/matrix-2026-W30.json does not exist.</p>
+        <p style="margin-bottom:0"><b>Metrics assumption</b> — review time saved uses 15 min per call (minutes_per_call_review in config.yml). It is an estimate, not a measurement.</p>
+      </div>
+      <div class="verdict" style="margin-top:4mm">
+        <b>Next digest: Friday 2026-08-07, 12:05 Europe/Lisbon.</b> It will report real rank movements for the first time,
+        against snapshots/matrix-2026-W31.json.
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div>Northwind Robotics · Product Discovery · Weekly PM Digest · 2026-W31 · generated 2026-08-02</div>
+    <div class="pg">Page 6 of 6</div>
+  </div>
+</div>
+
+</body>
+</html>

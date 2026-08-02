@@ -23,6 +23,7 @@ the only convention that matters:
 ---
 date: 2026-03-02
 title: Acme Foods — discovery call
+duration_min: 34
 ran_by: Dana Ruiz
 participants:
   - dana.ruiz@yourcompany.example (Your Company)
@@ -30,6 +31,8 @@ participants:
 link: https://example.com/calls/1001        # optional, for source links in reports
 ---
 ```
+
+`duration_min` is what makes the time-saved figure a measurement instead of a guess — it is the real length of the call. If you omit it, the agent falls back to the estimate in config and the reports say so.
 
 The email domains are what let the agent separate your people from the customer's, which drives
 the internal-vs-external filter and the Prospect / Implementation / Customer classification. If

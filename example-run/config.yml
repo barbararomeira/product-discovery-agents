@@ -59,8 +59,8 @@ output:
 # Report styling. Two colours is all it takes to make these look like yours.
 branding:
   product_name: "Product Discovery"
-  accent: "#3D5A80"         # headers, priority numbers, "new request" chips
-  accent_secondary: "#4C8577"  # positive / shipped-feature chips
+  accent: "#47809E"         # headers, priority numbers, "new request" chips
+  accent_secondary: "#75905A"  # positive / shipped-feature chips
   # macOS path shown; any Chrome/Chromium works. Used for HTML -> PDF.
   chrome_path: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 

@@ -1,0 +1,195 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@page { size: A4; margin: 0 }
+* { box-sizing: border-box }
+body { margin:0; font-family:-apple-system,"Helvetica Neue",Arial,sans-serif; color:#000; background:#fff;
+       font-size:9.6pt; line-height:1.42 }
+.page { width:210mm; padding:14mm 15mm; }
+.hdr { display:flex; justify-content:space-between; align-items:flex-start;
+        border-bottom:2.5px solid #47809E; padding-bottom:7px; margin-bottom:12px }
+.hdr .co { font-size:12.5pt; font-weight:700; color:#47809E }
+.badge { display:inline-block; margin-top:5px; background:#47809E; color:#fff; font-size:7.3pt;
+          letter-spacing:.9px; font-weight:700; padding:3px 8px; border-radius:2px }
+.date { text-align:right; font-size:9pt; color:#555 }
+h2 { font-size:10.6pt; color:#47809E; margin:17px 0 8px; padding-bottom:3px;
+      border-bottom:1px solid #d8dde4; page-break-after:avoid }
+.kpis { display:flex; gap:8px }
+.k { flex:1; border:1px solid #d8dde4; border-top:3px solid #47809E; border-radius:3px; padding:8px 9px }
+.k b { display:block; font-size:19pt; color:#47809E; line-height:1 }
+.k span { font-size:7.6pt; color:#555; display:block; margin-top:4px }
+.card { border:1px solid #d8dde4; border-left:3px solid #47809E; border-radius:3px;
+         padding:9px 11px; margin-bottom:8px; page-break-inside:avoid }
+.ct { font-weight:700; font-size:10pt; margin-bottom:5px }
+.rk { color:#47809E }
+.lab { display:inline-block; background:#eef1f5; color:#47809E; font-size:7pt; font-weight:700;
+        letter-spacing:.6px; padding:2px 6px; border-radius:2px; margin-right:6px; vertical-align:1px }
+.chips { margin-bottom:6px }
+.chip { display:inline-block; font-size:7.3pt; padding:2px 7px; border-radius:9px;
+         background:#eef1f5; color:#33414f; margin:0 4px 3px 0 }
+.chip.acc { background:#47809E; color:#fff }
+.chip.sec { background:#75905A; color:#fff }
+.chip.warn { background:#8a6d1f; color:#fff }
+.chip.grey { background:#5b6570; color:#fff }
+.ctx { font-size:9pt; color:#22282f }
+.q { font-style:italic; color:#33414f; border-left:2px solid #75905A; padding-left:8px;
+      margin:6px 0 0; font-size:8.9pt }
+.ft { font-size:7.6pt; color:#6b7480; margin-top:7px }
+.ft a { color:#47809E; text-decoration:none }
+.nc { border:1px solid #e0d9c2; background:#fdfbf4; border-left:3px solid #8a6d1f;
+       border-radius:3px; padding:8px 11px; margin-bottom:7px; page-break-inside:avoid }
+.nc b { font-size:9.4pt }
+.res { font-size:8.4pt; color:#7a6318; margin-top:4px; font-weight:600 }
+.tr { border-left:3px solid #75905A; padding:5px 0 5px 9px; margin-bottom:7px; page-break-inside:avoid }
+ul.bugs { margin:4px 0 0; padding-left:16px }
+ul.bugs li { font-size:8.8pt; margin-bottom:4px }
+.mut { color:#6b7480; font-size:7.6pt }
+.foot { margin-top:16px; padding-top:7px; border-top:1px solid #d8dde4;
+         font-size:7.6pt; color:#6b7480 }
+
+/* --- brand type: serif headlines, sans body, mono stamps (all with local fallbacks) --- */
+h1,h2,h3,.brand,.org,.mast .left .org,.mast .right .wk,.kpi .v,.tile .v,.n{
+  font-family:"Playfair Display",Georgia,"Times New Roman",serif !important; letter-spacing:-.2px; }
+.badge,.stamp,th,.foot,.kpi .l,.tile .k,.l,footer{
+  font-family:"Space Mono",ui-monospace,Menlo,Consolas,monospace !important; }
+body{ font-family:Inter,-apple-system,"Helvetica Neue",Helvetica,Arial,sans-serif; color:#23252B; }
+</style></head><body><div class="page">
+
+<div class="hdr">
+  <div><div class="co">Northwind Robotics · Product Discovery</div>
+       <div class="badge">CALL FEEDBACK BRIEFING</div></div>
+  <div class="date"><b>2 August 2026</b><br>calls of 2–5 March 2026</div>
+</div>
+
+<div class="kpis">
+<div class="k"><b>5</b><span>calls reviewed<br>2 prospect · 1 implementation · 2 customer</span></div>
+<div class="k"><b>3</b><span>new-feature signals</span></div>
+<div class="k"><b>7</b><span>enhancement signals<br>6 gap · 1 amplify</span></div>
+<div class="k"><b>7</b><span>roadmap validations</span></div>
+</div>
+
+<h2>New things requested</h2>
+<div class="card">
+  <div class="ct"><span class="rk">#4</span> Alerts delivered into the chat tool people use on shift</div>
+  <div class="chips"><span class="chip">Customer</span><span class="chip warn">Unclear — needs Alex Kim</span><span class="chip">Lumen Devices: 2</span><span class="chip acc">priority 2</span></div>
+  <div class="ctx">Alerts that arrive by email are not seen, because nobody on the floor reads email during a shift. Alerts need to land in the chat tool the shift already has open.</div>
+  <div class="q">Lumen Devices: &quot;I want them in Teams, not by email. Nobody here reads email during the shift.&quot;</div>
+  <div class="ft">Marc Olsen &nbsp;·&nbsp; <a href="https://example.com/calls/1004">call 1004</a></div>
+</div><div class="card">
+  <div class="ct"><span class="rk">#9</span> Flag numbers that look implausible</div>
+  <div class="chips"><span class="chip">Customer</span><span class="chip grey">Not planned</span><span class="chip">Acme Foods: 2</span><span class="chip acc">priority 2</span></div>
+  <div class="ctx">When a reading is wrong, nothing says so, and people act on it for a full day before anyone notices. Users want obviously implausible values flagged automatically so trust in the data survives a bad reading.</div>
+  <div class="q">Acme Foods: &quot;A wrong number I trust is worse than no number.&quot;</div>
+  <div class="ft">Sam Whitfield &nbsp;·&nbsp; <a href="https://example.com/calls/1005">call 1005</a></div>
+</div><div class="card">
+  <div class="ct"><span class="rk">#10</span> In-product screen showing what personal data is stored</div>
+  <div class="chips"><span class="chip">Implementation</span><span class="chip grey">Not planned</span><span class="chip">Halden Pumps: 2</span><span class="chip acc">priority 2</span></div>
+  <div class="ctx">Employee representatives will not sign off on a policy document; they want to be shown, live in the product, exactly what is recorded about an individual operator. Without it the rollout cannot start.</div>
+  <div class="q">Halden Pumps: &quot;This is the condition the whole rollout hangs on. Everything else we can work around.&quot;</div>
+  <div class="ft">Priya Nair &nbsp;·&nbsp; <a href="https://example.com/calls/1003">call 1003</a></div>
+</div>
+
+<h2>Feedback on what we ship</h2>
+<div class="card">
+  <div class="ct"><span class="lab">GAP</span><span class="rk">#3</span> Let customers edit the downtime reason-code list</div>
+  <div class="chips"><span class="chip">Prospect, Customer</span><span class="chip grey">Not planned</span><span class="chip">Acme Foods: 2</span><span class="chip acc">priority 4</span></div>
+  <div class="ctx">The list of downtime reason codes is fixed and can only be changed by support, so it drifts out of date and operators dump unmatched stops into &#x27;other&#x27;. Customers want to add, retire and group reasons themselves so downtime analysis stays usable.</div>
+  <div class="q">Acme Foods: &quot;My CI lead still cannot edit the stop reason list. She has asked me three times.&quot;</div>
+  <div class="ft">Dana Ruiz · Sam Whitfield &nbsp;·&nbsp; <a href="https://example.com/calls/1001">call 1001</a> <a href="https://example.com/calls/1005">call 1005</a></div>
+</div><div class="card">
+  <div class="ct"><span class="lab">GAP</span><span class="rk">#8</span> Create and remove users in bulk</div>
+  <div class="chips"><span class="chip">Implementation</span><span class="chip warn">Unclear — needs Alex Kim</span><span class="chip">Halden Pumps: 2</span><span class="chip acc">priority 2</span></div>
+  <div class="ctx">Accounts can only be created one at a time in the admin panel, which does not scale past a couple of lines and produces typos. Admins want bulk import, or accounts that follow the company directory as people move between lines.</div>
+  <div class="q">Halden Pumps: &quot;You are asking me to create fifty-two users by hand. That is not sustainable at seven lines.&quot;</div>
+  <div class="ft">Priya Nair &nbsp;·&nbsp; <a href="https://example.com/calls/1003">call 1003</a></div>
+</div><div class="card">
+  <div class="ct"><span class="lab">GAP</span><span class="rk">#12</span> Scheduled data feed into the customer&#x27;s own warehouse</div>
+  <div class="chips"><span class="chip">Prospect</span><span class="chip grey">Deferred (Public API)</span><span class="chip">Vertex Motors: 2</span><span class="chip acc">priority 2</span></div>
+  <div class="ctx">Getting the numbers out means a person clicking download, so the data cannot live inside the customer&#x27;s own reporting stack. They want an endpoint their systems can pull from on a schedule.</div>
+  <div class="q">Vertex Motors: &quot;We want the raw numbers in our own warehouse. Not a CSV someone downloads. An endpoint we can pull from every night.&quot;</div>
+  <div class="ft">Tom Becker &nbsp;·&nbsp; <a href="https://example.com/calls/1002">call 1002</a></div>
+</div><div class="card">
+  <div class="ct"><span class="lab">GAP</span><span class="rk">#13</span> Separate planned maintenance from unplanned downtime</div>
+  <div class="chips"><span class="chip">Customer</span><span class="chip acc">On roadmap — discovery (Maintenance-system integration)</span><span class="chip">Lumen Devices: 2</span><span class="chip acc">priority 2</span></div>
+  <div class="ctx">Planned maintenance is counted as availability loss, so the availability figure looks wrong to plant leadership and the dashboard cannot be shown in management meetings. Planned stops need to be excluded or reported separately.</div>
+  <div class="q">Lumen Devices: &quot;I need that. As long as the number looks wrong, I can&#x27;t show it in the factory meeting.&quot;</div>
+  <div class="ft">Marc Olsen &nbsp;·&nbsp; <a href="https://example.com/calls/1004">call 1004</a></div>
+</div><div class="card">
+  <div class="ct"><span class="lab">GAP</span><span class="rk">#17</span> Choose when the weekly report is generated</div>
+  <div class="chips"><span class="chip">Implementation</span><span class="chip grey">Not planned</span><span class="chip">Halden Pumps: 1</span><span class="chip acc">priority 1</span></div>
+  <div class="ctx">The weekly report runs on a fixed schedule that does not match every plant&#x27;s week, so it consistently misses the shift that opens the week. Customers want to set the day and time themselves.</div>
+  <div class="q">Halden Pumps: &quot;Our week starts Sunday night with the late shift, so the report always misses it.&quot;</div>
+  <div class="ft">Priya Nair &nbsp;·&nbsp; <a href="https://example.com/calls/1003">call 1003</a></div>
+</div><div class="card">
+  <div class="ct"><span class="lab">GAP</span><span class="rk">#19</span> Weekly report stays legible when printed large</div>
+  <div class="chips"><span class="chip">Customer</span><span class="chip grey">Not planned</span><span class="chip">Lumen Devices: 1</span><span class="chip acc">priority 1</span></div>
+  <div class="ctx">The weekly PDF is printed and pinned to a notice board, but the layout does not scale up, so the type is too small to read from standing distance.</div>
+  <div class="q">Lumen Devices: &quot;The font is too small when printed on A3. Not a big deal.&quot;</div>
+  <div class="ft">Marc Olsen &nbsp;·&nbsp; <a href="https://example.com/calls/1004">call 1004</a></div>
+</div>
+<div class="card">
+  <div class="ct"><span class="lab">AMPLIFY</span><span class="rk">#6</span> Compare a line against the same day last week</div>
+  <div class="chips"><span class="chip">Prospect</span><span class="chip sec">Shipped (Line dashboard)</span><span class="chip">Vertex Motors: 2</span><span class="chip acc">priority 2</span></div>
+  <div class="ctx">The like-for-like day comparison already in the dashboard replaces a spreadsheet the customer had been maintaining by hand for a year — worth leading with, because it removes a recurring weekly task rather than adding a new screen.</div>
+  <div class="q">Vertex Motors: &quot;That is the argument I have been trying to make with a spreadsheet for a year.&quot;</div>
+  <div class="ft">Tom Becker &nbsp;·&nbsp; <a href="https://example.com/calls/1002">call 1002</a></div>
+</div>
+<div style="page-break-inside:avoid">
+<b style="font-size:9.4pt">Bugs spotted</b>
+<ul class="bugs"><li><b>Bug — output double-counted after a line restart</b> — After a line restart the counter reported roughly double the real output for a full day. Reported as fixed on the call; logged because recurrence would matter. <span class="mut">(Acme Foods: 2 · Sam Whitfield &nbsp;·&nbsp; <a href="https://example.com/calls/1005">call 1005</a>)</span></li><li><b>Bug — line filter resets when the date range changes</b> — Filtering the dashboard to one line and then changing the date range silently returns the view to all lines, so a user can read the wrong figures without noticing. <span class="mut">(Halden Pumps: 1 · Priya Nair &nbsp;·&nbsp; <a href="https://example.com/calls/1003">call 1003</a>)</span></li></ul>
+</div>
+
+<h2>Roadmap validation</h2>
+<div class="card">
+  <div class="ct"><span class="rk">#1</span> Read-only view of line status on a phone</div>
+  <div class="chips"><span class="chip">Prospect, Customer</span><span class="chip warn">Unclear — needs Alex Kim (Mobile layout Q3 is read-only)</span><span class="chip">Acme Foods: 2, Vertex Motors: 2</span><span class="chip acc">priority 8</span></div>
+  <div class="ctx">Supervisors who spend the shift on the floor have no workstation, so they never see line status while they could still act on it. They want to check the line from the phone already in their pocket; read-only is enough.</div>
+  <div class="q">Vertex Motors: &quot;Half my supervisors do not sit at a desk. They have a phone in their pocket and that is it.&quot;</div><div class="q">Acme Foods: &quot;We are there on line three. Not on line one, because line one&#x27;s supervisor does not sit at a computer.&quot;</div>
+  <div class="ft">Tom Becker · Sam Whitfield &nbsp;·&nbsp; <a href="https://example.com/calls/1002">call 1002</a> <a href="https://example.com/calls/1005">call 1005</a></div>
+</div><div class="card">
+  <div class="ct"><span class="rk">#2</span> Surface recurring stop patterns automatically</div>
+  <div class="chips"><span class="chip">Prospect, Customer</span><span class="chip acc">On roadmap — discovery (Root-cause suggestions)</span><span class="chip">Acme Foods: 1, Vertex Motors: 1</span><span class="chip acc">priority 4</span></div>
+  <div class="ctx">Repeating stops are only noticed when somebody happens to scan several days of the log by eye. Users want the system to point out the pattern itself — same station, same shift, three days running — rather than only categorising stops.</div>
+  <div class="q">Vertex Motors: &quot;If the system spotted that and said it out loud, I would trust it more than any chart.&quot;</div><div class="q">Acme Foods: &quot;It was seeing the same stop reason three days running. Nobody had noticed.&quot;</div>
+  <div class="ft">Tom Becker · Sam Whitfield &nbsp;·&nbsp; <a href="https://example.com/calls/1002">call 1002</a> <a href="https://example.com/calls/1005">call 1005</a></div>
+</div><div class="card">
+  <div class="ct"><span class="rk">#7</span> Compare the same line across shifts and crews</div>
+  <div class="chips"><span class="chip">Customer</span><span class="chip acc">On roadmap — committed (Shift comparison view, Q2)</span><span class="chip">Lumen Devices: 2</span><span class="chip acc">priority 2</span></div>
+  <div class="ctx">Differences between crews on the same line are invisible today, and a customer has already promised their own management a shift comparison by April.</div>
+  <div class="q">Lumen Devices: &quot;I told the plant manager we&#x27;d have them in April.&quot;</div>
+  <div class="ft">Marc Olsen &nbsp;·&nbsp; <a href="https://example.com/calls/1004">call 1004</a></div>
+</div><div class="card">
+  <div class="ct"><span class="rk">#11</span> One view across all plants</div>
+  <div class="chips"><span class="chip">Prospect, Customer</span><span class="chip acc">On roadmap — discovery (Multi-site rollup)</span><span class="chip">Acme Foods: 1</span><span class="chip acc">priority 2</span></div>
+  <div class="ctx">Data stops at the plant boundary, so a regional manager has to open one account per site. They want every plant on a single screen.</div>
+  <div class="q">Acme Foods: &quot;He wants all four plants on one screen.&quot;</div>
+  <div class="ft">Dana Ruiz · Sam Whitfield &nbsp;·&nbsp; <a href="https://example.com/calls/1001">call 1001</a> <a href="https://example.com/calls/1005">call 1005</a></div>
+</div><div class="card">
+  <div class="ct"><span class="rk">#14</span> Single sign-on with the corporate identity provider</div>
+  <div class="chips"><span class="chip">Prospect</span><span class="chip acc">On roadmap — committed (Single sign-on / SAML, Q3)</span><span class="chip">Vertex Motors: 2</span><span class="chip acc">priority 2</span></div>
+  <div class="ctx">Enterprise IT will not approve a tool that keeps its own local accounts. SSO through the company identity provider is a security-review gate, not a preference.</div>
+  <div class="q">Vertex Motors: &quot;I am not saying no. I am saying it is a gate, not a wish.&quot;</div>
+  <div class="ft">Tom Becker &nbsp;·&nbsp; <a href="https://example.com/calls/1002">call 1002</a></div>
+</div><div class="card">
+  <div class="ct"><span class="rk">#15</span> Tell me when the line drifts, during the shift</div>
+  <div class="chips"><span class="chip">Prospect</span><span class="chip acc">On roadmap — committed (Real-time alerts, Q2)</span><span class="chip">Acme Foods: 2</span><span class="chip acc">priority 2</span></div>
+  <div class="ctx">Shortfalls are discovered hours later from a manual count or the next morning&#x27;s report, when nothing can be done about them. Users want to be told while the shift is still running.</div>
+  <div class="q">Acme Foods: &quot;That is the difference between us running a pilot and us not running a pilot.&quot;</div>
+  <div class="ft">Dana Ruiz &nbsp;·&nbsp; <a href="https://example.com/calls/1001">call 1001</a></div>
+</div><div class="card">
+  <div class="ct"><span class="rk">#18</span> Read planned stops from the maintenance system</div>
+  <div class="chips"><span class="chip">Customer</span><span class="chip acc">On roadmap — discovery (Maintenance-system integration)</span><span class="chip">Lumen Devices: 1</span><span class="chip acc">priority 1</span></div>
+  <div class="ctx">Tagging which stops were planned is manual, even though the work orders already exist in the maintenance system. Reading them would classify those stops automatically.</div>
+  <div class="q">Lumen Devices: &quot;If you could read that, the assignment would be automatic.&quot;</div>
+  <div class="ft">Marc Olsen &nbsp;·&nbsp; <a href="https://example.com/calls/1004">call 1004</a></div>
+</div>
+
+<h2>Needs your call</h2>
+<div class="nc"><b>Alerts delivered into the chat tool people use on shift</b><div class="ctx">Real-time alerts is committed for Q2 but the scope does not say which delivery channels are included — so this is either roadmap validation or separate, unplanned work.</div><div class="res">→ Confirm whether chat delivery is inside the Q2 alerts scope.</div></div><div class="nc"><b>Create and remove users in bulk</b><div class="ctx">Unclear whether the committed Q3 SSO / SAML item also brings directory-driven provisioning, or whether bulk import is separate work Halden needs before rollout.</div><div class="res">→ Confirm whether SCIM / directory sync is in the Q3 SSO scope.</div></div><div class="nc"><b>Read-only view of line status on a phone (rank 1)</b><div class="ctx">The committed Q3 Mobile layout is read-only, but Acme&#x27;s pilot success criterion is supervisors acting during the shift — read-only may not satisfy the criterion this row is ranked on.</div><div class="res">→ Confirm whether the Q3 Mobile layout includes taking action, or viewing only.</div></div><div class="nc"><b>Planned maintenance — two rows kept separate</b><div class="ctx">&quot;Separate planned maintenance from unplanned downtime&quot; and &quot;Read planned stops from the maintenance system&quot; both map to the Maintenance-system integration idea and may be one need.</div><div class="res">→ Decide whether excluding planned maintenance can ship without the integration; if not, merge (combined priority 3).</div></div><div class="res">→ Confirm which run owns this workbook and settle the three differing scores.</div></div>
+
+<h2>Cross-call themes</h2>
+<div class="tr"><div class="ctx">Downtime data is only as trustworthy as the reason list behind it — stale codes, &#x27;other&#x27; as a catch-all, and planned maintenance counted as loss all point at the same root.</div><div class="ft">Acme Foods discovery (1001), Acme Foods pilot review (1005), Lumen Devices weekly (1004) &nbsp;·&nbsp; Acme Foods, Lumen Devices</div></div><div class="tr"><div class="ctx">The people who should act on the data do not sit at a desk: phone access and alerts in the shift&#x27;s chat tool decide whether anything actually changes on the floor.</div><div class="ft">Vertex Motors demo (1002), Acme Foods pilot review (1005), Lumen Devices weekly (1004) &nbsp;·&nbsp; Vertex Motors, Acme Foods, Lumen Devices</div></div><div class="tr"><div class="ctx">Customers want the system to tell them something, not just show them charts — pattern detection, drift alerts and flagging implausible numbers were all asked for unprompted.</div><div class="ft">Acme Foods discovery (1001), Vertex Motors demo (1002), Acme Foods pilot review (1005) &nbsp;·&nbsp; Acme Foods, Vertex Motors</div></div><div class="tr"><div class="ctx">IT and employee representatives, not the buyer, hold the gate: SSO, bulk provisioning and a data-transparency screen were each framed as conditions of deployment.</div><div class="ft">Vertex Motors demo (1002), Halden Pumps rollout planning (1003) &nbsp;·&nbsp; Vertex Motors, Halden Pumps</div></div>
+
+<div class="foot">
+5 calls processed (2 prospect · 1 implementation · 2 customer) · listening time saved 2 h 44 min <i>(the real length of these five calls, summed — average call 33 min; every call measured, nothing assumed)</i> · Rank movements: first run against an empty matrix, so every row is new — #1 read-only phone access (priority 8), #2 surface recurring stop patterns (4), #3 editable downtime reason codes (4).
+</div>
+
+</div></body></html>

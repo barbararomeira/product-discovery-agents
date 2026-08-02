@@ -1,6 +1,7 @@
 ---
 date: 2026-03-03
 title: Vertex Motors — demo and technical review
+duration_min: 41
 ran_by: Tom Becker
 participants:
   - tom.becker@northwind.example (Northwind Robotics)

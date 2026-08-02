@@ -9,55 +9,77 @@
 <title>Product Discovery — how it works</title>
 <style>
   :root {
-    --accent: #3D5A80;          /* branding.accent */
-    --accent-2: #4C8577;        /* branding.accent_secondary */
-    --ink: #111;
-    --muted: #666;
-    --rule: #e2e2e2;
+    --accent:    #47809E;   /* branding.accent           — headings, rules, priority numbers */
+    --accent-2:  #75905A;   /* branding.accent_secondary — shipped features, positive chips  */
+    --attention: #C4718D;   /* risk, bugs, "needs your call"                                 */
+    --ink:       #23252B;   /* body text                                                     */
+    --muted:     #6A6E75;
+    --rule:      #E7E4DF;
+    --surface:   #F3F1EE;
+    --page:      #FBFAF8;
+    /* Serif headlines, sans body, mono for stamps. All fall back to fonts every
+       machine already has, so a PDF renders identically without downloads. */
+    --serif: "Playfair Display", Georgia, "Times New Roman", serif;
+    --sans:  Inter, -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --mono:  "Space Mono", ui-monospace, Menlo, Consolas, monospace;
   }
   @page { size: A4; margin: 0; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: -apple-system, "Helvetica Neue", Arial, sans-serif; color: var(--ink);
-         background: #fff; font-size: 10pt; line-height: 1.45; }
-  .page { width: 210mm; height: 296mm; overflow: hidden; padding: 12mm 16mm;
-          page-break-after: always; }
+  body { font-family: var(--sans); color: var(--ink); background: #fff;
+         font-size: 10pt; line-height: 1.45; }
+  /* Pages must be allowed to GROW. A fixed height silently overflows onto the
+     next page and prints one section on top of another. */
+  .page { width: 210mm; padding: 12mm 16mm; page-break-after: always; }
   .page:last-child { page-break-after: auto; }
   header { display: flex; justify-content: space-between; align-items: baseline;
-           border-bottom: 3px solid var(--accent); padding-bottom: 7px; margin-bottom: 14px; }
-  .brand { font-weight: 800; font-size: 14pt; }
+           border-bottom: 2.5pt solid var(--accent); padding-bottom: 7px; margin-bottom: 14px; }
+  .brand { font-family: var(--serif); font-weight: 700; font-size: 15pt; letter-spacing: -0.2px; }
   .brand span { color: var(--accent); }
-  .badge { font-size: 8pt; font-weight: 700; letter-spacing: 1.2px; color: var(--accent);
-           text-transform: uppercase; }
-  h1 { font-size: 18pt; letter-spacing: -0.4px; margin-bottom: 4px; }
+  .badge { font-family: var(--mono); font-size: 7.6pt; font-weight: 700; letter-spacing: 1.2px;
+           color: var(--accent); text-transform: uppercase; }
+  h1 { font-family: var(--serif); font-size: 21pt; letter-spacing: -0.4px; margin-bottom: 4px; }
   .subtitle { color: var(--muted); margin-bottom: 16px; }
-  h2 { font-size: 11.5pt; margin: 13px 0 6px; padding-left: 8px; border-left: 4px solid var(--accent); }
+  h2 { font-family: var(--serif); font-size: 12.5pt; margin: 14px 0 6px; padding-left: 8px;
+       border-left: 4px solid var(--accent); break-after: avoid; }
   h2.alt { border-left-color: var(--accent-2); }
   p { margin-bottom: 6px; }
   ul { margin: 0 0 8px 16px; } li { margin-bottom: 3px; }
   table { border-collapse: collapse; width: 100%; margin: 5px 0 8px; font-size: 9.3pt; }
-  th { background: var(--ink); color: #fff; text-align: left; padding: 5px 8px; font-size: 8.6pt; }
+  th { background: var(--ink); color: #fff; text-align: left; padding: 5px 8px;
+       font-family: var(--mono); font-size: 7.8pt; letter-spacing: .4px; text-transform: uppercase; }
   td { border: 1px solid var(--rule); padding: 5px 8px; vertical-align: top; }
+  tbody tr:nth-child(even) td { background: var(--page); }
   /* Cards must never split across a page. */
   .card { border: 1px solid var(--rule); border-left: 4px solid var(--accent); border-radius: 6px;
           padding: 8px 10px; margin-bottom: 7px; break-inside: avoid; }
   .card.shipped { border-left-color: var(--accent-2); }
+  .card.risk { border-left-color: var(--attention); }
   .card .title { font-weight: 700; margin-bottom: 3px; }
-  .card .quote { font-style: italic; color: #333; margin: 4px 0; }
-  .card .foot { font-size: 8.4pt; color: var(--muted); }
+  .card .quote { font-style: italic; color: #333; margin: 4px 0;
+                 border-left: 2px solid var(--rule); padding-left: 8px; }
+  .card .foot { font-family: var(--mono); font-size: 7.6pt; color: var(--muted); }
   .chip { display: inline-block; border-radius: 10px; padding: 0 8px; font-size: 8.2pt;
           font-weight: 700; color: #fff; margin-right: 4px; }
   .c-prospect { background: var(--accent); }
   .c-customer { background: var(--accent-2); }
-  .c-implementation { background: #777; }
-  .c-bug { background: #b3261e; }
+  .c-implementation { background: var(--muted); }
+  .c-bug { background: var(--attention); }
   .kpis { display: flex; gap: 8px; margin-bottom: 12px; }
-  .kpi { flex: 1; border: 1px solid var(--rule); border-radius: 6px; padding: 8px; text-align: center; }
-  .kpi .n { font-size: 20pt; font-weight: 800; color: var(--accent); line-height: 1; }
-  .kpi .l { font-size: 8pt; color: var(--muted); text-transform: uppercase; letter-spacing: .6px; }
-  .note { border: 1.5px dashed var(--accent); border-radius: 8px; padding: 9px 12px;
-          margin: 10px 0; font-size: 9.3pt; break-inside: avoid; }
+  .kpi { flex: 1; border: 1px solid var(--rule); border-top: 3px solid var(--accent);
+         border-radius: 6px; padding: 8px; text-align: center; break-inside: avoid; }
+  .kpi .n { font-family: var(--serif); font-size: 22pt; font-weight: 700;
+            color: var(--accent); line-height: 1; }
+  .kpi .l { font-family: var(--mono); font-size: 7.4pt; color: var(--muted);
+            text-transform: uppercase; letter-spacing: .6px; margin-top: 3px; }
+  .note { background: var(--surface); border-left: 3px solid var(--accent);
+          border-radius: 4px; padding: 9px 12px; margin: 10px 0; font-size: 9.3pt;
+          break-inside: avoid; }
+  .note.attention { border-left-color: var(--attention); }
+  /* The tricolour rule — blue, pink, matcha — used sparingly, under the masthead. */
+  .tricolour { height: 3px; margin: 0 0 12px;
+    background: linear-gradient(90deg, #93B8CA 0 33.3%, #EEBCCA 33.3% 66.6%, #B2C49C 66.6% 100%); }
   footer { margin-top: 14px; padding-top: 8px; border-top: 1px solid var(--rule);
-           color: #888; font-size: 8.4pt; }
+           font-family: var(--mono); color: var(--muted); font-size: 7.6pt; }
 </style>
 </head>
 <body>
@@ -66,16 +88,17 @@
     <div class="brand">Your Company<span>.</span> Product Discovery</div>
     <div class="badge">Reference</div>
   </header>
+  <div class="tricolour"></div>
 
   <h1>The print stylesheet</h1>
-  <p class="subtitle">This file is the visual reference the agents follow. Swap the two colours at the top to make every report yours.</p>
+  <p class="subtitle">This file is the visual reference the agents follow. Change the three colours at the top and every report becomes yours.</p>
 
   <h2>Building blocks</h2>
   <div class="kpis">
     <div class="kpi"><div class="n">7</div><div class="l">calls</div></div>
     <div class="kpi"><div class="n">4</div><div class="l">new requests</div></div>
     <div class="kpi"><div class="n">3</div><div class="l">enhancements</div></div>
-    <div class="kpi"><div class="n">2</div><div class="l">validations</div></div>
+    <div class="kpi"><div class="n">2h</div><div class="l">listening saved</div></div>
   </div>
 
   <div class="card">
@@ -92,14 +115,23 @@
     <p>Same shape, secondary colour, so praise and gaps read differently from new requests at a glance.</p>
   </div>
 
-  <div class="note"><b>Rules that matter:</b> A4 with zero page margin and padding on the page container · cards use <code>break-inside: avoid</code> so nothing splits across pages · content must never exceed the page height, because overflow is hidden and silently clips.</div>
+  <div class="card risk">
+    <div class="title">Something that needs a decision</div>
+    <span class="chip c-bug">Bug</span>
+    <p>The third colour is reserved for attention: bugs, retention risk, and anything waiting on you.</p>
+  </div>
 
-  <h2 class="alt">Colours</h2>
+  <div class="note"><b>Rules that matter:</b> A4 with zero page margin and padding on the page container · pages must be allowed to <b>grow</b>, never a fixed height, or a long section prints on top of the next one · cards use <code>break-inside: avoid</code> · headings use <code>break-after: avoid</code> so none is stranded at the foot of a page.</div>
+
+  <h2 class="alt">Colours and type</h2>
   <table>
-    <tr><th>Token</th><th>Where it comes from</th><th>Used for</th></tr>
-    <tr><td><code>--accent</code></td><td><code>branding.accent</code></td><td>header rule, headings, priority numbers, prospect chips</td></tr>
+    <tr><th>Token</th><th>Comes from</th><th>Used for</th></tr>
+    <tr><td><code>--accent</code></td><td><code>branding.accent</code></td><td>rules, headings, priority numbers, prospect chips</td></tr>
     <tr><td><code>--accent-2</code></td><td><code>branding.accent_secondary</code></td><td>shipped-feature cards, customer chips</td></tr>
+    <tr><td><code>--attention</code></td><td>fixed</td><td>bugs, retention risk, open questions</td></tr>
+    <tr><td><code>--serif / --sans / --mono</code></td><td>fixed</td><td>headlines · body · stamps and labels</td></tr>
   </table>
+  <p style="font-size:9pt;color:#6A6E75">Every font falls back to something already installed, so a PDF renders the same on any machine with no downloads.</p>
 
   <footer>Product Discovery · print reference</footer>
 </div>

@@ -5,9 +5,14 @@ Coverage
   Calls processed:        5  (2 prospect · 1 implementation · 2 customer)
   All time:               5 calls
 
-Time
-  Est. review time saved: 1.2 h this all, 1.2 h all time
-  Assumption:             15 min to review one call by hand (set in config; an estimate, not a measurement)
+Time you did not spend listening
+  This all:      2.7 h  (164 min of talk time, average call 33 min)
+  All time:               2.7 h
+  Basis:                  every call measured
+
+  At the current rate (5.0 calls/week, 2.7 h/week), by 31 Dec
+  2026 this will be 61 h — 58 h more
+  from the 22 weeks remaining.
 
 Backlog
   Signals tracked:        20

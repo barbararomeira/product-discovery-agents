@@ -1,6 +1,7 @@
 ---
 date: 2026-03-02
 title: Acme Foods — discovery call
+duration_min: 34
 ran_by: Dana Ruiz
 participants:
   - dana.ruiz@northwind.example (Northwind Robotics)

@@ -21,7 +21,7 @@ import sys
 
 from openpyxl import load_workbook
 
-DEFAULT_MINUTES_PER_CALL = 15
+DEFAULT_MINUTES_PER_CALL = 15  # fallback ONLY for calls whose real length is unknown
 
 
 def read_config(path):
@@ -117,6 +117,24 @@ def compute(matrix_path, minutes_per_call, scope="week", today=None):
     in_scope = [r for r in ledger if (d := as_date(r[0])) and d >= start]
     by_type = collections.Counter(str(r[5] or "Unclassified") for r in in_scope)
 
+    # Time saved is measured, not assumed: it is the real length of the calls the
+    # system read for you. Duration lives in the ledger (column G). Only calls whose
+    # length was never recorded fall back to the configured estimate, and the count
+    # of those is reported so the number stays auditable.
+    def minutes(row):
+        raw = row[6] if len(row) > 6 else None
+        try:
+            return float(raw), True
+        except (TypeError, ValueError):
+            return float(minutes_per_call), False
+
+    scoped_minutes = [minutes(r) for r in in_scope]
+    all_minutes = [minutes(r) for r in ledger]
+    measured_scope = sum(1 for _, m in scoped_minutes if m)
+    measured_all = sum(1 for _, m in all_minutes if m)
+    mins_scope = sum(v for v, _ in scoped_minutes)
+    mins_all = sum(v for v, _ in all_minutes)
+
     ranked = [r for r in signals if not str(r[4] or "").startswith("Out of scope")]
     all_accounts = set()
     with_consequence = 0
@@ -139,7 +157,11 @@ def compute(matrix_path, minutes_per_call, scope="week", today=None):
         "prospect": by_type.get("Prospect", 0),
         "implementation": by_type.get("Implementation", 0),
         "customer": by_type.get("Customer", 0),
-        "hours_saved": round(calls * minutes_per_call / 60, 1),
+        "hours_saved": round(mins_scope / 60, 1),
+        "minutes_total": round(mins_scope),
+        "avg_call_minutes": round(mins_scope / calls) if calls else 0,
+        "measured": measured_scope,
+        "estimated": calls - measured_scope,
         "minutes_per_call": minutes_per_call,
         "signals_new": new_this_scope,
         "signals_merged": max(touched - new_this_scope, 0),
@@ -148,7 +170,15 @@ def compute(matrix_path, minutes_per_call, scope="week", today=None):
         "pct_consequence": pct(with_consequence, len(ranked)),
         "pct_no_roadmap_home": pct(no_home, len(ranked)),
         "calls_all_time": len(ledger),
-        "hours_saved_all_time": round(len(ledger) * minutes_per_call / 60, 1),
+        "hours_saved_all_time": round(mins_all / 60, 1),
+        "measured_all": measured_all,
+        # Rate is measured over the period the calls actually span, not since the
+        # first call — otherwise a backfill of one busy week looks like a slow year.
+        "weeks_elapsed": max(
+            ((max(_dates) - min(_dates)).days + 1) / 7 if (_dates := [d for r in ledger if (d := as_date(r[0]))]) else 1,
+            1),
+        "weeks_to_year_end": max((dt.date(today.year, 12, 31) - today).days / 7, 0),
+        "today": today.isoformat(),
         "top": sorted(
             ((str(r[1]), r[7] or 0, str(r[3] or "")) for r in ranked),
             key=lambda x: -(x[1] if isinstance(x[1], (int, float)) else 0))[:3],
@@ -158,15 +188,26 @@ def compute(matrix_path, minutes_per_call, scope="week", today=None):
 def render(m, company):
     top = "\n".join(f"  {i}. {name} — priority {p} ({aud})"
                     for i, (name, p, aud) in enumerate(m["top"], 1))
+    per_week = m["hours_saved_all_time"] / m["weeks_elapsed"] if m["weeks_elapsed"] else 0
+    calls_per_week = m["calls_all_time"] / m["weeks_elapsed"] if m["weeks_elapsed"] else 0
+    to_year_end = per_week * m["weeks_to_year_end"]
+    caveat = ("every call measured" if not m["estimated"]
+              else f"{m['measured']} measured, {m['estimated']} estimated at {m['minutes_per_call']} min "
+                   f"(length not recorded)")
     return f"""{company} · product discovery — by the numbers ({m['scope']}, since {m['since']})
 
 Coverage
   Calls processed:        {m['calls']}  ({m['prospect']} prospect · {m['implementation']} implementation · {m['customer']} customer)
   All time:               {m['calls_all_time']} calls
 
-Time
-  Est. review time saved: {m['hours_saved']} h this {m['scope']}, {m['hours_saved_all_time']} h all time
-  Assumption:             {m['minutes_per_call']} min to review one call by hand (set in config; an estimate, not a measurement)
+Time you did not spend listening
+  This {m['scope']}:      {m['hours_saved']} h  ({m['minutes_total']} min of talk time, average call {m['avg_call_minutes']} min)
+  All time:               {m['hours_saved_all_time']} h
+  Basis:                  {caveat}
+
+  At the current rate ({calls_per_week:.1f} calls/week, {per_week:.1f} h/week), by 31 Dec
+  {m['today'][:4]} this will be {to_year_end + m['hours_saved_all_time']:.0f} h — {to_year_end:.0f} h more
+  from the {m['weeks_to_year_end']:.0f} weeks remaining.
 
 Backlog
   Signals tracked:        {m['signals_tracked']}

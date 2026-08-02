@@ -1,6 +1,7 @@
 ---
 date: 2026-03-04
 title: Lumen Devices — wöchentlicher Jour Fixe (live account)
+duration_min: 37
 ran_by: Marc Olsen
 participants:
   - marc.olsen@northwind.example (Northwind Robotics)

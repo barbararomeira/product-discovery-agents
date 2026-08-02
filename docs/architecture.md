@@ -52,10 +52,10 @@ flowchart TB
     PM -->|"questions to ask"| T
 
     classDef h fill:#eef3f8,stroke:#94a9bd,color:#33475b,font-size:11px;
-    style DAILY fill:#f7f9fb,stroke:#3D5A80
-    style WEEKLY fill:#f5faf8,stroke:#4C8577
+    style DAILY fill:#f7f9fb,stroke:#47809E
+    style WEEKLY fill:#f5faf8,stroke:#75905A
     style MX fill:#fff8e8,stroke:#b98b2e
-    style PM fill:#eef3f8,stroke:#3D5A80
+    style PM fill:#eef3f8,stroke:#47809E
 ```
 
 The loop closes through you, and that is the point: the system prepares decisions, it does not make
@@ -130,9 +130,9 @@ flowchart TB
     J -->|"confident"| G["One row, evidence accumulates"]:::good
     J -->|"close call"| E["Keep separate + ask the PM"]:::ok
 
-    classDef bad fill:#fdeceb,stroke:#b3261e,color:#7a1b14;
-    classDef good fill:#eef7f2,stroke:#4C8577,color:#2b5245;
-    classDef ok fill:#eef3f8,stroke:#3D5A80,color:#28405c;
+    classDef bad fill:#fdeceb,stroke:#C4718D,color:#7a1b14;
+    classDef good fill:#eef7f2,stroke:#75905A,color:#2b5245;
+    classDef ok fill:#eef3f8,stroke:#47809E,color:#28405c;
 ```
 
 That is why the merge stays with the strongest model, never gets delegated to a helper, and prefers

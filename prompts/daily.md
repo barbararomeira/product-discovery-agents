@@ -97,7 +97,7 @@ Edit the matrix with python3 + openpyxl. The filename never changes.
 - Recompute `Priority = (sum of the importances in the Customers cell) × Mentions` for every ranked row, re-sort descending, renumber `Rank`.
 - Rows whose Roadmap status starts with `Out of scope` were closed by a human: keep them, never re-rank them, sort them to the bottom with Rank `—`, and don't feature them in briefings.
 - Append recurring patterns to **Cross-call themes** (dated; themes seen in 2+ calls this run, or reinforcing an existing theme).
-- Append every processed call to **Processed calls** (date, title/customer, who ran it, unique id, processed-on date, call type).
+- Append every processed call to **Processed calls** (date, title/customer, who ran it, unique id, processed-on date, call type, **and the call's real duration in minutes** — from the source's metadata, or the transcript's `duration_min` header, or its last timestamp). Duration is what makes the time-saved figure a measurement rather than a guess; leave it blank only if the length is genuinely unavailable.
 - Update the **Run metrics** sheet via `tools/metrics.py`.
 - Save, then re-open to verify the workbook is intact and row counts are sane. If the file is locked, retry twice, then save as `<name>.RECOVERY.xlsx` and say so in the log. Never silently drop the update.
 

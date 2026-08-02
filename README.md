@@ -103,9 +103,10 @@ Nobody should run an automation for months without knowing whether it earns its 
 writes to a **Run metrics** sheet, surfaced in the digest as *"By the numbers"*:
 
 - **Coverage** — calls processed, split across prospect / implementation / customer conversations.
-- **Time saved** — `calls × minutes_per_call_review`, using *your* assumption from config. The
-  reports always print the assumption next to the number, because it is an estimate, not a
-  measurement.
+- **Listening time saved** — the **real length of the calls it read**, summed from the duration
+  recorded in the ledger. Measured, not assumed. Calls whose length was never captured fall back to
+  a configured estimate, and the reports say how many did. The same numbers give you the projection:
+  at the rate you are actually running, this is what the system will have read by year end.
 - **Backlog health** — signals tracked, new versus merged into existing rows, spread across types.
 - **Evidence quality** — the share of ranked signals where at least one customer attached a real
   consequence. This is the number that tells you the ranking follows actual customer problems and
@@ -120,12 +121,12 @@ python3 tools/metrics.py --scope week
 
 ### What it saved, concretely
 
-From the worked example in this repo — one week, five calls:
+From the worked example in this repo — five calls in one week:
 
 | | |
 |---|---|
 | Calls read | **5** (2 prospect · 1 implementation · 2 customer) |
-| Review time saved | **1 h 15 min** *(5 calls × 15 min — your assumption, printed next to the number)* |
+| **Listening time saved** | **2 h 44 min** — the real length of those calls, summed. Average call **33 min**. Every call measured; nothing assumed. |
 | Signals tracked | **20**, across **4 accounts** |
 | Merged rather than duplicated | **4** second mentions landed on an existing row |
 | Opportunity briefs drafted | **1**, the moment a human answered an open question |
@@ -133,24 +134,24 @@ From the worked example in this repo — one week, five calls:
 | Demand with no roadmap home | **45%** |
 | Your time in | **~15 min/week + 30 min on Friday** |
 
-Time saved scales with how much your team talks to customers. At 15 minutes to watch a call and
-write up what mattered:
+**The conclusion that matters is the projection.** At the rate this example actually ran —
+5 calls a week, 2.7 hours of talk time — the system reads **61 hours** of customer conversation
+by 31 December. That is not an estimate of how long you *might* have spent reviewing calls; it is
+the measured length of calls somebody would otherwise have had to sit through to get the same
+signal, and almost nobody does, which is exactly why the signal is normally lost.
 
-| Calls per week | Hours saved / week | Hours saved / year |
-|---|---|---|
-| 5 | 1.3 | ~65 |
-| 10 | 2.5 | ~130 |
-| 20 | 5.0 | ~260 |
-| 40 | 10.0 | ~520 |
+`tools/metrics.py` computes this from the duration recorded in the ledger for every call, and says
+plainly how many were measured versus estimated. Run it any time:
 
-Two honesty notes, because inflated numbers are how tools like this lose trust. **This is an
-estimate, not a measurement** — it assumes you would otherwise have reviewed those calls yourself,
-which for most teams is exactly the point: nobody does, so the signal is simply lost. And the hours
-are the smaller half of the value. The bigger half is the part with no number: the request you would
-have forgotten, the third account that turns a hunch into a decision, and the promise made on a call
-that nobody wrote down.
+```bash
+python3 tools/metrics.py --scope week
+```
 
----
+Two things the number does not capture, and I would rather say so than inflate it. Reading a call
+properly takes longer than its runtime — you pause, rewind, take notes — so the real saving is
+larger. And the hours are still the smaller half of the value: the bigger half is the request you
+would have forgotten, the third account that turns a hunch into a decision, and the promise made on
+a call that nobody wrote down.
 
 ## How it works
 
@@ -179,10 +180,10 @@ flowchart TB
     PM -->|"your edits are final"| MX
     PM -->|"questions to ask next"| T
 
-    style DAILY fill:#f7f9fb,stroke:#3D5A80
-    style WEEKLY fill:#f5faf8,stroke:#4C8577
+    style DAILY fill:#f7f9fb,stroke:#47809E
+    style WEEKLY fill:#f5faf8,stroke:#75905A
     style MX fill:#fff8e8,stroke:#b98b2e
-    style PM fill:#eef3f8,stroke:#3D5A80
+    style PM fill:#eef3f8,stroke:#47809E
 ```
 
 More diagrams — a step-by-step of a daily run, how scoring works, and why the merge is guarded —

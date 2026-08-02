@@ -59,8 +59,11 @@ output:
 # Report styling. Two colours is all it takes to make these look like yours.
 branding:
   product_name: "Product Discovery"
-  accent: "#3D5A80"         # headers, priority numbers, "new request" chips
-  accent_secondary: "#4C8577"  # positive / shipped-feature chips
+  accent: "#47809E"            # headers, priority numbers, prospect chips
+  accent_secondary: "#75905A"  # shipped-feature cards, customer chips
+  attention: "#C4718D"         # bugs, retention risk, anything waiting on you
+  # Type is set in docs/how-it-works.html: serif headlines, sans body, mono stamps,
+  # each falling back to fonts every machine already has.
   # macOS path shown; any Chrome/Chromium works. Used for HTML -> PDF.
   chrome_path: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 
