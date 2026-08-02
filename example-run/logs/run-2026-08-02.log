@@ -1,0 +1,58 @@
+=== Run started 2026-08-02 19:17:49 ===
+The file changed under me; I'll write the restructured version to a fresh path.
+API Error: Connection closed mid-response. The response above may be incomplete.
+=== Run finished 2026-08-02 19:46:32 exit=1 ===
+
+--- Coordinator run summary 2026-08-02 (Europe/Lisbon) ---
+
+CALLS PROCESSED: 5 of 5 qualifying, all previously unprocessed (ledger was empty).
+  Prospect       2  Acme Foods discovery (Dana Ruiz) · Vertex Motors demo (Tom Becker)
+  Implementation 1  Halden Pumps rollout planning (Priya Nair)
+  Customer       2  Lumen Devices weekly, in German (Marc Olsen) · Acme Foods pilot review (Sam Whitfield)
+  Read by 5 parallel claude-sonnet-5 subagents; the coordinator read no transcript.
+
+WINDOW NOTE: the transcripts are dated 2026-03-02..05, outside a literal last-7-days window
+  from 2026-08-02. Processed anyway under the Step 0 rule that the ledger, not the date,
+  decides what is new — they were unprocessed and sitting in the configured source folder.
+
+SIGNALS: 23 raw findings -> 19 matrix rows (4 merged as the same need across calls:
+  phone access, recurring stop patterns, editable reason list, all-plants view).
+  Types: 7 roadmap validation · 6 enhancement-gap · 3 new feature · 1 enhancement-amplify · 2 bug.
+  68% of ranked rows have at least one customer who attached a consequence. 47% have no roadmap home.
+
+TOP 3 BY EVIDENCE:
+  1. Read-only view of line status on a phone — priority 8 (Vertex Motors 2, Acme Foods 2)
+  2. Surface recurring stop patterns automatically — priority 4 (Acme Foods 1, Vertex Motors 1)
+  3. Let customers edit the downtime reason-code list — priority 4 (Acme Foods 2, two calls)
+
+OPEN QUESTIONS: 5, in needs-review.md and the briefing's "Needs your call" box —
+  chat-tool alert delivery vs Q2 alerts scope; bulk provisioning vs Q3 SSO scope;
+  read-only Q3 mobile vs Acme's "act during the shift" criterion; whether the two
+  planned-maintenance rows are one need; and which run owns this workbook (below).
+
+INCIDENT — CONCURRENT WRITER: a second daily run wrote to signal-matrix.xlsx at the same time.
+  Both runs appended a full set of the same 19 signals (38 rows), then each removed the other's
+  block, momentarily emptying the sheet. Restored from /tmp/signal-matrix.prededupe.bak.xlsx to a
+  single canonical set of 19 rows, ranks recomputed 1..19. The surviving block is the other run's
+  wording (it is what the existing needs-review.md and the duplicate log describe); its
+  "Customers" cells were reformatted from "Acme Foods (2)" to "Acme Foods: 2" so tools/metrics.py
+  can parse importance at all — in the "(2)" form it scored every row 0 and reported 0% consequence.
+  The other run's copy of the discarded block is preserved in logs/duplicate-append-2026-08-02.md.
+  Three scores differ between the two versions; listed in needs-review.md item 5 for Alex to settle.
+
+METRICS: written by tools/metrics.py --scope all (scope "run" compares ledger dates against today
+  and would have counted 0 calls, since the calls predate the run date). Two cells corrected by
+  hand afterwards, because the tool cannot derive them at all-time scope: signals merged 0 -> 4,
+  and open questions left blank -> 5.
+
+BRIEFING: Daily briefing/briefing-2026-08-02.pdf (5 pages, regenerated from the final reconciled
+  matrix after the dedupe, so the PDF and the matrix agree). A stray briefing-2026-08-02.html left
+  in the briefing folder by the other run was moved to /tmp; the spec keeps that folder PDF-only.
+
+=== Run finished 2026-08-02 ===
+
+POSTSCRIPT: the concurrent run terminated at 19:46:32 with "API Error: Connection closed
+  mid-response" (logs/failures.log) while restructuring, and took logs/duplicate-append-2026-08-02.md
+  with it. That file has been rewritten from the pre-dedupe backup, so the reference from
+  needs-review.md item 5 resolves and the discarded block is preserved verbatim. This run is the
+  surviving one; the matrix, the briefing PDF and needs-review.md are mutually consistent.

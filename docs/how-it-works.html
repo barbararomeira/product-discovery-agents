@@ -1,0 +1,107 @@
+<!-- A4 print stylesheet the agents reuse for briefings, digests and briefs.
+     Two colours come from config (accent, accent_secondary); everything else is neutral.
+     Open in a browser to preview, or print to PDF:
+       chrome --headless --disable-gpu --no-pdf-header-footer --print-to-pdf=out.pdf file://…/how-it-works.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Product Discovery — how it works</title>
+<style>
+  :root {
+    --accent: #3D5A80;          /* branding.accent */
+    --accent-2: #4C8577;        /* branding.accent_secondary */
+    --ink: #111;
+    --muted: #666;
+    --rule: #e2e2e2;
+  }
+  @page { size: A4; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, "Helvetica Neue", Arial, sans-serif; color: var(--ink);
+         background: #fff; font-size: 10pt; line-height: 1.45; }
+  .page { width: 210mm; height: 296mm; overflow: hidden; padding: 12mm 16mm;
+          page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+  header { display: flex; justify-content: space-between; align-items: baseline;
+           border-bottom: 3px solid var(--accent); padding-bottom: 7px; margin-bottom: 14px; }
+  .brand { font-weight: 800; font-size: 14pt; }
+  .brand span { color: var(--accent); }
+  .badge { font-size: 8pt; font-weight: 700; letter-spacing: 1.2px; color: var(--accent);
+           text-transform: uppercase; }
+  h1 { font-size: 18pt; letter-spacing: -0.4px; margin-bottom: 4px; }
+  .subtitle { color: var(--muted); margin-bottom: 16px; }
+  h2 { font-size: 11.5pt; margin: 13px 0 6px; padding-left: 8px; border-left: 4px solid var(--accent); }
+  h2.alt { border-left-color: var(--accent-2); }
+  p { margin-bottom: 6px; }
+  ul { margin: 0 0 8px 16px; } li { margin-bottom: 3px; }
+  table { border-collapse: collapse; width: 100%; margin: 5px 0 8px; font-size: 9.3pt; }
+  th { background: var(--ink); color: #fff; text-align: left; padding: 5px 8px; font-size: 8.6pt; }
+  td { border: 1px solid var(--rule); padding: 5px 8px; vertical-align: top; }
+  /* Cards must never split across a page. */
+  .card { border: 1px solid var(--rule); border-left: 4px solid var(--accent); border-radius: 6px;
+          padding: 8px 10px; margin-bottom: 7px; break-inside: avoid; }
+  .card.shipped { border-left-color: var(--accent-2); }
+  .card .title { font-weight: 700; margin-bottom: 3px; }
+  .card .quote { font-style: italic; color: #333; margin: 4px 0; }
+  .card .foot { font-size: 8.4pt; color: var(--muted); }
+  .chip { display: inline-block; border-radius: 10px; padding: 0 8px; font-size: 8.2pt;
+          font-weight: 700; color: #fff; margin-right: 4px; }
+  .c-prospect { background: var(--accent); }
+  .c-customer { background: var(--accent-2); }
+  .c-implementation { background: #777; }
+  .c-bug { background: #b3261e; }
+  .kpis { display: flex; gap: 8px; margin-bottom: 12px; }
+  .kpi { flex: 1; border: 1px solid var(--rule); border-radius: 6px; padding: 8px; text-align: center; }
+  .kpi .n { font-size: 20pt; font-weight: 800; color: var(--accent); line-height: 1; }
+  .kpi .l { font-size: 8pt; color: var(--muted); text-transform: uppercase; letter-spacing: .6px; }
+  .note { border: 1.5px dashed var(--accent); border-radius: 8px; padding: 9px 12px;
+          margin: 10px 0; font-size: 9.3pt; break-inside: avoid; }
+  footer { margin-top: 14px; padding-top: 8px; border-top: 1px solid var(--rule);
+           color: #888; font-size: 8.4pt; }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="brand">Your Company<span>.</span> Product Discovery</div>
+    <div class="badge">Reference</div>
+  </header>
+
+  <h1>The print stylesheet</h1>
+  <p class="subtitle">This file is the visual reference the agents follow. Swap the two colours at the top to make every report yours.</p>
+
+  <h2>Building blocks</h2>
+  <div class="kpis">
+    <div class="kpi"><div class="n">7</div><div class="l">calls</div></div>
+    <div class="kpi"><div class="n">4</div><div class="l">new requests</div></div>
+    <div class="kpi"><div class="n">3</div><div class="l">enhancements</div></div>
+    <div class="kpi"><div class="n">2</div><div class="l">validations</div></div>
+  </div>
+
+  <div class="card">
+    <div class="title">A requested capability</div>
+    <span class="chip c-prospect">Prospect</span><span class="chip c-implementation">Implementation</span>
+    <p>One or two lines of plain language: what they cannot do today, and what they want instead.</p>
+    <p class="quote">“A short verbatim quote, twenty-five words at most, in the report language.”</p>
+    <div class="foot">Ran by · source link</div>
+  </div>
+
+  <div class="card shipped">
+    <div class="title">Feedback on something already shipped</div>
+    <span class="chip c-customer">Customer</span>
+    <p>Same shape, secondary colour, so praise and gaps read differently from new requests at a glance.</p>
+  </div>
+
+  <div class="note"><b>Rules that matter:</b> A4 with zero page margin and padding on the page container · cards use <code>break-inside: avoid</code> so nothing splits across pages · content must never exceed the page height, because overflow is hidden and silently clips.</div>
+
+  <h2 class="alt">Colours</h2>
+  <table>
+    <tr><th>Token</th><th>Where it comes from</th><th>Used for</th></tr>
+    <tr><td><code>--accent</code></td><td><code>branding.accent</code></td><td>header rule, headings, priority numbers, prospect chips</td></tr>
+    <tr><td><code>--accent-2</code></td><td><code>branding.accent_secondary</code></td><td>shipped-feature cards, customer chips</td></tr>
+  </table>
+
+  <footer>Product Discovery · print reference</footer>
+</div>
+</body>
+</html>

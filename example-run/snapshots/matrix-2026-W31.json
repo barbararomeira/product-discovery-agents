@@ -1,0 +1,173 @@
+[
+  {
+    "signal": "Read-only view of line status on a phone",
+    "rank": 1,
+    "mentions": 2,
+    "priority": 8,
+    "type": "Roadmap validation",
+    "audience": "Prospect, Customer",
+    "roadmap_status": "Unclear — needs Alex Kim (Mobile layout Q3 is read-only)"
+  },
+  {
+    "signal": "Surface recurring stop patterns automatically",
+    "rank": 2,
+    "mentions": 2,
+    "priority": 4,
+    "type": "Roadmap validation",
+    "audience": "Prospect, Customer",
+    "roadmap_status": "On roadmap — discovery (Root-cause suggestions)"
+  },
+  {
+    "signal": "Let customers edit the downtime reason-code list",
+    "rank": 3,
+    "mentions": 2,
+    "priority": 4,
+    "type": "Enhancement — Gap",
+    "audience": "Prospect, Customer",
+    "roadmap_status": "Not planned"
+  },
+  {
+    "signal": "Alerts delivered into the chat tool people use on shift",
+    "rank": 4,
+    "mentions": 1,
+    "priority": 2,
+    "type": "New feature",
+    "audience": "Customer",
+    "roadmap_status": "Unclear — needs Alex Kim"
+  },
+  {
+    "signal": "Bug — output double-counted after a line restart",
+    "rank": 5,
+    "mentions": 1,
+    "priority": 2,
+    "type": "Bug",
+    "audience": "Customer",
+    "roadmap_status": "Shipped (Line dashboard)"
+  },
+  {
+    "signal": "Compare a line against the same day last week",
+    "rank": 6,
+    "mentions": 1,
+    "priority": 2,
+    "type": "Enhancement — Amplify",
+    "audience": "Prospect",
+    "roadmap_status": "Shipped (Line dashboard)"
+  },
+  {
+    "signal": "Compare the same line across shifts and crews",
+    "rank": 7,
+    "mentions": 1,
+    "priority": 2,
+    "type": "Roadmap validation",
+    "audience": "Customer",
+    "roadmap_status": "On roadmap — committed (Shift comparison view, Q2)"
+  },
+  {
+    "signal": "Create and remove users in bulk",
+    "rank": 8,
+    "mentions": 1,
+    "priority": 2,
+    "type": "Enhancement — Gap",
+    "audience": "Implementation",
+    "roadmap_status": "Unclear — needs Alex Kim"
+  },
+  {
+    "signal": "Flag numbers that look implausible",
+    "rank": 9,
+    "mentions": 1,
+    "priority": 2,
+    "type": "New feature",
+    "audience": "Customer",
+    "roadmap_status": "Not planned"
+  },
+  {
+    "signal": "In-product screen showing what personal data is stored",
+    "rank": 10,
+    "mentions": 1,
+    "priority": 2,
+    "type": "New feature",
+    "audience": "Implementation",
+    "roadmap_status": "Not planned"
+  },
+  {
+    "signal": "One view across all plants",
+    "rank": 11,
+    "mentions": 2,
+    "priority": 2,
+    "type": "Roadmap validation",
+    "audience": "Prospect, Customer",
+    "roadmap_status": "On roadmap — discovery (Multi-site rollup)"
+  },
+  {
+    "signal": "Scheduled data feed into the customer's own warehouse",
+    "rank": 12,
+    "mentions": 1,
+    "priority": 2,
+    "type": "Enhancement — Gap",
+    "audience": "Prospect",
+    "roadmap_status": "Deferred (Public API)"
+  },
+  {
+    "signal": "Separate planned maintenance from unplanned downtime",
+    "rank": 13,
+    "mentions": 1,
+    "priority": 2,
+    "type": "Enhancement — Gap",
+    "audience": "Customer",
+    "roadmap_status": "On roadmap — discovery (Maintenance-system integration)"
+  },
+  {
+    "signal": "Single sign-on with the corporate identity provider",
+    "rank": 14,
+    "mentions": 1,
+    "priority": 2,
+    "type": "Roadmap validation",
+    "audience": "Prospect",
+    "roadmap_status": "On roadmap — committed (Single sign-on / SAML, Q3)"
+  },
+  {
+    "signal": "Tell me when the line drifts, during the shift",
+    "rank": 15,
+    "mentions": 1,
+    "priority": 2,
+    "type": "Roadmap validation",
+    "audience": "Prospect",
+    "roadmap_status": "On roadmap — committed (Real-time alerts, Q2)"
+  },
+  {
+    "signal": "Bug — line filter resets when the date range changes",
+    "rank": 16,
+    "mentions": 1,
+    "priority": 1,
+    "type": "Bug",
+    "audience": "Implementation",
+    "roadmap_status": "Shipped (Line dashboard)"
+  },
+  {
+    "signal": "Choose when the weekly report is generated",
+    "rank": 17,
+    "mentions": 1,
+    "priority": 1,
+    "type": "Enhancement — Gap",
+    "audience": "Implementation",
+    "roadmap_status": "Not planned"
+  },
+  {
+    "signal": "Read planned stops from the maintenance system",
+    "rank": 18,
+    "mentions": 1,
+    "priority": 1,
+    "type": "Roadmap validation",
+    "audience": "Customer",
+    "roadmap_status": "On roadmap — discovery (Maintenance-system integration)"
+  },
+  {
+    "signal": "Weekly report stays legible when printed large",
+    "rank": 19,
+    "mentions": 1,
+    "priority": 1,
+    "type": "Enhancement — Gap",
+    "audience": "Customer",
+    "roadmap_status": "Not planned"
+  }
+]

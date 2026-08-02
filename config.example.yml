@@ -1,0 +1,96 @@
+# product-discovery-agents — configuration
+# Copy to config.yml and edit. config.yml is gitignored; nothing here should be secret.
+
+company:
+  # Used in report headers and to tell internal people from customers.
+  name: "Northwind Robotics"
+  # Any attendee whose email ends in one of these is one of YOUR people.
+  internal_email_domains:
+    - "northwind.example"
+
+pm:
+  # The person the agents escalate to. Appears in reports and in the
+  # "Unclear — needs <name>" marker the agents use when they refuse to guess.
+  name: "Alex Kim"
+  # Optional: Slack DM notifications on completion/failure. Leave blank to disable.
+  slack_handle: ""
+
+# Who to follow. Anyone customer-facing whose calls carry product signal.
+# Groups only affect the default call-type guess; content always wins.
+team:
+  sales:            # usually Prospect calls
+    - "Dana Ruiz"
+    - "Tom Becker"
+  post_sales:       # usually Implementation / Customer calls
+    - "Priya Nair"
+    - "Marc Olsen"
+  customer_success: # usually Customer calls
+    - "Sam Whitfield"
+
+# Where the transcripts come from. Pick ONE.
+# See sources/transcript-folder.md and sources/call-recorder-mcp.md.
+transcripts:
+  mode: "folder"          # "folder" | "recorder"
+  folder:
+    path: "./transcripts" # any recorder's export: .txt / .md / .vtt / .json
+  recorder:
+    # Only used when mode: recorder. The prompt asks for transcripts generically;
+    # this names the MCP tool family your Claude Code has connected.
+    mcp_prefix: ""        # e.g. the tool-name prefix of your call recorder's MCP server
+    lookback_days: 7
+
+# What you already ship / already plan. Grounds every classification so the
+# agents can tell "new request" from "we shipped that last quarter".
+product_knowledge:
+  mode: "file"                        # "file" | "remote"
+  file: "./knowledge/product.md"
+  refresh_days: 7                     # re-read remote sources at most this often
+  remote:
+    # Optional. Any doc your Claude Code can read via MCP (wiki page, sheet, doc).
+    # Left blank in folder mode.
+    description: ""
+
+output:
+  dir: "./output"           # matrix, briefings, digests, briefs all land here
+  matrix_filename: "signal-matrix.xlsx"
+  timezone: "Europe/Lisbon"
+  language: "English"       # reports are written in this language, whatever the call language
+
+# Report styling. Two colours is all it takes to make these look like yours.
+branding:
+  product_name: "Product Discovery"
+  accent: "#3D5A80"         # headers, priority numbers, "new request" chips
+  accent_secondary: "#4C8577"  # positive / shipped-feature chips
+  # macOS path shown; any Chrome/Chromium works. Used for HTML -> PDF.
+  chrome_path: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+
+scoring:
+  # Stated importance per customer, from their own words:
+  #   2 = a consequence is attached (deal condition, success criterion, hard
+  #       constraint, quantified pain, renewal risk)
+  #   1 = interest without consequence ("would be nice")
+  # A customer only appears on a signal if they raised it, so 0 is never stored.
+  # Priority = (sum of customer importances) x mentions. Nothing is estimated.
+  brief_threshold_customers: 3    # draft an opportunity brief at 3+ accounts...
+  brief_threshold_importance2: 2  # ...or importance 2 from 2+ accounts
+
+metrics:
+  # Used for the "time saved" estimate. This is YOUR assumption: how long it
+  # takes you to watch/skim one call and write up what mattered.
+  # The reports always print the assumption next to the number.
+  minutes_per_call_review: 15
+
+models:
+  # The coordinator merges into the matrix — the one irreversible step.
+  # The helpers read transcripts. Cheap model for volume, strong model for judgment.
+  coordinator: "claude-opus-5"
+  transcript_helper: "claude-sonnet-5"
+  weekly: "claude-opus-5"
+  max_concurrent_helpers: 5
+
+schedule:
+  daily_hour: 10     # local time
+  daily_minute: 0
+  weekly_weekday: 5  # 1 = Monday ... 5 = Friday
+  weekly_hour: 12
+  weekly_minute: 5

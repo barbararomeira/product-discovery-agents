@@ -1,0 +1,21 @@
+# Your configuration and your data never belong in git.
+# Patterns are ANCHORED to the repo root (leading slash) so they do not
+# accidentally swallow the committed example in example-run/.
+/config.yml
+/output/
+/transcripts/
+/knowledge/
+/logs/
+.env
+
+# Never commit a real matrix. The example one is committed on purpose.
+*.xlsx
+!example-run/**/*.xlsx
+
+# Logs anywhere except the example's illustrative one.
+*.log
+!example-run/logs/*.log
+
+.DS_Store
+__pycache__/
+*.pyc
