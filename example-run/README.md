@@ -37,7 +37,7 @@ The five calls are deliberately varied, because that is what a real week looks l
 | `signal-matrix.xlsx` | **The backlog.** 19 signals extracted from 5 calls, ranked by evidence. Four sheets: the signals, cross-call themes, the processed-calls ledger, and run metrics. |
 | `Daily briefing/` | The two-minute morning read. |
 | `Weekly digest/` | The Friday agenda: movers, decisions, retention risks, questions to send back to the team. |
-| `Opportunity briefs/` | Drafted automatically for signals that crossed the evidence threshold. |
+| `Opportunity briefs/` | Empty this week, on purpose — nothing crossed the evidence threshold. The folder's README explains why that is a finding, not a gap. |
 | `needs-review.md` | What the agents refused to guess about, waiting for a human. |
 | `metrics.md` | What the system reports about itself for this week. |
 | `logs/` | What a run actually prints. |
