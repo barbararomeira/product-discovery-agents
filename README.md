@@ -8,13 +8,23 @@
 
 **Turn call transcripts into an evidence-ranked product backlog — automatically, every day.**
 
-Every week your team has customer calls full of product signal. Somebody asks for a feature.
-Somebody says the reporting is unusable for their shift pattern. Somebody mentions, in passing,
-that they were promised something six weeks ago.
+**The problem.** Every week your team has customer calls full of product signal. Somebody asks for a
+feature. Somebody says the reporting is unusable for their shift pattern. Somebody mentions, in
+passing, that they were promised something six weeks ago.
 
-Then everyone hangs up, and that signal survives only in whoever's memory happens to hold it.
-So prioritization becomes an argument about who remembers most confidently — and the loudest
-recent call wins.
+Then everyone hangs up, and that signal survives only in whoever's memory happens to hold it. So
+prioritization becomes an argument about who remembers most confidently, and the loudest recent call
+wins. It feels rigorous while it happens — everyone in the room is experienced, everyone is arguing
+in good faith. It is just an argument about recall, dressed up as an argument about strategy.
+
+**Why nobody fixes it by trying harder.** Measure your own calls and the reason is obvious. A team of
+five customer-facing people running ~30 calls a week generates **around 790 hours of conversation a
+year — roughly 98 working days.** Five months of somebody's working year, spent listening. Nobody has
+that, so the calls go unreviewed and the signal is not triaged, it is lost.
+
+This reads all of it, every morning, and keeps one file that accumulates: each row a real customer
+need, carrying who asked, how strongly they said it, and how many times it has come back — with
+their own words attached.
 
 This is a small system that fixes that. Agents read the calls, extract what customers asked for,
 and maintain **one cumulative backlog** where every item carries *who asked, how strongly they
