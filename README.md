@@ -127,6 +127,7 @@ From the worked example in this repo — five calls in one week:
 |---|---|
 | Calls read | **5** (2 prospect · 1 implementation · 2 customer) |
 | **Listening time saved** | **2 h 44 min** — the real length of those calls, summed. Average call **33 min**. Every call measured; nothing assumed. |
+| Same figure, in working days | **0.3 days** in one week |
 | Signals tracked | **20**, across **4 accounts** |
 | Merged rather than duplicated | **4** second mentions landed on an existing row |
 | Opportunity briefs drafted | **1**, the moment a human answered an open question |
@@ -135,8 +136,8 @@ From the worked example in this repo — five calls in one week:
 | Your time in | **~15 min/week + 30 min on Friday** |
 
 **The conclusion that matters is the projection.** At the rate this example actually ran —
-5 calls a week, 2.7 hours of talk time — the system reads **61 hours** of customer conversation
-by 31 December. That is not an estimate of how long you *might* have spent reviewing calls; it is
+5 calls a week, 2.7 hours of talk time — the system reads **61 hours of customer conversation by
+31 December. That is 7.6 working days.** That is not an estimate of how long you *might* have spent reviewing calls; it is
 the measured length of calls somebody would otherwise have had to sit through to get the same
 signal, and almost nobody does, which is exactly why the signal is normally lost.
 
@@ -152,6 +153,23 @@ properly takes longer than its runtime — you pause, rewind, take notes — so 
 larger. And the hours are still the smaller half of the value: the bigger half is the request you
 would have forgotten, the third account that turns a hunch into a decision, and the promise made on
 a call that nobody wrote down.
+
+## The agents, and what each one is for
+
+Four actors. Three are automated; the fourth is you, and the system is built so that stays true.
+
+| | Runs | Purpose | Reads | Produces |
+|---|---|---|---|---|
+| **Agent 1 — Discovery** *(coordinator)* | daily | Turn yesterday's conversations into evidence. Classifies each call, decides what each signal *is* against your roadmap, and merges it into the backlog. | the ledger, your roadmap, and the helpers' findings — **never a transcript directly** | rows in the **signal matrix**, the **daily briefing**, and any open question in **needs-review.md** |
+| **Transcript helpers** *(one per call, in parallel)* | inside each daily run | Read one call and come back with facts. Translate if needed, pull the signals, the stated importance and one verbatim quote each. | exactly one transcript | structured findings handed back to the coordinator — they write nothing themselves |
+| **Agent 2 — Synthesis** | weekly | Turn accumulated evidence into decisions. Compares against last week, spots what crossed the evidence threshold, and says what needs deciding. | the matrix, the week's briefings, last week's snapshot, your roadmap | the **weekly digest**, **opportunity briefs**, and this week's **snapshot** |
+| **You** | 2 min daily · 30 min Friday | Decide. Resolve what the agents refused to guess, promote or park briefs, and forward the questions to the people already talking to customers. | the briefing and the digest | decisions, edits to the matrix (**final — never overwritten**), and next week's questions |
+
+Why split it this way: reading transcripts is mechanical and expensive, so it fans out to a cheap
+model in parallel. Deciding what a signal *means* — and especially whether it is the same need as an
+existing row — is neither, so it stays with one strong model that never gets handed a transcript to
+wade through. And synthesis needs a different altitude than capture, which is why it waits for the
+week rather than running daily.
 
 ## How it works
 

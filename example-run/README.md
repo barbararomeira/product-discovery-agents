@@ -39,7 +39,7 @@ The five calls are deliberately varied, because that is what a real week looks l
 | `Weekly digest/` | The Friday agenda: movers, decisions, retention risks, questions to send back to the team. |
 | `Opportunity briefs/` | One brief, drafted the moment a human answered an open question — see §3. |
 | `needs-review.md` | What the agents refused to guess about, waiting for a human. |
-| `metrics.md` | What the system reports about itself: 5 calls, **2 h 44 min of real talk time** read for you, and the year-end projection at that rate. |
+| `metrics.md` | What the system reports about itself: 5 calls, **2 h 44 min of real talk time** read for you — and at that rate, **7.6 working days** of customer conversation by 31 December. |
 | `logs/` | What a run actually prints. |
 
 ## 3. Things worth noticing in the output

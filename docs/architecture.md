@@ -5,6 +5,20 @@ Everything below is rendered by GitHub — no images to keep in sync.
 
 ---
 
+## Who does what
+
+| | Cadence | Job | Never does |
+|---|---|---|---|
+| **Agent 1 — Discovery** | daily | Classify each call, judge each signal against the roadmap, merge into the matrix, write the briefing | read a transcript itself; guess when unsure |
+| **Transcript helpers** | one per call, ≤5 at a time | Read one transcript, translate, return signals + importance + one quote each | write to the matrix or make a classification decision |
+| **Agent 2 — Synthesis** | weekly | Compare to last week, decide what crossed the threshold, draft briefs, write the digest | touch the ledger or re-extract from calls |
+| **You** | 2 min daily · 30 min Friday | Resolve open questions, promote or park, forward the questions to the team | get asked to read the matrix end to end |
+
+**Outputs, one line each.** Daily briefing = what was said yesterday and what needs you today.
+Signal matrix = the accumulated evidence, one row per need. Weekly digest = this week's decisions.
+Opportunity brief = the seed of a PRD, drafted only when the evidence justifies it.
+`needs-review.md` = everything the agents refused to guess.
+
 ## The whole system
 
 ```mermaid
