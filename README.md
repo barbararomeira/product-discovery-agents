@@ -4,6 +4,8 @@
   <img src="assets/hero.gif" alt="Customer calls flow through five stages — capture raw conversations, structure the evidence, score it into a signal matrix, draft briefs, and you decide — under the line: evidence, not whoever remembers loudest." width="100%">
 </p>
 
+### Evidence, not whoever remembers loudest.
+
 **Turn call transcripts into an evidence-ranked product backlog — automatically, every day.**
 
 Every week your team has customer calls full of product signal. Somebody asks for a feature.
