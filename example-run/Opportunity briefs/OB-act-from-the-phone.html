@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Northwind Robotics · Opportunity brief — Act on a stop from the phone</title>
+<style>
+  :root{
+    --accent:#3D5A80;
+    --accent2:#4C8577;
+    --ink:#1c2126;
+    --mid:#5b6672;
+    --line:#dfe4ea;
+    --wash:#f4f6f8;
+    --risk:#9c3b2e;
+  }
+  @page{ size:A4; margin:0; }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    font-family:-apple-system,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    color:var(--ink); font-size:9.4pt; line-height:1.45;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  /* page containers size to content — never a fixed height */
+  .sheet{
+    width:210mm; padding:13mm 14mm 10mm 14mm;
+    break-after:page; page-break-after:always; position:relative;
+  }
+  .sheet:last-child{ break-after:auto; page-break-after:auto; }
+
+  /* ---------- masthead ---------- */
+  .mast{ display:flex; justify-content:space-between; align-items:flex-start;
+         border-bottom:2.5pt solid var(--accent); padding-bottom:2.5mm; margin-bottom:5mm; }
+  .mast .left .org{ font-size:12.5pt; font-weight:700; color:var(--accent); letter-spacing:.2pt; }
+  .mast .left .badge{
+    display:inline-block; margin-top:2mm; background:var(--accent); color:#fff;
+    font-size:7.2pt; font-weight:700; letter-spacing:1.1pt; padding:1.4mm 2.6mm; border-radius:1.2mm;
+  }
+  .mast .right{ text-align:right; }
+  .mast .right .st{ font-size:9.5pt; font-weight:700; color:var(--risk); }
+  .mast .right .rng{ font-size:8.2pt; color:var(--mid); margin-top:.8mm; }
+  .mast .right .for{ font-size:8.2pt; color:var(--mid); margin-top:.4mm; }
+  .mast.slim{ padding-bottom:1.8mm; margin-bottom:4mm; border-bottom-width:1.2pt; }
+  .mast.slim .org{ font-size:9.5pt; }
+  .mast.slim .rt{ font-size:9.5pt; font-weight:700; color:var(--accent); }
+
+  /* ---------- structure ---------- */
+  h1{ font-size:16pt; line-height:1.2; margin:0 0 1.5mm 0; color:var(--ink); letter-spacing:-.2pt; }
+  .subtitle{ font-size:8.6pt; color:var(--mid); margin-bottom:4.5mm; }
+  h2{
+    font-size:10.5pt; margin:0 0 2.5mm 0; color:var(--accent);
+    border-bottom:.8pt solid var(--line); padding-bottom:1.2mm;
+  }
+  h2 .sub{ float:right; font-size:7.6pt; font-weight:400; color:var(--mid); padding-top:1.4pt; }
+  .sec{ margin-bottom:5.5mm; break-inside:avoid; page-break-inside:avoid; }
+  .sec.loose{ break-inside:auto; page-break-inside:auto; }
+  p{ margin:0 0 2.2mm 0; }
+  p:last-child{ margin-bottom:0; }
+  ul,ol{ margin:0 0 2.2mm 0; padding-left:4.8mm; }
+  li{ margin-bottom:1.2mm; }
+  li:last-child{ margin-bottom:0; }
+  .lede{ color:var(--mid); font-size:8.6pt; margin-bottom:3mm; }
+
+  /* ---------- stat tiles ---------- */
+  .tiles{ display:flex; flex-wrap:wrap; gap:2.5mm; }
+  .tile{
+    flex:1 1 30%; min-width:38mm; border:.8pt solid var(--line); border-top:2.2pt solid var(--accent);
+    border-radius:1.2mm; padding:2.6mm 3mm; background:#fff;
+    break-inside:avoid; page-break-inside:avoid;
+  }
+  .tile.alt{ border-top-color:var(--accent2); }
+  .tile .k{ font-size:7.2pt; text-transform:uppercase; letter-spacing:.6pt; color:var(--mid); }
+  .tile .v{ font-size:17pt; font-weight:700; color:var(--accent); line-height:1.1; margin:.8mm 0 .6mm; }
+  .tile.alt .v{ color:var(--accent2); }
+  .tile .v small{ font-size:9pt; font-weight:600; }
+  .tile .d{ font-size:7.6pt; color:var(--mid); line-height:1.35; }
+
+  /* ---------- chips ---------- */
+  .chip{
+    display:inline-block; font-size:7pt; font-weight:700; letter-spacing:.4pt;
+    padding:.7mm 1.6mm; border-radius:1mm; white-space:nowrap;
+  }
+  .chip.gap{ background:var(--risk); color:#fff; }
+  .chip.cust{ background:var(--accent2); color:#fff; }
+  .chip.pros{ background:var(--accent); color:#fff; }
+  .chip.disc{ background:var(--accent2); color:#fff; }
+
+  /* ---------- quote cards ---------- */
+  .who{
+    border:.8pt solid var(--line); border-left:2.6pt solid var(--accent2);
+    border-radius:1.2mm; padding:2.8mm 3.2mm; background:#fff; margin-bottom:2.5mm;
+    break-inside:avoid; page-break-inside:avoid;
+  }
+  .who.pros{ border-left-color:var(--accent); }
+  .who h3{ font-size:8.8pt; margin:0 0 1.6mm 0; color:var(--accent); }
+  .who h3 .meta{ float:right; font-size:7.4pt; font-weight:400; color:var(--mid); }
+  blockquote{
+    margin:0 0 1.8mm 0; padding-left:3mm; border-left:1.6pt solid var(--line);
+    font-size:8.6pt; color:var(--ink);
+  }
+  blockquote:last-child{ margin-bottom:0; }
+  blockquote cite{ display:block; font-style:normal; font-size:7.4pt; color:var(--mid); margin-top:.8mm; }
+  blockquote.counter{ border-left-color:var(--risk); }
+
+  /* ---------- tables ---------- */
+  table{ width:100%; border-collapse:collapse; font-size:8.4pt; }
+  th{
+    text-align:left; background:var(--accent); color:#fff; font-size:7.2pt;
+    text-transform:uppercase; letter-spacing:.5pt; padding:1.8mm 2mm; font-weight:700;
+  }
+  td{ padding:1.8mm 2mm; border-bottom:.6pt solid var(--line); vertical-align:top; }
+  tr{ break-inside:avoid; page-break-inside:avoid; }
+  tbody tr:nth-child(even){ background:var(--wash); }
+  td.lab{ font-weight:600; width:42mm; }
+
+  /* ---------- scope columns ---------- */
+  .cols{ display:flex; gap:3.5mm; }
+  .col{
+    flex:1 1 50%; border:.8pt solid var(--line); border-top:2.2pt solid var(--accent);
+    border-radius:1.2mm; padding:2.8mm 3.2mm; background:#fff;
+    break-inside:avoid; page-break-inside:avoid;
+  }
+  .col.later{ border-top-color:var(--accent2); }
+  .col h3{ font-size:8.6pt; margin:0 0 1.6mm 0; color:var(--accent); }
+  .col.later h3{ color:var(--accent2); }
+  .col .tag{ font-size:7pt; text-transform:uppercase; letter-spacing:.6pt; color:var(--mid); display:block; margin-bottom:.8mm; }
+
+  /* ---------- callouts ---------- */
+  .verdict{
+    background:var(--wash); border-left:2.6pt solid var(--accent); padding:2.4mm 3mm;
+    margin-top:3mm; font-size:8.6pt; break-inside:avoid; page-break-inside:avoid;
+  }
+  .verdict b{ color:var(--accent); }
+  .verdict.warn{ border-left-color:var(--risk); }
+  .verdict.warn b{ color:var(--risk); }
+  .note{ font-size:7.8pt; color:var(--mid); margin-top:2mm; }
+  .qgroup{ margin-bottom:3mm; break-inside:avoid; page-break-inside:avoid; }
+  .qgroup .hd{ font-size:8pt; font-weight:700; color:var(--accent2); text-transform:uppercase;
+               letter-spacing:.5pt; margin-bottom:1.2mm; }
+  .log{ display:flex; gap:3mm; padding:2mm 0; border-bottom:.6pt solid var(--line); }
+  .log:last-child{ border-bottom:none; }
+  .log .dt{ flex:0 0 24mm; font-size:7.6pt; font-weight:700; color:var(--accent); }
+  .log .tx{ flex:1 1 auto; font-size:8.4pt; }
+
+  /* ---------- footer ---------- */
+  .foot{
+    margin-top:6mm; padding-top:2.2mm; border-top:.8pt solid var(--line);
+    display:flex; justify-content:space-between; font-size:7.2pt; color:var(--mid);
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================ PAGE 1 ============================ -->
+<div class="sheet">
+  <div class="mast">
+    <div class="left">
+      <div class="org">Northwind Robotics · Product Discovery</div>
+      <div class="badge">OPPORTUNITY BRIEF</div>
+    </div>
+    <div class="right">
+      <div class="st">DRAFT — awaiting review</div>
+      <div class="rng">auto-generated 2026-08-02</div>
+      <div class="for">for Alex Kim</div>
+    </div>
+  </div>
+
+  <h1>Act on a stop from the phone, not just see it</h1>
+  <div class="subtitle">
+    <span class="chip gap">ENHANCEMENT — GAP</span>
+    <span class="chip pros">PROSPECT</span>
+    <span class="chip cust">CUSTOMER</span>
+    &nbsp; Rank 1 · Priority 8 · Not planned — split from the committed Mobile layout (Q3) after
+    Alex Kim ruled it view-only on 2026-08-02.
+  </div>
+
+  <div class="sec">
+    <h2>Problem</h2>
+    <p>
+      Supervisors who spend the shift on the floor have no workstation. The committed
+      <b>Mobile layout (Q3)</b> gives them the dashboard on their phone, and Alex Kim confirmed on
+      2026-08-02 that it is <b>view-only</b>. That closes the <i>seeing</i> half of the problem and
+      leaves the <i>acting</i> half open: the same person who now sees that line one is down still
+      has to walk to a computer to tag the stop, pick a reason, or record what they did about it.
+    </p>
+    <p>
+      This matters because Acme Foods' pilot is not scored on looking. It is scored on doing. The
+      test they set in the first discovery call was "supervisors act on something during the shift,
+      at least twice a week, without me telling them to" — and six weeks in, the line that fails
+      that test is precisely the line whose supervisor does not sit at a computer. A read-only
+      phone screen tells that supervisor what is wrong. It does not let them close the loop where
+      they are standing.
+    </p>
+  </div>
+
+  <div class="sec">
+    <h2>Who's asking<span class="sub">2 accounts · both at stated importance 2</span></h2>
+
+    <div class="who">
+      <h3>Acme Foods — live customer, pilot on a second line
+        <span class="meta">M. Hartley, Plant Manager · importance 2 · Customer</span></h3>
+      <blockquote>
+        "If my supervisors act on something during the shift, at least twice a week, without me
+        telling them to. That is the whole test."
+        <cite>2026-03-02 · discovery call · https://example.com/calls/1001</cite>
+      </blockquote>
+      <blockquote>
+        "We are there on line three. Not on line one, because line one's supervisor does not sit at
+        a computer."
+        <cite>2026-03-05 · pilot review, answering "where are we against the test you set —
+        supervisors acting during the shift, twice a week, unprompted?" ·
+        https://example.com/calls/1005</cite>
+      </blockquote>
+    </div>
+
+    <div class="who pros">
+      <h3>Vertex Motors — prospect, deal in flight
+        <span class="meta">R. Adeyemi, Operations · importance 2 · Prospect</span></h3>
+      <blockquote>
+        "Half my supervisors do not sit at a desk. They have a phone in their pocket and that is
+        it. If they cannot see the line status on that phone, they will not use this, no matter how
+        good it is."
+        <cite>2026-03-03 · demo and technical review · https://example.com/calls/1002</cite>
+      </blockquote>
+      <blockquote class="counter">
+        "Read-only is fine. Seeing is the whole job."
+        <cite>Counter-evidence — same account, same call, immediately after being told mobile would
+        be read-only to start · https://example.com/calls/1002</cite>
+      </blockquote>
+    </div>
+
+    <div class="verdict warn">
+      <b>Read this honestly.</b> Vertex's importance 2 sizes the population of supervisors who will
+      never use a desktop. It is not, on the record, a request to act from the phone. Acme is the
+      only account that has attached a consequence to <i>acting</i>.
+    </div>
+  </div>
+
+  <div class="foot">
+    <div>Northwind Robotics · Product Discovery · Opportunity brief · OB-act-from-the-phone</div>
+    <div>DRAFT 2026-08-02</div>
+  </div>
+</div>
+
+<!-- ============================ PAGE 2 ============================ -->
+<div class="sheet">
+  <div class="mast slim">
+    <div class="left"><div class="org">Northwind Robotics · Product Discovery</div></div>
+    <div class="right"><div class="rt">OPPORTUNITY BRIEF · act from the phone</div></div>
+  </div>
+
+  <div class="sec">
+    <h2>Evidence<span class="sub">from signal-matrix.xlsx, Prioritized Signals</span></h2>
+    <div class="tiles" style="margin-bottom:3mm">
+      <div class="tile">
+        <div class="k">Rank / priority</div>
+        <div class="v">1 <small>· p8</small></div>
+        <div class="d">(2 + 2) × 2 mentions — joint-highest in the matrix</div>
+      </div>
+      <div class="tile alt">
+        <div class="k">Accounts at importance 2</div>
+        <div class="v">2</div>
+        <div class="d">Acme Foods · Vertex Motors — meets the threshold on the nose, not by a margin</div>
+      </div>
+      <div class="tile">
+        <div class="k">Window</div>
+        <div class="v">4 <small>days</small></div>
+        <div class="d">First seen 2026-03-02 → last mentioned 2026-03-03</div>
+      </div>
+    </div>
+    <table>
+      <tbody>
+        <tr><td class="lab">Mentions</td><td>2 — Acme Foods discovery (1001) · Vertex Motors demo (1002)</td></tr>
+        <tr><td class="lab">Type / roadmap status</td><td>Enhancement — Gap · Not planned (Q3 mobile layout is view-only — ruled by Alex Kim 2026-08-02)</td></tr>
+        <tr><td class="lab">Trend</td><td>New row, created 2026-08-02 by splitting rank 1. No prior rank to move from.</td></tr>
+        <tr><td class="lab">Third touch</td><td>Acme returned to the criterion on 2026-03-05 (call 1005); that mention is logged against the parent row "Read-only view of line status on a phone".</td></tr>
+      </tbody>
+    </table>
+    <div class="verdict">
+      <b>Predicted before it existed.</b> The 2026-W31 digest said it plainly: "if Mobile layout Q3
+      is view-only, the 'act on the floor' half becomes an Enhancement — Gap with no home and drafts
+      immediately."
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2>Roadmap fit<span class="sub">why it has no home today</span></h2>
+    <table>
+      <thead>
+        <tr><th style="width:52mm">Roadmap item</th><th>Relationship to this row</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="lab">Mobile layout — committed Q3</td>
+          <td>Read-only; ruled view-only by Alex Kim on 2026-08-02. Covers the sibling row, not this one.</td>
+        </tr>
+        <tr>
+          <td class="lab">Real-time alerts — committed Q2</td>
+          <td>Makes the gap <i>sharper</i>, not smaller: the alert reaches a phone that cannot respond to it. Lumen Devices has already asked for those alerts in Teams "because nobody here reads email during the shift" (call 1004) — same floor, same person, same dead end at the point of action.</td>
+        </tr>
+        <tr>
+          <td class="lab">Downtime log — shipped</td>
+          <td>The place the action would land. Operators already tag a stop with a reason code from a fixed list, so the write path exists; it is only unreachable from a phone.</td>
+        </tr>
+        <tr>
+          <td class="lab">Parking lot</td>
+          <td>No conflict. On-premise deployment, Public API and the custom report builder are unrelated to this.</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="verdict warn">
+      <b>One dependency worth naming.</b> The action is only useful if the reason code the
+      supervisor needs exists in the list. Acme's CI lead cannot edit that list today (rank 4, Not
+      planned; Acme's own words: "Half the stops get logged as 'other'"). Shipping
+      tagging-from-phone on a stale list moves the "other" problem onto a smaller screen.
+    </div>
+  </div>
+
+  <div class="foot">
+    <div>Northwind Robotics · Product Discovery · Opportunity brief · OB-act-from-the-phone</div>
+    <div>DRAFT 2026-08-02</div>
+  </div>
+</div>
+
+<!-- ============================ PAGE 3 ============================ -->
+<div class="sheet">
+  <div class="mast slim">
+    <div class="left"><div class="org">Northwind Robotics · Product Discovery</div></div>
+    <div class="right"><div class="rt">OPPORTUNITY BRIEF · act from the phone</div></div>
+  </div>
+
+  <div class="sec">
+    <h2>Possible scope<span class="sub">tiered — the smallest useful version first</span></h2>
+    <div class="cols">
+      <div class="col">
+        <h3><span class="tag">Smallest testable version</span>One action, on the stop that is already open</h3>
+        <ul>
+          <li>On the read-only mobile line view, a stop that is currently open gets a single control: <b>set its reason code</b> from the existing list.</li>
+          <li>Nothing else. No editing past stops, no free text, no new screen, no notifications, no permissions work beyond the existing supervisor role.</li>
+          <li>Ships <i>inside</i> the Q3 Mobile layout work rather than beside it.</li>
+        </ul>
+        <div class="verdict" style="margin-top:2.5mm">
+          <b>How we would know it worked.</b> Acme Foods, line one, one supervisor, four weeks. The
+          measure is already agreed and already being reported against — does line one start meeting
+          "acts on something during the shift, twice a week, unprompted", the way line three does?
+          If tagging from the phone does not move that number, acting from the phone is not the
+          constraint and this row should be parked rather than grown.
+        </div>
+      </div>
+      <div class="col later">
+        <h3><span class="tag">Fuller version later</span>Only if the smallest version moves the number</h3>
+        <ul>
+          <li><b>Acknowledge or dismiss a real-time alert</b> from the phone, so the Q2 alert has a reply path. Pairs directly with Lumen's Teams request.</li>
+          <li><b>A short free-text note</b> on a stop — "waiting on maintenance", "changeover ran long" — which is what supervisors currently tell someone verbally and nobody records.</li>
+          <li><b>Reassign or escalate</b> a stop to maintenance from the floor.</li>
+          <li><b>Editable reason codes</b> (rank 4) as a prerequisite, so the code they need is actually there.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec loose">
+    <h2>Open questions / discovery gaps<span class="sub">two calls decide whether this is a PRD or a park</span></h2>
+    <p class="lede">Both accounts already have an owner and a next call. Nothing here needs new research.</p>
+
+    <div class="qgroup">
+      <div class="hd">Acme Foods — owner: Sam Whitfield</div>
+      <ol>
+        <li>When line one's supervisor sees a stop on the phone, what is the <i>first thing</i> they do — tag it, radio someone, or walk to the machine? We are assuming tagging; that assumption is untested.</li>
+        <li>Does that supervisor carry a phone that can reach our product during the shift at all, or is the constraint the device rather than the screen?</li>
+        <li>If tagging from the phone existed on line one, would you expect the twice-a-week criterion to be met — or is something else in the way?</li>
+      </ol>
+    </div>
+
+    <div class="qgroup">
+      <div class="hd">Vertex Motors — owner: Tom Becker</div>
+      <ol start="4">
+        <li>You said read-only was fine and that seeing is the whole job. Was that about the demo, or about the job? What happens on your floor between a supervisor seeing a stop and it being recorded?</li>
+        <li>How many of your supervisors have no workstation at all?</li>
+      </ol>
+    </div>
+
+    <div class="qgroup">
+      <div class="hd">For the roadmap — Alex Kim</div>
+      <ol start="6">
+        <li>Can one write action fit inside the Q3 Mobile layout commitment without moving its date? The answer changes this from a new item into a scope amendment.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div>Northwind Robotics · Product Discovery · Opportunity brief · OB-act-from-the-phone</div>
+    <div>DRAFT 2026-08-02</div>
+  </div>
+</div>
+
+<!-- ============================ PAGE 4 ============================ -->
+<div class="sheet">
+  <div class="mast slim">
+    <div class="left"><div class="org">Northwind Robotics · Product Discovery</div></div>
+    <div class="right"><div class="rt">OPPORTUNITY BRIEF · act from the phone</div></div>
+  </div>
+
+  <div class="sec">
+    <h2>Recommendation<span class="sub">one line of why</span></h2>
+    <p style="font-size:11pt; font-weight:700; color:#4C8577; margin-bottom:2.5mm">
+      <span class="chip disc">RUN DISCOVERY</span> &nbsp; Do not promote to PRD yet.
+    </p>
+    <p>
+      The row clears the evidence threshold arithmetically — importance 2 from two accounts — but
+      only one of those accounts has actually asked to <i>act</i>: Vertex supplies the population
+      and, asked directly, said seeing was enough. That is a one-account problem wearing a
+      two-account number, and writing a PRD on it would be over-reading our own matrix.
+    </p>
+    <p>
+      The five questions on the previous page are answerable on calls that are already scheduled,
+      and the smallest version is small enough to land inside a Q3 commitment that is already
+      funded. The cost of waiting two weeks for a real answer is close to zero. The cost of being
+      wrong is a mobile release that still does not move Acme's pilot criterion.
+    </p>
+  </div>
+
+  <div class="sec">
+    <h2>Update log</h2>
+    <div class="log">
+      <div class="dt">2026-08-02</div>
+      <div class="tx">
+        <b>Created.</b> Alex Kim ruled that the committed Mobile layout (Q3) is view-only and does
+        not cover acting on the floor (needs-review.md item 4, raised 2026-08-02, closed the same
+        day). Rank 1 "Line status on a phone" was split: the validated half stays as
+        <i>Roadmap validation</i> against Mobile layout Q3 (now rank 2), and this open half was
+        created as <i>Enhancement — Gap</i> with no roadmap home, priority 8. Drafted by the weekly
+        run; no human edits exist in this file yet.
+      </div>
+    </div>
+    <div class="note">
+      The <b>.md</b> next to this PDF is the editable master —
+      <b>Opportunity briefs/OB-act-from-the-phone.md</b>. Edit there; later runs append to the
+      update log and never rewrite your edits.
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2>Sources</h2>
+    <table>
+      <tbody>
+        <tr><td class="lab">Calls</td><td>Acme Foods discovery, 2026-03-02 (1001) · Vertex Motors demo and technical review, 2026-03-03 (1002) · Acme Foods pilot review, 2026-03-05 (1005) · Lumen Devices weekly, 2026-03-04 (1004, alerts channel only)</td></tr>
+        <tr><td class="lab">Matrix</td><td>signal-matrix.xlsx · Prioritized Signals, rank 1, as at 2026-08-02</td></tr>
+        <tr><td class="lab">Product knowledge</td><td>knowledge/roadmap.md, refreshed 2026-08-02</td></tr>
+        <tr><td class="lab">Human decision</td><td>needs-review.md item 4 — Mobile layout (Q3) is view-only. Ruled by Alex Kim, 2026-08-02. A human decision is final and is never overwritten by a later run.</td></tr>
+        <tr><td class="lab">Digest</td><td>Weekly digest/digest-2026-W31.pdf — §5 "Needs your attention" and §7 "Nearest miss"</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="foot">
+    <div>Northwind Robotics · Product Discovery · Opportunity brief · OB-act-from-the-phone · generated 2026-08-02</div>
+    <div>DRAFT 2026-08-02</div>
+  </div>
+</div>
+
+</body>
+</html>
