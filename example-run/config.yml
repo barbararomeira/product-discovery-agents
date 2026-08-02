@@ -43,7 +43,7 @@ transcripts:
 # agents can tell "new request" from "we shipped that last quarter".
 product_knowledge:
   mode: "file"                        # "file" | "remote"
-  file: "./knowledge/product.md"
+  file: "./knowledge/roadmap.md"
   refresh_days: 7                     # re-read remote sources at most this often
   remote:
     # Optional. Any doc your Claude Code can read via MCP (wiki page, sheet, doc).

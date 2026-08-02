@@ -1,1 +1,53 @@
 === Weekly run started 2026-08-02 19:28:40 ===
+Weekly run complete for **2026-W31** (27 Jul – 2 Aug 2026).
+
+## What was written
+
+- `Weekly digest/digest-2026-W31.pdf` — 6 A4 pages, all 8 sections, page numbers, `#3D5A80`/`#4C8577` branding, badge and ISO week/date range top right. Every sheet measured at exactly 297mm, so no card or table row breaks across a page.
+- `snapshots/matrix-2026-W31.json` — all 19 ranked signals with rank, mentions, priority, type, audience, roadmap status.
+
+## The three things worth your attention
+
+**No movers.** `snapshots/matrix-2026-W30.json` doesn't exist, so there was nothing to compare against. This week's snapshot is the baseline; next Friday reports real movement. Retention is 1 of 8 — nothing pruned.
+
+**No briefs — and it's a real finding, not a failure.** I tested all 19 ranked rows against both threshold conditions. Six passed the roadmap test (no home), one passed the evidence test (importance 2 from 2+ accounts), **none passed both**. The reason is uniform: every unplanned request in the matrix is carried by exactly one account. That's a corroboration problem, not a prioritisation one, which is why §6 (Questions for the next calls) is the section that matters most this week — it's aimed squarely at getting a second account onto the rows that are closest.
+
+The near-miss worth flagging: **"Read-only view of line status on a phone"** is the only row with the evidence (Acme 2, Vertex 2) but it's typed `Roadmap validation`, so it fails condition (a). If you rule that Mobile layout Q3 is view-only, that row splits and the "act on the floor" half becomes an `Enhancement — Gap` with no home — and drafts a brief immediately.
+
+**Four rulings unblock five rows.** Mobile act-vs-view, chat delivery in Q2 alerts, SCIM in Q3 SSO, and whether April is a date you can stand behind for Lumen. Each costs you a sentence.
+
+Five items are flagged **retention risk** under the standing lens — reason-code editing, planned-maintenance split, implausible-number flags, chat alerts, and the two report niggles — all raised only by Acme and Lumen, who already pay you. The reason-code one carries an explicit renewal warning.
+
+## Two notes
+
+- `Opportunity briefs/README.md` appeared during the run explaining the empty folder. I didn't write it; its content is accurate, so I left it in place.
+- A stale `digest-2026-W31.html` also appeared in `Weekly digest/`. The spec says save only the PDF there, so I removed it — the editable source stayed at `/tmp/digest.html`.
+
+I sent no messages, per the run instructions.
+Northwind Robotics · product discovery — by the numbers (week, since 2026-07-27)
+
+Coverage
+  Calls processed:        0  (0 prospect · 0 implementation · 0 customer)
+  All time:               5 calls
+
+Time
+  Est. review time saved: 0.0 h this week, 1.2 h all time
+  Assumption:             15 min to review one call by hand (set in config; an estimate, not a measurement)
+
+Backlog
+  Signals tracked:        19
+  New / merged:           0 new · 0 merged into existing rows
+  Accounts represented:   4
+
+Evidence quality
+  Priority driven by real problems: 68% of ranked signals have at least one
+  customer who attached a consequence (deal condition, success criterion, quantified pain).
+  Demand with no roadmap home:      47%
+
+Top by evidence
+  1. Read-only view of line status on a phone — priority 8 (Prospect, Customer)
+  2. Surface recurring stop patterns automatically — priority 4 (Prospect, Customer)
+  3. Let customers edit the downtime reason-code list — priority 4 (Prospect, Customer)
+
+appended to 'Run metrics'
+=== Weekly run finished 2026-08-02 20:38:26 exit=0 ===

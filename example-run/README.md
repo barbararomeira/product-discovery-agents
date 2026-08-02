@@ -16,7 +16,7 @@ Read this folder in the order below and you will understand the whole system in 
 | File | What it is |
 |---|---|
 | `config.yml` | The filled-in configuration for Northwind Robotics. Compare it to `config.example.yml`. |
-| `knowledge/product.md` | What Northwind already ships, has committed to, is exploring, and has parked. This is how the agents tell "new request" from "we shipped that last quarter". |
+| `knowledge/roadmap.md` | **The roadmap**, in the form the agents read: shipped · committed (with dates) · in discovery · explicitly parked. This is how a briefing can say "validates Real-time alerts, committed Q2" instead of just "customer wants alerts". |
 | `transcripts/` | Five calls across one week. |
 
 The five calls are deliberately varied, because that is what a real week looks like:
@@ -37,7 +37,7 @@ The five calls are deliberately varied, because that is what a real week looks l
 | `signal-matrix.xlsx` | **The backlog.** 19 signals extracted from 5 calls, ranked by evidence. Four sheets: the signals, cross-call themes, the processed-calls ledger, and run metrics. |
 | `Daily briefing/` | The two-minute morning read. |
 | `Weekly digest/` | The Friday agenda: movers, decisions, retention risks, questions to send back to the team. |
-| `Opportunity briefs/` | Empty this week, on purpose — nothing crossed the evidence threshold. The folder's README explains why that is a finding, not a gap. |
+| `Opportunity briefs/` | One brief, drafted the moment a human answered an open question — see §3. |
 | `needs-review.md` | What the agents refused to guess about, waiting for a human. |
 | `metrics.md` | What the system reports about itself for this week. |
 | `logs/` | What a run actually prints. |
@@ -74,6 +74,12 @@ never trigger an opportunity brief — they belong in your bug tracker, not your
 **The agents escalated instead of guessing.** See `needs-review.md`. That is the system working
 correctly: a backlog quietly mis-classified is worse than no backlog, because you would trust it.
 
+**A human answer unlocked a brief.** The digest predicted it explicitly: *"if Mobile layout Q3 is
+view-only, the 'act on the floor' half becomes an Enhancement — Gap with no home and drafts
+immediately."* Alex ruled that Q3 is view-only, the top row was split into the validated part and
+the open part, and `Opportunity briefs/OB-act-from-the-phone.md` drafted itself against two accounts
+at importance 2. That is the whole loop in one move: agent asks, human decides, backlog updates.
+
 ## 4. Reproduce it yourself
 
 ```bash
@@ -85,5 +91,5 @@ CONFIG="$PWD/config.yml" ../scripts/run_weekly.sh
 Run the daily twice and watch nothing get double-counted — the ledger in the matrix is what makes
 runs safe to repeat and missed days self-healing.
 
-Then swap `transcripts/` for a few of your own calls, edit `knowledge/product.md` to describe your
+Then swap `transcripts/` for a few of your own calls, edit `knowledge/roadmap.md` to describe your
 product, and you have your own version. That is genuinely the whole setup.

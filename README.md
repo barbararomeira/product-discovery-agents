@@ -118,29 +118,74 @@ writes to a **Run metrics** sheet, surfaced in the digest as *"By the numbers"*:
 python3 tools/metrics.py --scope week
 ```
 
+### What it saved, concretely
+
+From the worked example in this repo — one week, five calls:
+
+| | |
+|---|---|
+| Calls read | **5** (2 prospect · 1 implementation · 2 customer) |
+| Review time saved | **1 h 15 min** *(5 calls × 15 min — your assumption, printed next to the number)* |
+| Signals tracked | **19**, across **4 accounts** |
+| Merged rather than duplicated | **4** second mentions landed on an existing row |
+| Ranking driven by real problems | **68%** of ranked signals have a customer with a consequence attached |
+| Demand with no roadmap home | **47%** |
+| Your time in | **~15 min/week + 30 min on Friday** |
+
+Time saved scales with how much your team talks to customers. At 15 minutes to watch a call and
+write up what mattered:
+
+| Calls per week | Hours saved / week | Hours saved / year |
+|---|---|---|
+| 5 | 1.3 | ~65 |
+| 10 | 2.5 | ~130 |
+| 20 | 5.0 | ~260 |
+| 40 | 10.0 | ~520 |
+
+Two honesty notes, because inflated numbers are how tools like this lose trust. **This is an
+estimate, not a measurement** — it assumes you would otherwise have reviewed those calls yourself,
+which for most teams is exactly the point: nobody does, so the signal is simply lost. And the hours
+are the smaller half of the value. The bigger half is the part with no number: the request you would
+have forgotten, the third account that turns a hunch into a decision, and the promise made on a call
+that nobody wrote down.
+
 ---
 
 ## How it works
 
+```mermaid
+flowchart TB
+    T["📞 Call transcripts"] --> C
+    R["🗺️ Your roadmap"] -.-> M
+
+    subgraph DAILY ["Agent 1 · daily"]
+        C["Coordinator<br/><b>never reads a transcript</b>"] -->|"one call each,<br/>max 5 at a time"| H["helpers, in parallel<br/><i>read · translate · extract</i>"]
+        H --> M["Merge<br/><b>the irreversible step</b>"]
+    end
+
+    M --> MX[("📊 Signal matrix<br/><i>one row per need, never rebuilt</i>")]
+    M --> BR["📄 Daily briefing"]
+
+    subgraph WEEKLY ["Agent 2 · weekly"]
+        S["Movers vs last week"] --> D["Decisions · retention risks<br/>· questions for the team"] --> OB["Opportunity briefs"]
+    end
+
+    MX --> S
+    D --> DG["📄 Weekly digest"]
+    OB --> DG
+    BR --> PM(["🧑 You — decide, resolve, forward"])
+    DG --> PM
+    PM -->|"your edits are final"| MX
+    PM -->|"questions to ask next"| T
+
+    style DAILY fill:#f7f9fb,stroke:#3D5A80
+    style WEEKLY fill:#f5faf8,stroke:#4C8577
+    style MX fill:#fff8e8,stroke:#b98b2e
+    style PM fill:#eef3f8,stroke:#3D5A80
 ```
-call transcripts
-      │
-      ▼   daily
-┌──────────────────────────┐        ┌────────────────────────────┐
-│ Agent 1 — discovery      │───────▶│ signal-matrix.xlsx         │  one file,
-│ classify → extract →     │        │ (cumulative, never rebuilt)│  updated in place
-│ merge                    │        └────────────────────────────┘
-│                          │───────▶ Daily briefing/…pdf
-└──────────────────────────┘
-      │
-      ▼   weekly
-┌──────────────────────────┐───────▶ Weekly digest/…pdf
-│ Agent 2 — synthesis      │───────▶ Opportunity briefs/…md
-└──────────────────────────┘
-      │
-      ▼
-    you — decide, resolve, forward the questions
-```
+
+More diagrams — a step-by-step of a daily run, how scoring works, and why the merge is guarded —
+are in [`docs/architecture.md`](docs/architecture.md).
 
 Three design decisions are worth stealing even if you never run this code:
 

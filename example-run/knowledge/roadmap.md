@@ -1,9 +1,14 @@
 Refreshed: 2026-08-02
 
-# Northwind Robotics — product knowledge (example)
+# Northwind Robotics — product & roadmap (example)
 
-This is the file the agents read to tell "new request" from "we shipped that last quarter".
-Keep it short. Four headings, a line each. Rewrite it whenever the roadmap moves.
+**This is your roadmap, in the form the agents read.** It is what lets them tell a genuinely new
+request from something you shipped last quarter, and it is why a briefing can say *"this validates
+Real-time alerts, committed Q2"* instead of just *"customer wants alerts"*.
+
+Keep it short — four headings, one line per item. Rewrite it whenever the roadmap moves; the agents
+re-read it on a schedule (`product_knowledge.refresh_days`). If your roadmap already lives in a wiki
+page, a sheet or a doc, point `product_knowledge.remote` at it instead and this file becomes a cache.
 
 ## Shipped today
 - **Line dashboard** — throughput, cycle time and downtime per line, refreshed hourly.
