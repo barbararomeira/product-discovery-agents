@@ -126,10 +126,11 @@ From the worked example in this repo — one week, five calls:
 |---|---|
 | Calls read | **5** (2 prospect · 1 implementation · 2 customer) |
 | Review time saved | **1 h 15 min** *(5 calls × 15 min — your assumption, printed next to the number)* |
-| Signals tracked | **19**, across **4 accounts** |
+| Signals tracked | **20**, across **4 accounts** |
 | Merged rather than duplicated | **4** second mentions landed on an existing row |
-| Ranking driven by real problems | **68%** of ranked signals have a customer with a consequence attached |
-| Demand with no roadmap home | **47%** |
+| Opportunity briefs drafted | **1**, the moment a human answered an open question |
+| Ranking driven by real problems | **70%** of ranked signals have a customer with a consequence attached |
+| Demand with no roadmap home | **45%** |
 | Your time in | **~15 min/week + 30 min on Friday** |
 
 Time saved scales with how much your team talks to customers. At 15 minutes to watch a call and

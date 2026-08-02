@@ -10,17 +10,17 @@ Time
   Assumption:             15 min to review one call by hand (set in config; an estimate, not a measurement)
 
 Backlog
-  Signals tracked:        19
-  New / merged:           19 new · 0 merged into existing rows
+  Signals tracked:        20
+  New / merged:           20 new · 0 merged into existing rows
   Accounts represented:   4
 
 Evidence quality
-  Priority driven by real problems: 68% of ranked signals have at least one
+  Priority driven by real problems: 70% of ranked signals have at least one
   customer who attached a consequence (deal condition, success criterion, quantified pain).
-  Demand with no roadmap home:      47%
+  Demand with no roadmap home:      45%
 
 Top by evidence
-  1. Read-only view of line status on a phone — priority 8 (Prospect, Customer)
-  2. Surface recurring stop patterns automatically — priority 4 (Prospect, Customer)
-  3. Let customers edit the downtime reason-code list — priority 4 (Prospect, Customer)
+  1. Act on a stop from the phone, not just see it — priority 8 (Prospect, Customer)
+  2. Read-only view of line status on a phone — priority 8 (Prospect, Customer)
+  3. Surface recurring stop patterns automatically — priority 4 (Prospect, Customer)
 ```

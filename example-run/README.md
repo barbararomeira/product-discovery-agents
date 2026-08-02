@@ -34,7 +34,7 @@ The five calls are deliberately varied, because that is what a real week looks l
 
 | File | What it is |
 |---|---|
-| `signal-matrix.xlsx` | **The backlog.** 19 signals extracted from 5 calls, ranked by evidence. Four sheets: the signals, cross-call themes, the processed-calls ledger, and run metrics. |
+| `signal-matrix.xlsx` | **The backlog.** 20 signals extracted from 5 calls, ranked by evidence. Four sheets: the signals, cross-call themes, the processed-calls ledger, and run metrics. |
 | `Daily briefing/` | The two-minute morning read. |
 | `Weekly digest/` | The Friday agenda: movers, decisions, retention risks, questions to send back to the team. |
 | `Opportunity briefs/` | One brief, drafted the moment a human answered an open question — see §3. |
