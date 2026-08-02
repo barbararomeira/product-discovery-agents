@@ -207,9 +207,10 @@ Time you did not spend listening
 
   In working days:        {m['hours_saved']/8:.1f} d this {m['scope']} ({m['hours_saved_all_time']/8:.1f} d all time), at 8 h a day
 
-  At the current rate ({calls_per_week:.1f} calls/week, {per_week:.1f} h/week), by 31 Dec
-  {m['today'][:4]} this reaches {to_year_end + m['hours_saved_all_time']:.0f} h — {(to_year_end + m['hours_saved_all_time'])/8:.1f} working days
-  of customer conversation read for you, from the {m['weeks_to_year_end']:.0f} weeks remaining.
+Run-rate ({calls_per_week:.1f} calls/week, {per_week:.1f} h/week)
+  A FULL YEAR at this rate:   {per_week*52:.0f} h = {per_week*52/8:.1f} working days
+  Rest of {m['today'][:4]} ({m['weeks_to_year_end']:.0f} weeks left): {to_year_end:.0f} h = {to_year_end/8:.1f} working days
+  Total by 31 Dec {m['today'][:4]}:      {to_year_end + m['hours_saved_all_time']:.0f} h = {(to_year_end + m['hours_saved_all_time'])/8:.1f} working days
 
 Backlog
   Signals tracked:        {m['signals_tracked']}

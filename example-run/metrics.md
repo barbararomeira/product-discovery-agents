@@ -12,9 +12,10 @@ Time you did not spend listening
 
   In working days:        0.3 d this all (0.3 d all time), at 8 h a day
 
-  At the current rate (5.0 calls/week, 2.7 h/week), by 31 Dec
-  2026 this reaches 61 h — 7.6 working days
-  of customer conversation read for you, from the 22 weeks remaining.
+Run-rate (5.0 calls/week, 2.7 h/week)
+  A FULL YEAR at this rate:   140 h = 17.6 working days
+  Rest of 2026 (22 weeks left): 58 h = 7.3 working days
+  Total by 31 Dec 2026:      61 h = 7.6 working days
 
 Backlog
   Signals tracked:        20

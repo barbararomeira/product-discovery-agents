@@ -127,7 +127,7 @@ From the worked example in this repo — five calls in one week:
 |---|---|
 | Calls read | **5** (2 prospect · 1 implementation · 2 customer) |
 | **Listening time saved** | **2 h 44 min** — the real length of those calls, summed. Average call **33 min**. Every call measured; nothing assumed. |
-| Same figure, in working days | **0.3 days** in one week |
+| Same figure, in working days | **0.3 days** in one week · **17.6 days a year** at this rate |
 | Signals tracked | **20**, across **4 accounts** |
 | Merged rather than duplicated | **4** second mentions landed on an existing row |
 | Opportunity briefs drafted | **1**, the moment a human answered an open question |
@@ -135,9 +135,12 @@ From the worked example in this repo — five calls in one week:
 | Demand with no roadmap home | **45%** |
 | Your time in | **~15 min/week + 30 min on Friday** |
 
-**The conclusion that matters is the projection.** At the rate this example actually ran —
-5 calls a week, 2.7 hours of talk time — the system reads **61 hours of customer conversation by
-31 December. That is 7.6 working days.** That is not an estimate of how long you *might* have spent reviewing calls; it is
+**The conclusion that matters is the run-rate.** This example ran at 5 calls a week, 2.7 hours of
+talk time. Held for a full year, that is **140 hours — 17.6 working days of customer conversation
+read for you.** (Starting in August, the remaining 22 weeks of 2026 come to 58 hours, or 7.3 days.)
+
+Double the call volume and you double the number: a team doing 10 customer calls a week is at
+**35 working days a year**, and 20 a week is **70**. That is not an estimate of how long you *might* have spent reviewing calls; it is
 the measured length of calls somebody would otherwise have had to sit through to get the same
 signal, and almost nobody does, which is exactly why the signal is normally lost.
 
