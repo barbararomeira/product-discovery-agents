@@ -1,0 +1,125 @@
+/* Report stylesheet — the ONE source of print styling for every report this system
+   produces (daily briefing, weekly digest, opportunity briefs).
+
+   Inline this file verbatim into a <style> tag. Do not rewrite it, do not "improve"
+   it per run, do not add page-height rules. Every rule marked LESSON below exists
+   because a real report shipped broken without it. */
+
+:root{
+  --orange:#47809E;      /* branding.accent — rules, headings, priority, prospect chips */
+  --green:#75905A;       /* branding.accent_secondary — shipped features, customer chips */
+  --attention:#C4718D;   /* bugs, retention risk, needs-your-call */
+  --ink:#23252B;
+  --muted:#666;
+  --rule:#e2e2e2;
+  --surface:#fafafa;
+}
+
+@page{ size:A4; margin:0; }
+*{ margin:0; padding:0; box-sizing:border-box; }
+
+body{
+  font-family:-apple-system,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  color:var(--ink); background:#fff; font-size:10pt; line-height:1.45;
+  -webkit-print-color-adjust:exact; print-color-adjust:exact;
+}
+
+/* LESSON: pages must be allowed to GROW. A fixed height (height:297mm) silently
+   overflows and prints one section on top of the next. Never set a page height. */
+.page{ width:210mm; padding:12mm 14mm; }
+.page + .page{ break-before:page; page-break-before:always; }
+
+/* ---------- masthead ---------- */
+header{
+  display:flex; justify-content:space-between; align-items:baseline;
+  border-bottom:2.5pt solid var(--orange); padding-bottom:7px; margin-bottom:14px;
+}
+.brand{ font-weight:800; font-size:14pt; letter-spacing:-.2px; }
+.brand span{ color:var(--orange); }
+.badge{
+  display:inline-block; font-size:7.6pt; font-weight:700; letter-spacing:1.2px;
+  color:var(--orange); text-transform:uppercase;
+}
+.meta{ text-align:right; font-size:8.4pt; color:var(--muted); }
+
+/* ---------- structure ---------- */
+h1{ font-size:18pt; letter-spacing:-.4px; margin-bottom:4px; }
+/* LESSON: a heading stranded alone at the foot of a page looks broken. */
+h2{
+  font-size:12pt; margin:16px 0 7px; padding-left:8px;
+  border-left:4px solid var(--orange);
+  break-after:avoid; page-break-after:avoid; break-inside:avoid;
+}
+h2.green{ border-left-color:var(--green); }
+h2 .sub{ font-weight:400; font-size:9.5pt; color:var(--muted); }
+p{ margin-bottom:6px; }
+ul{ margin:0 0 8px 16px; } li{ margin-bottom:3px; }
+/* LESSON: never leave a single line of a paragraph alone across a break. */
+p, li{ orphans:3; widows:3; }
+
+/* ---------- KPI row ---------- */
+.kpis{ display:flex; gap:8px; margin-bottom:14px; }
+.kpi{
+  flex:1; border:1px solid var(--rule); border-top:3px solid var(--orange);
+  border-radius:6px; padding:8px; text-align:center;
+  break-inside:avoid; page-break-inside:avoid;
+}
+.kpi .n{ font-size:20pt; font-weight:800; color:var(--orange); line-height:1.1; }
+.kpi .l{ font-size:7.6pt; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; }
+
+/* ---------- signal cards ----------
+   LESSON: this is the rule that was missing. A card split across a page break is the
+   single most common defect in these reports. Both properties, on every card. */
+.card{
+  border:1px solid var(--rule); border-left:4px solid var(--orange);
+  border-radius:6px; padding:9px 11px; margin-bottom:8px;
+  break-inside:avoid; page-break-inside:avoid;
+}
+.card.shipped{ border-left-color:var(--green); }
+.card.risk{ border-left-color:var(--attention); }
+.card .title{ font-weight:700; margin-bottom:4px; }
+.card .quote{
+  font-style:italic; color:#333; margin:5px 0;
+  border-left:2px solid var(--rule); padding-left:8px;
+}
+.card .foot{ font-size:8pt; color:var(--muted); margin-top:4px; }
+
+/* ---------- chips ---------- */
+.chip{
+  display:inline-block; border-radius:10px; padding:1px 8px; font-size:8pt;
+  font-weight:700; color:#fff; margin:0 4px 3px 0; white-space:nowrap;
+}
+.c-prospect{ background:var(--orange); }
+.c-customer{ background:var(--green); }
+.c-implementation{ background:#777; }
+.c-bug,.c-risk{ background:var(--attention); }
+.c-neutral{ background:#1a1a1a; }
+.c-open{ background:#a8730a; }
+
+/* ---------- boxes ---------- */
+/* LESSON: a call-out box that splits reads as two unrelated fragments. */
+.box{
+  border:1px solid var(--rule); border-left:3px solid var(--orange);
+  background:var(--surface); border-radius:5px; padding:10px 12px; margin:10px 0;
+  break-inside:avoid; page-break-inside:avoid;
+}
+.box.attention{ border-left-color:var(--attention); }
+.box .title{ font-weight:700; margin-bottom:4px; }
+
+/* ---------- tables ---------- */
+table{ border-collapse:collapse; width:100%; margin:6px 0 10px; font-size:9.2pt; }
+th{
+  background:var(--ink); color:#fff; text-align:left; padding:5px 8px;
+  font-size:7.8pt; text-transform:uppercase; letter-spacing:.4px;
+}
+td{ border:1px solid var(--rule); padding:5px 8px; vertical-align:top; }
+tbody tr:nth-child(even) td{ background:var(--surface); }
+/* LESSON: a table ROW must never split; the table itself may flow across pages. */
+tr{ break-inside:avoid; page-break-inside:avoid; }
+thead{ display:table-header-group; }   /* repeat headers on continuation pages */
+
+/* ---------- footer ---------- */
+footer{
+  margin-top:16px; padding-top:8px; border-top:1px solid var(--rule);
+  color:var(--muted); font-size:7.8pt; break-inside:avoid;
+}

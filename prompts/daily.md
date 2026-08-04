@@ -110,7 +110,7 @@ Write print-ready HTML to a temp path, then convert:
   --print-to-pdf="<output>.pdf" "file:///tmp/briefing.html"
 ```
 
-Save only the PDF to `Daily briefing/briefing-<YYYY-MM-DD>.pdf`. Design for A4: `@page { size: A4; margin: 0 }`, page containers 210mm wide, cards that don't break across pages. Style: accent `{{ACCENT}}`, secondary `{{ACCENT_SECONDARY}}`, black on white, header "{{COMPANY_NAME}} · {{PRODUCT_NAME}}", badge "CALL FEEDBACK BRIEFING", date top right.
+Save only the PDF to `Daily briefing/briefing-<YYYY-MM-DD>.pdf`. **Styling is not yours to write.** Read `docs/report.css` and inline it verbatim in one `<style>` tag; author no CSS of your own, and never give a page container a fixed height — that is what makes one section print on top of the next. Produce semantic HTML using the classes it defines (`.page` `.kpis/.kpi` `.card` `.chip` `.box` `.quote` `.foot`): every signal is a `.card`, every call-out a `.box`. After rendering, check the PDF and confirm no card, box or table row is split across a page break. Design for A4: `@page { size: A4; margin: 0 }`, page containers 210mm wide, cards that don't break across pages. Style: accent `{{ACCENT}}`, secondary `{{ACCENT_SECONDARY}}`, black on white, header "{{COMPANY_NAME}} · {{PRODUCT_NAME}}", badge "CALL FEEDBACK BRIEFING", date top right.
 
 Sections, in order:
 1. **KPI row** — calls reviewed with the audience split · new-feature signals · enhancement signals · roadmap validations.
