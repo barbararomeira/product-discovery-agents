@@ -309,6 +309,12 @@ Two equal options, neither better than the other:
 `setup.sh` renders ready-to-install launchd jobs (macOS); see [`templates/cron.md`](templates/cron.md)
 for Linux.
 
+> ⚠️ **Runs are capped at one hour** (`MAX_RUN_SECONDS`). A run can stall indefinitely on an
+> unresponsive MCP server, and a silent stall is worse than a crash: nothing is produced and nothing
+> complains, so you keep trusting a briefing that never arrived. The cap kills it, says so in the
+> log, and the ledger picks the calls up on the next run. *(This warning exists because it happened —
+> a run sat there for an hour and forty-seven minutes doing nothing.)*
+
 > ⚠️ **If your output folder lives in Google Drive, Dropbox or iCloud**, a scheduled job may be
 > unable to *read* it even though it can create files — macOS requires Full Disk Access for the
 > shell running the job. This fails silently every morning, which is the worst kind of broken. The

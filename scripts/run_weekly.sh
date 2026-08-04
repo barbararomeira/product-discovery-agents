@@ -33,11 +33,23 @@ cd "$OUT_DIR" || exit 1
 ALLOWED_TOOLS="Read,Write,Edit,Glob,Grep,Bash"
 [ -n "$EXTRA_ALLOWED_TOOLS" ] && ALLOWED_TOOLS="$ALLOWED_TOOLS,$EXTRA_ALLOWED_TOOLS"
 
+# A run can stall indefinitely on an unresponsive MCP server, and a silent stall is
+# worse than a crash: nothing is produced and nothing complains. Cap it.
+MAX_RUN_SECONDS=${MAX_RUN_SECONDS:-3600}
+
 render_prompt "$REPO_ROOT/prompts/weekly.md" | claude -p "$(cat)" \
   --model "$(cfg models weekly)" \
   --allowedTools "$ALLOWED_TOOLS" \
-  --output-format text >> "$LOG" 2>&1
+  --output-format text >> "$LOG" 2>&1 &
+CLAUDE_PID=$!
+( sleep "$MAX_RUN_SECONDS"; kill -TERM $CLAUDE_PID 2>/dev/null ) &
+WATCHDOG_PID=$!
+wait $CLAUDE_PID
 STATUS=$?
+kill $WATCHDOG_PID 2>/dev/null
+if [ $STATUS -eq 143 ]; then
+  echo "TIMED OUT after ${MAX_RUN_SECONDS}s — killed. The ledger will catch these calls up next run." >> "$LOG"
+fi
 
 if [ $STATUS -eq 0 ]; then
   python3 "$REPO_ROOT/tools/metrics.py" --config "$CONFIG" --matrix "$MATRIX" \
