@@ -99,6 +99,7 @@ subs = {
   "{{TEAM_SALES}}": """$(cfg_list team sales)""",
   "{{TEAM_POST_SALES}}": """$(cfg_list team post_sales)""",
   "{{TEAM_CUSTOMER_SUCCESS}}": """$(cfg_list team customer_success)""",
+  "{{TEAM_PRODUCT}}": """$(cfg_list team product)""",
   "{{TRANSCRIPT_SOURCE_INSTRUCTIONS}}": """$source_doc""",
   "{{PRODUCT_KNOWLEDGE_SOURCE}}": """$knowledge_source""",
   "{{PRODUCT_KNOWLEDGE_CACHE}}": """$(cfg product_knowledge file)""",

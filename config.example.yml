@@ -26,6 +26,8 @@ team:
     - "Marc Olsen"
   customer_success: # usually Customer calls
     - "Sam Whitfield"
+  product:          # PM-led discovery, workshops, roadmap conversations — often the richest signal
+    - "Alex Kim"
 
 # Where the transcripts come from. Pick ONE.
 # See sources/transcript-folder.md and sources/call-recorder-mcp.md.

@@ -29,7 +29,13 @@ People whose calls carry product signal:
 - Sales (usually prospect calls): {{TEAM_SALES}}
 - Post-sales / technical account management (usually implementation and customer calls): {{TEAM_POST_SALES}}
 - Customer success (usually customer calls): {{TEAM_CUSTOMER_SUCCESS}}
+- Product (usually the deepest product signal): {{TEAM_PRODUCT}} — discovery sessions, workshops,
+  roadmap and feature conversations. These are often the richest calls of the week, because talking
+  about what to build is their entire purpose. Classify them by account status like any other call.
 Also keep clearly customer-facing calls run by anyone else internal.
+
+Adding product people does **not** relax the internal rule: most of a PM's calendar is internal
+(planning, metrics, 1:1s) and stays excluded. What qualifies is the subset where a customer is present.
 
 **Classify each qualifying call** as exactly one of:
 - `Prospect` — selling to an account that has not signed (demos, discovery, proposals)
