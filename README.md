@@ -312,7 +312,9 @@ for Linux.
 > ⚠️ **Runs are capped at one hour** (`MAX_RUN_SECONDS`). A run can stall indefinitely on an
 > unresponsive MCP server, and a silent stall is worse than a crash: nothing is produced and nothing
 > complains, so you keep trusting a briefing that never arrived. The cap kills it, says so in the
-> log, and the ledger picks the calls up on the next run. *(This warning exists because it happened —
+> log, and the ledger picks the calls up on the next run. The deadline is wall-clock rather than a
+> `sleep`, because a suspended laptop pauses sleep timers — the first version of this guard let a
+> hung run survive 29 hours against a 1-hour cap. *(This warning exists because it happened —
 > a run sat there for an hour and forty-seven minutes doing nothing.)*
 
 > ⚠️ **If your output folder lives in Google Drive, Dropbox or iCloud**, a scheduled job may be

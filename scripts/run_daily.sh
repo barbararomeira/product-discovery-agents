@@ -45,7 +45,14 @@ render_prompt "$REPO_ROOT/prompts/daily.md" | claude -p "$(cat)" \
   --allowedTools "$ALLOWED_TOOLS" \
   --output-format text >> "$LOG" 2>&1 &
 CLAUDE_PID=$!
-( sleep "$MAX_RUN_SECONDS"; kill -TERM $CLAUDE_PID 2>/dev/null ) &
+# Wall-clock deadline, NOT `sleep N`: macOS (and any machine that suspends) pauses sleep
+# timers while asleep, so a plain `sleep 3600` can let a hung run survive overnight —
+# in one case 29 hours against a 1-hour cap. Polling the clock kills it promptly on wake.
+RUN_DEADLINE=$(( $(date +%s) + MAX_RUN_SECONDS ))
+( while kill -0 $CLAUDE_PID 2>/dev/null; do
+    if [ "$(date +%s)" -ge "$RUN_DEADLINE" ]; then kill -TERM $CLAUDE_PID 2>/dev/null; break; fi
+    sleep 30
+  done ) &
 WATCHDOG_PID=$!
 wait $CLAUDE_PID
 STATUS=$?
