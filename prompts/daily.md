@@ -15,6 +15,13 @@ Open the matrix with python3 + openpyxl. Read the **Processed calls** sheet. You
 
 Never re-process a call already listed (match on the call's unique id; if a logged row has no id, match on date + customer and backfill the id when you find it).
 
+**Check for a missing briefing before you start.** The ledger is written before the briefing is
+rendered, so a run that dies between those two steps leaves calls marked processed with no briefing —
+the matrix moves on and that day vanishes silently. For each call date in the last 7 days with rows in
+**Processed calls**, confirm a briefing exists in `Daily briefing/`. If one is missing, rebuild it first
+from the matrix rows citing those calls (`briefing-<call date>-recovered.pdf`) and say so in the run
+summary. A processed call with no briefing is a silent loss, not a completed run.
+
 ## STEP 1 — Collect calls
 
 Obtain the list of calls in the window using the configured transcript source:
