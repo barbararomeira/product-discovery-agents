@@ -1,4 +1,4 @@
-# product-discovery-agents
+# Product discovery agents
 
 <p align="center">
   <img src="assets/hero.gif" alt="Customer calls flow through five stages — capture raw conversations, structure the evidence, score it into a signal matrix, draft briefs, and you decide — under the line: evidence, not whoever remembers loudest." width="100%">
@@ -7,6 +7,8 @@
 ### Evidence, not whoever remembers loudest.
 
 **Turn call transcripts into an evidence-ranked product backlog — automatically, every day.**
+
+*Companion project: [**evidence-scored-call-review**](https://github.com/barbararomeira/evidence-scored-call-review) — the other half of the same pipeline. It reads the same transcripts for how the conversation went; this one reads them for what customers need built. Reading each transcript once and analysing it several ways is the reason both exist.*
 
 **The problem.** Every week your team has customer calls full of product signal. Somebody asks for a
 feature. Somebody says the reporting is unusable for their shift pattern. Somebody mentions, in
@@ -253,6 +255,9 @@ flowchart TB
 More diagrams — a step-by-step of a daily run, how scoring works, and why the merge is guarded —
 are in [`docs/architecture.md`](docs/architecture.md).
 
+Why it is shaped this way — what was chosen, what was genuinely considered, and what each choice
+costs — is in [`DECISIONS.md`](DECISIONS.md).
+
 Three design decisions are worth stealing even if you never run this code:
 
 **The coordinator never reads a transcript.** Agent 1 delegates each call to a cheap model running
@@ -343,6 +348,6 @@ The roadmap for this thing, roughly in order:
 Issues and pull requests welcome. If you adopt this and change something meaningful about the
 method, I'd genuinely like to hear about it.
 
-## Licence
+## License
 
 MIT — see [LICENSE](LICENSE). Use it, fork it, sell what you build with it.
