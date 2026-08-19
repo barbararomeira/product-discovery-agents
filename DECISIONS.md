@@ -147,5 +147,14 @@ sense of coverage; reaching for it at the boundary — the shape, arithmetic and
 model produced — gets you a real check that fails the same way every time. Ask what the output must
 be true of, not what the reasoning should have been.
 
+**When to remove it.** A check earns its place by being believed, so the condition to watch is false
+positives — not effort. If it starts failing runs that turn out to be fine (a legitimate merge it
+reads as a duplicate account, a rank order it disputes for a reason the prompt actually allows), it
+has become the thing it was built to prevent: an alarm that costs attention and does not repay it,
+and the next real failure gets scrolled past with the rest. Fix the rule if the rule is wrong; delete
+the check if it cannot be made right. What is *not* a reason to remove it is that it was cheap to
+write — it costs nothing to keep, and the question of whether it was worth starting stopped being
+live the moment it existed.
+
 **Implementation status:** Implemented in `tools/validate_matrix.py`, wired into
 `scripts/run_daily.sh`, and covered by `tests/test_validate_matrix.py`.
