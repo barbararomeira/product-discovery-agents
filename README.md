@@ -10,6 +10,14 @@
 
 *Companion project: [**evidence-scored-call-review**](https://github.com/barbararomeira/evidence-scored-call-review). Both projects use the same transcript source for different decisions. Product Discovery identifies what customers need built, while Evidence-Scored Call Review examines how the commercial conversation went. Each uses a purpose-specific extraction so the evidence and evaluation rules remain separate.*
 
+| | |
+|---|---|
+| **Problem** | Customer needs and commercial commitments are spread across prospect, implementation and customer calls, and survive only in whoever's memory holds them. |
+| **Built** | An evidence-led daily workflow that classifies calls, accumulates recurring product signals into one cumulative matrix, and produces decision-ready briefings. |
+| **Human boundary** | The system organises evidence. The product manager owns effort, trade-offs and every roadmap decision — the system never estimates effort or sets priority by judgement. |
+| **Public scope** | Clean-room implementation on synthetic transcripts. Production integrations and employer data are excluded. |
+| **Verification** | A processing ledger, operational guards (single-run lock, real-read checks on synced folders), deterministic metrics, and 21 tests including a post-run validator over the matrix. |
+
 **The problem.** Every week your team has customer calls full of product signal. Somebody asks for a
 feature. Somebody says the reporting is unusable for their shift pattern. Somebody mentions, in
 passing, that they were promised something six weeks ago.
@@ -24,13 +32,9 @@ five customer-facing people running ~30 calls a week generates **around 790 hour
 year — roughly 98 working days.** Five months of somebody's working year, spent listening. Nobody has
 that, so the calls go unreviewed and the signal is not triaged, it is lost.
 
-This reads all of it, every morning, and keeps one file that accumulates: each row a real customer
-need, carrying who asked, how strongly they said it, and how many times it has come back — with
-their own words attached.
-
-This is a small system that fixes that. Agents read the calls, extract what customers asked for,
-and maintain **one cumulative backlog** where every item carries *who asked, how strongly they
-said it, and how many times it has come back*, with their own words attached.
+This reads all of it, every morning, and maintains **one cumulative backlog** — each row a real
+customer need, carrying *who asked, how strongly they said it, and how many times it has come back*,
+with their own words attached.
 
 You stop saying *"customers seem to want X."*
 You start saying *"six calls, three accounts, two of them made it a deal condition — here are the quotes."*
@@ -358,6 +362,21 @@ rather than blocking forever.
 
 The reasoning is [Decision 4](DECISIONS.md): *the parts of an AI system you cannot test are usually
 surrounded by parts you can.*
+
+## Data and governance boundaries
+
+The public example uses invented companies and synthetic transcripts; nothing here comes from a real
+call.
+
+In a production setting, processing conversation transcripts needs an approved legal basis,
+transparency for the people on the call, role-based access, retention limits, and controls that keep
+sensitive customer information out of tools not authorised to hold it. Those are deployment
+questions, not code questions, and this template does not answer them for you.
+
+One design consequence is worth stating because it cuts both ways: **extracted signals stay traceable
+to their source call, while access to the original transcript should be narrower than access to the
+matrix.** The matrix is meant to be read widely — that is the point of it — and it carries verbatim
+customer quotes, so treat it as customer data rather than as an internal summary.
 
 ## What's next
 
