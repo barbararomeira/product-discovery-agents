@@ -16,7 +16,7 @@
 | **Built** | An evidence-led daily workflow that classifies calls, accumulates recurring product signals into one cumulative matrix, and produces decision-ready briefings. |
 | **Human boundary** | The system organises evidence. The product manager owns effort, trade-offs and every roadmap decision — the system never estimates effort or sets priority by judgement. |
 | **Public scope** | Clean-room implementation on synthetic transcripts. Production integrations and employer data are excluded. |
-| **Verification** | A processing ledger, operational guards (single-run lock, real-read checks on synced folders), deterministic metrics, and 21 tests including a post-run validator over the matrix. |
+| **Verification** | A processing ledger, operational guards (single-run lock, real-read checks on synced folders), deterministic metrics, and tests covering the run lock and a post-run validator over the matrix. |
 
 **The problem.** Every week your team has customer calls full of product signal. Somebody asks for a
 feature. Somebody says the reporting is unusable for their shift pattern. Somebody mentions, in
