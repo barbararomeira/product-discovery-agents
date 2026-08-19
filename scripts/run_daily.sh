@@ -1,6 +1,8 @@
 #!/bin/zsh
 # Daily product-discovery run. Reads config.yml, renders prompts/daily.md, runs Claude Code
-# headless. Safe to run by hand at any time — the ledger prevents double-counting.
+# headless. Safe to run by hand at any time — the ledger prevents double-counting, and the
+# lock below prevents a hand-run and a scheduled run from overlapping. The ledger alone is
+# not enough: it stops a call being processed twice, not two runs writing at once.
 
 export PATH="$HOME/.local/bin:/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin"
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -11,6 +13,31 @@ MATRIX="$OUT_DIR/$(cfg output matrix_filename)"
 LOGDIR="$OUT_DIR/logs"
 mkdir -p "$LOGDIR" "$OUT_DIR/Daily briefing"
 LOG="$LOGDIR/run-$(date +%F).log"
+
+# --- single-run lock ---
+# The ledger stops a call being counted twice. It does not stop two runs existing at once, and
+# those are different problems: overlapping runs write the same workbook from two processes and
+# can deliver the same message twice, both before either one reaches the ledger.
+#
+# This is not hypothetical. A hand-started catch-up run was still working when the scheduled run
+# fired an hour later. Nothing stopped it — it happened to inspect the ledger, notice the day was
+# already done and abort itself, which is judgement standing in for a lock.
+#
+# mkdir is atomic on every POSIX filesystem, which flock is not (absent on stock macOS, unreliable
+# over network mounts). The PID inside lets us tell a live run from a crashed one.
+LOCK="$LOGDIR/.run_daily.lock"
+if ! mkdir "$LOCK" 2>/dev/null; then
+  OTHER=$(cat "$LOCK/pid" 2>/dev/null)
+  if [ -n "$OTHER" ] && kill -0 "$OTHER" 2>/dev/null; then
+    echo "$(date '+%F %T') ABORT: run already in progress (pid $OTHER). Skipped — no writes made." >> "$LOGDIR/failures.log"
+    exit 0
+  fi
+  # No live owner: the previous run died without cleaning up. Take the lock and say so, rather
+  # than refusing forever on a stale directory — a lock that outlives its holder is an outage.
+  echo "$(date '+%F %T') NOTE: stale lock from pid ${OTHER:-unknown} reclaimed." >> "$LOGDIR/failures.log"
+fi
+echo $$ > "$LOCK/pid"
+trap 'rm -rf "$LOCK"' EXIT INT TERM
 
 # The output directory may live in a synced folder (Drive, Dropbox, iCloud) that is not
 # mounted yet, or that a scheduler cannot read without disk-access permission. Verify a

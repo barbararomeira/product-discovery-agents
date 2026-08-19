@@ -177,3 +177,57 @@ flowchart LR
 Two consequences worth knowing: you can run it by hand any time without double-counting anything,
 and a missed day — laptop asleep, scheduler broken, a call skipped — heals itself on the next run
 rather than being lost.
+
+### Repeatable is not the same as concurrent
+
+The ledger makes a run safe to *repeat*. It does nothing to make two runs safe to *overlap*, and
+those are different guarantees that are easy to confuse — the second sounds like a consequence of
+the first and is not.
+
+Overlapping runs share a failure the ledger cannot see: both read it before either writes it, so
+both conclude the day is unprocessed, and both go on to write the same workbook from two processes
+and deliver the same messages twice. Idempotence protects the *record*; it protects nothing that
+happens before the record is written.
+
+This is not theoretical. A catch-up run started by hand was still working when the scheduler fired
+the regular run an hour later. Nothing prevented it. The second run happened to inspect the ledger,
+notice the day was already done and abort itself — judgement standing in for a lock, on a day it
+happened to reason well.
+
+```mermaid
+flowchart TD
+    A["Run starts"] --> B{"mkdir lock<br/>succeeds?"}
+    B -->|yes| C["Own the day:<br/>write pid, trap EXIT"]
+    B -->|no| D{"pid still<br/>alive?"}
+    D -->|yes| E["Abort, exit 0<br/>no writes"]
+    D -->|no| F["Stale lock:<br/>reclaim and log"]
+    F --> C
+    C --> G["Run, then release"]
+
+    style E fill:#f6f6f6,stroke:#999
+    style G fill:#fff8e8,stroke:#b98b2e
+```
+
+`mkdir` is the lock because it is atomic on every POSIX filesystem, which `flock` is not — absent
+from stock macOS, unreliable over network mounts. The PID inside distinguishes a live run from a
+crashed one, because **a lock that outlives its holder is an outage**: refusing forever on a stale
+directory turns a crash into a permanent failure, which is a worse bug than the one being fixed.
+
+### Two guard failures worth designing against
+
+**A guard that is written but never called.** A preflight check existed for five days — built
+specifically to turn an hour-long hang into a fifteen-second abort — and no runner ever invoked it.
+It sat in the directory through four more hangs while the thing it prevented kept happening. Nothing
+detects this: the file is present, it is correct, its tests pass, and it is dead code. If a guard
+matters, something must fail when it is missing; otherwise the only evidence it is wired is that
+somebody remembers wiring it.
+
+**A reference that goes stale without saying so.** The knowledge cache above carries a freshness
+rule. The reference files beside it did not, and sat weeks behind while every run still cited them
+as authoritative. The worst case was the one most likely to change: a document edited by hand,
+upstream, by people with no idea a pipeline depended on it.
+
+The rule that falls out: **every mirrored reference carries its own `Refreshed:` date and its own
+rule, or it is not a mirror — it is a copy that was accurate once.** A stale source raises no error.
+It produces confident, well-formatted, sourced output that is out of date, which is the hardest kind
+of wrong to notice.
