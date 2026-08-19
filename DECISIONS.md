@@ -52,7 +52,7 @@ sounds like a consequence of the first.* Anything that says "safe to re-run" is 
 the record, not about concurrency, and the gap between those two is invisible until two copies run
 at once.
 
-**Implementation status:** Implemented in `scripts/run_daily.sh`, including stale-lock reclamation. This repository has no test suite, so the behaviour is documented rather than regression-tested here.
+**Implementation status:** Implemented in `scripts/run_daily.sh`, including stale-lock reclamation, and regression-tested in `tests/test_run_lock.py` — which lifts the lock block out of the shipped script rather than copying it, so the tests fail if the real one changes.
 
 ---
 
@@ -106,3 +106,46 @@ well-formatted and correctly sourced — and out of date. Every quality signal y
 still looks good, which makes it the hardest kind of wrong to notice and the easiest to keep shipping.
 
 **Implementation status:** Implemented here for the configured product-knowledge cache, through `refresh_days` in `config.example.yml` and the `Refreshed:` rule in `prompts/daily.md`. The broader claim — that *every* mirrored reference carries its own named owner and refresh rule — is a production lesson. Note also that the safeguard is prompt-driven rather than a deterministic freshness validator.
+
+---
+
+## 4. You cannot test a judgement, but you can check its output
+
+**Chose:** a deterministic validator that runs over the matrix immediately after the agent writes it
+(`tools/validate_matrix.py`, wired into `scripts/run_daily.sh`). It re-derives every rule that has a
+single right answer: importance inside the stated scale, each account counted once, priority equal to
+its own published formula, ranks 1..n in priority order, every row citing a source call, and the
+PM-owned columns identical to a snapshot taken before the run.
+
+**Considered:** unit tests over the merge, which is what a reviewer naturally asks for. Also
+considered leaving the rules as prompt instructions and trusting the model to follow them, which is
+what the system did before.
+
+**Why:** the merge is the judgement. Deciding that two customers described the same underlying need
+is the one thing here that a model does and rules cannot, and there is no function to test — writing
+one would mean building a merge engine that should not exist, then testing that instead of the thing
+that actually runs.
+
+What escapes that argument is everything *downstream* of the judgement. Whether importance is 1 or 2
+is semantic; whether the recorded value is *inside the scale* is arithmetic. Whether two requests are
+the same need is semantic; whether one account got counted twice in a single cell is set membership.
+The prompt states all of these plainly, and a prompt is not an enforcement mechanism — the difference
+only shows up when a run mis-parses a cell or silently renumbers a rank, and produces a matrix that
+looks finished and is wrong.
+
+The manual-column check is the one that matters most and is easiest to miss. A run legitimately
+re-ranks and re-evidences a row; it must never re-own one. Distinguishing "the agent overwrote a
+human's column" from "the human changed it themselves" is impossible after the fact without a
+before-snapshot, so the runner takes one.
+
+Failing the run outright was rejected: by the time validation happens the briefing is written and is
+worth having. It notifies instead, loudly.
+
+**The generalisation:** *the parts of an AI system you cannot test are usually surrounded by parts
+you can.* Reaching for determinism in the model's own reasoning gets you a worse system and a false
+sense of coverage; reaching for it at the boundary — the shape, arithmetic and provenance of what the
+model produced — gets you a real check that fails the same way every time. Ask what the output must
+be true of, not what the reasoning should have been.
+
+**Implementation status:** Implemented in `tools/validate_matrix.py`, wired into
+`scripts/run_daily.sh`, and covered by `tests/test_validate_matrix.py`.

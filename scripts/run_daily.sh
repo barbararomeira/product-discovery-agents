@@ -67,6 +67,13 @@ ALLOWED_TOOLS="Read,Write,Edit,Glob,Grep,Bash,Task,Agent"
 # worse than a crash: nothing is produced and nothing complains. Cap it.
 MAX_RUN_SECONDS=${MAX_RUN_SECONDS:-3600}
 
+# Snapshot the fields that belong to the PM, so the validator below can prove the run did not
+# overwrite them. Cheap, and the only way to tell "the agent tidied a human's column" from
+# "the human changed it themselves" after the fact.
+MANUAL_SNAPSHOT="$LOGDIR/.manual-before.json"
+python3 "$REPO_ROOT/tools/validate_matrix.py" "$MATRIX" --save-manual "$MANUAL_SNAPSHOT" \
+  >> "$LOG" 2>&1 || echo "NOTE: could not snapshot manual fields; the overwrite check will be skipped." >> "$LOG"
+
 render_prompt "$REPO_ROOT/prompts/daily.md" | claude -p "$(cat)" \
   --model "$(cfg models coordinator)" \
   --allowedTools "$ALLOWED_TOOLS" \
@@ -89,6 +96,17 @@ if [ $STATUS -eq 143 ]; then
 fi
 
 if [ $STATUS -eq 0 ]; then
+  # The merge is a judgement and cannot be tested. Its OUTPUT can: importance inside the scale,
+  # accounts counted once, priority equal to its own formula, ranks 1..n in priority order, every
+  # row sourced, and the PM's columns untouched. A violation means the run produced a matrix that
+  # looks finished and is wrong, which is the failure worth catching before anyone reads it.
+  # Non-fatal for the run — the work is done and the briefing is worth having — but it notifies.
+  if ! python3 "$REPO_ROOT/tools/validate_matrix.py" "$MATRIX" \
+         --check-manual "$MANUAL_SNAPSHOT" >> "$LOG" 2>&1; then
+    "$REPO_ROOT/scripts/notify_failure.sh" "Daily discovery" \
+      "the matrix failed validation — see $LOG" 2>/dev/null
+  fi
+  rm -f "$MANUAL_SNAPSHOT"
   python3 "$REPO_ROOT/tools/metrics.py" --config "$CONFIG" --matrix "$MATRIX" \
     --scope run --write >> "$LOG" 2>&1
 else

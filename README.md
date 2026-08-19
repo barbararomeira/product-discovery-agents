@@ -88,6 +88,9 @@ absolutely lose to a 12 that ships next sprint. That call stays yours, deliberat
 Priority = (sum of customer importances) × mentions
 ```
 
+That formula is re-derived independently after every run by `tools/validate_matrix.py`, so a matrix
+whose numbers disagree with it fails validation rather than being read.
+
 Two inputs, both taken from what customers actually said. Nothing estimated by an agent.
 
 **Stated importance, per customer (1–2)** — a customer appears on a row only if they raised it, so
@@ -331,6 +334,30 @@ for Linux.
 > because it happened.)*
 
 ---
+
+## Tests
+
+```bash
+python3 -m pytest tests -q
+```
+
+The merge is a judgement and is not tested — deciding that two customers described the same
+underlying need is the one thing here a model does that rules cannot, and unit-testing it would mean
+building a merge engine that should not exist.
+
+What *is* tested is everything around it. `tools/validate_matrix.py` runs after every daily run and
+re-derives each rule with a single right answer: importance inside the stated scale, each account
+counted once per cell, priority equal to the formula above, ranks 1..n in priority order, every row
+citing a source call, and the PM-owned columns identical to a snapshot taken before the run. The
+tests feed it a correct matrix — the one committed in `example-run/` — and deliberately broken ones.
+
+`tests/test_run_lock.py` covers the single-run lock by lifting the block out of `scripts/run_daily.sh`
+rather than copying it, so the tests fail if the shipped script changes. Both paths are covered: a
+second run blocked while the first holds the lock, and a stale lock from a crashed run reclaimed
+rather than blocking forever.
+
+The reasoning is [Decision 4](DECISIONS.md): *the parts of an AI system you cannot test are usually
+surrounded by parts you can.*
 
 ## What's next
 
