@@ -8,7 +8,7 @@
 
 **Turn call transcripts into an evidence-ranked product backlog — automatically, every day.**
 
-*Companion project: [**evidence-scored-call-review**](https://github.com/barbararomeira/evidence-scored-call-review) — the other half of the same pipeline. It reads the same transcripts for how the conversation went; this one reads them for what customers need built. Reading each transcript once and analysing it several ways is the reason both exist.*
+*Companion project: [**evidence-scored-call-review**](https://github.com/barbararomeira/evidence-scored-call-review). Both projects use the same transcript source for different decisions. Product Discovery identifies what customers need built, while Evidence-Scored Call Review examines how the commercial conversation went. Each uses a purpose-specific extraction so the evidence and evaluation rules remain separate.*
 
 **The problem.** Every week your team has customer calls full of product signal. Somebody asks for a
 feature. Somebody says the reporting is unusable for their shift pattern. Somebody mentions, in
