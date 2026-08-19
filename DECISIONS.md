@@ -10,6 +10,11 @@ entries are the ones where the alternative was live and the wrong choice had alr
 **Note on names.** Every company, person and quote in this repo is invented. Nothing here is drawn
 from a real call.
 
+**Scope note:** This log includes decisions from both the public clean-room implementation and the
+live internal workflow that inspired it. Entries that could reasonably imply a public capability
+state whether the safeguard is **implemented here**, provided as **guidance rather than
+enforcement**, or documented as a **production lesson only**.
+
 ---
 
 ## 1. A ledger stops double-counting, not double-running
@@ -47,6 +52,8 @@ sounds like a consequence of the first.* Anything that says "safe to re-run" is 
 the record, not about concurrency, and the gap between those two is invisible until two copies run
 at once.
 
+**Implementation status:** Implemented in `scripts/run_daily.sh`, including stale-lock reclamation. This repository has no test suite, so the behaviour is documented rather than regression-tested here.
+
 ---
 
 ## 2. If a guard matters, something must fail when it is missing
@@ -73,6 +80,8 @@ having diagnosed it.
 written — except that it feels like the problem is solved.* The only durable evidence a guard is wired
 is that removing it breaks something.
 
+**Implementation status:** Production lesson only. The upstream-authorisation preflight described here is not included in this public template.
+
 ---
 
 ## 3. Every mirrored reference carries its own refresh rule
@@ -95,3 +104,5 @@ the rule somewhere other than the file it governs, so a new copy inherits nothin
 **The generalisation:** *a stale source raises no error.* The run succeeds, the output is confident,
 well-formatted and correctly sourced — and out of date. Every quality signal you would normally check
 still looks good, which makes it the hardest kind of wrong to notice and the easiest to keep shipping.
+
+**Implementation status:** Implemented here for the configured product-knowledge cache, through `refresh_days` in `config.example.yml` and the `Refreshed:` rule in `prompts/daily.md`. The broader claim — that *every* mirrored reference carries its own named owner and refresh rule — is a production lesson. Note also that the safeguard is prompt-driven rather than a deterministic freshness validator.
