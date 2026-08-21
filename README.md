@@ -51,7 +51,7 @@ You start saying *"six calls, three accounts, two of them made it a deal conditi
 |---|---|---|
 | **Signal matrix** (`.xlsx`) | updated in place, daily | The accumulated backlog. One row per need, never rebuilt, never duplicated. |
 | **Daily briefing** (PDF) | every morning | A 2-minute read: what was asked yesterday, split into new requests, feedback on what you ship, and anything the agent could not classify confidently. |
-| **Weekly digest** (PDF) | Fridays | Your working agenda: rank movers, decisions to make, retention risks, and questions to send back to the customer-facing team. |
+| **Weekly digest** (PDF) | Mondays, on the week that just ended | Your working agenda: rank movers, decisions to make, retention risks, and questions to send back to the customer-facing team. |
 | **Opportunity briefs** (Markdown + PDF) | when evidence crosses a threshold | A one-page draft — problem, who's asking, quotes, scope sketch, recommendation — ready to grow into a PRD. |
 
 ---
@@ -66,10 +66,15 @@ call"* box (answer it today, while the call is fresh), any bug tied to a renewal
 anything that makes you say *"wait, we promised what?"*. Then close it. Don't study it — the matrix
 absorbed everything either way.
 
-**Friday — 20 to 30 minutes.** The digest is an agenda, not a report. Decide every row in
+**Monday — 20 to 30 minutes.** The digest is an agenda, not a report. Decide every row in
 *"Decisions for you"* (promote / discover / park / resolve conflict). Skim the movers for trend.
 **Forward the suggested questions to your sales, onboarding and CS teams** — that one message is
 what compounds, because it turns them into your discovery engine for next week.
+
+> It runs on **Monday**, reporting the week that has just ended, rather than inside the week it
+> describes. The daily agent reads *yesterday's* calls, so a Friday digest can only ever have seen
+> Monday to Thursday while still being named for the full week. [`DECISIONS.md`](DECISIONS.md#5-a-weekly-report-cannot-cover-a-week-that-has-not-finished)
+> has the reasoning and what it costs.
 
 **Monthly and quarterly.** Bring the matrix to roadmap reviews instead of your memory. Filter
 `Not planned` by priority for your candidate list; filter `On roadmap` with high evidence to defend
@@ -158,7 +163,7 @@ From the worked example in this repo — five calls in one week:
 | Opportunity briefs drafted | **1**, the moment a human answered an open question |
 | Ranking driven by real problems | **70%** of ranked signals have a customer with a consequence attached |
 | Demand with no roadmap home | **45%** |
-| Your time in | **~15 min/week + 30 min on Friday** |
+| Your time in | **~15 min/week + 30 min on Monday** |
 
 **The conclusion that matters is the run-rate.** This example ran at 5 calls a week, 2.7 hours of
 talk time. Held for a full year, that is **140 hours — 17.6 working days of customer conversation
@@ -196,7 +201,7 @@ Four actors. Three are automated; the fourth is you, and the system is built so 
 | **Agent 1 — Discovery** *(coordinator)* | daily | **Opus 5** | Turn yesterday's conversations into evidence. Classifies each call, decides what each signal *is* against your roadmap, and merges it into the backlog. | the ledger, your roadmap, and the helpers' findings — **never a transcript directly** | rows in the **signal matrix**, the **daily briefing**, and any open question in **needs-review.md** |
 | **Transcript helpers** *(one per call, in parallel)* | inside each daily run | **Sonnet 5** | Read one call and come back with facts. Translate if needed, pull the signals, the stated importance and one verbatim quote each. | exactly one transcript | structured findings handed back to the coordinator — they write nothing themselves |
 | **Agent 2 — Synthesis** | weekly | **Opus 5** | Turn accumulated evidence into decisions. Compares against last week, spots what crossed the evidence threshold, and says what needs deciding. | the matrix, the week's briefings, last week's snapshot, your roadmap | the **weekly digest**, **opportunity briefs**, and this week's **snapshot** |
-| **You** | 2 min daily · 30 min Friday | — | Decide. Resolve what the agents refused to guess, promote or park briefs, and forward the questions to the people already talking to customers. | the briefing and the digest | decisions, edits to the matrix (**final — never overwritten**), and next week's questions |
+| **You** | 2 min daily · 30 min Monday | — | Decide. Resolve what the agents refused to guess, promote or park briefs, and forward the questions to the people already talking to customers. | the briefing and the digest | decisions, edits to the matrix (**final — never overwritten**), and next week's questions |
 
 **Why the split, and why those models.** Reading a transcript is high-volume and mechanical: long
 input, a well-specified extraction, no judgement. That is exactly what a fast, cheap model is good

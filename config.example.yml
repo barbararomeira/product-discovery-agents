@@ -96,6 +96,10 @@ models:
 schedule:
   daily_hour: 10     # local time
   daily_minute: 0
-  weekly_weekday: 5  # 1 = Monday ... 5 = Friday
+  # Run the weekly on a MONDAY, not inside the week it reports on. The daily agent covers the
+  # PREVIOUS day, so a weekly that fires on Friday can only ever have seen Monday to Thursday —
+  # and it still names its file for the whole week. Monday sees the week complete. See DECISIONS.md
+  # entry 5. If you move this back into the week, change what the digest claims to cover as well.
+  weekly_weekday: 1  # 1 = Monday ... 5 = Friday
   weekly_hour: 12
   weekly_minute: 5

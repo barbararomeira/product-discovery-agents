@@ -3,7 +3,7 @@
 The system produces. You decide. This page is the part most people skip, and it is the part
 that determines whether the backlog is alive in three months or abandoned.
 
-**Total cost: about 15 minutes a week, plus 30 minutes on Friday.**
+**Total cost: about 15 minutes a week, plus 30 minutes on Monday.**
 
 ---
 
@@ -20,7 +20,14 @@ Open the briefing when it lands. You are scanning for **three things only**:
 Then close it. **Do not study it.** If nothing jumps out, you are done; the matrix absorbed
 everything either way. The briefing is a filter, not homework.
 
-## Friday — 20 to 30 minutes, the real session
+## Monday — 20 to 30 minutes, the real session
+
+**Why Monday and not Friday.** The daily agent reads *yesterday's* calls, so a digest that runs on
+Friday has only ever seen Monday to Thursday — and it still names its file for the whole week. The
+last day of the week is structurally missing from the document that claims to cover it, and nobody
+notices, because a report that arrives on time looks finished. Running on Monday costs you a weekend
+of delay and buys a week that is actually complete. If you do move it back inside the week, change
+what the digest says it covers, so the gap is visible rather than implied.
 
 The digest is a **working agenda, not a report to read**. Work down it:
 

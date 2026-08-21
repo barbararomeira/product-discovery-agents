@@ -158,3 +158,51 @@ live the moment it existed.
 
 **Implementation status:** Implemented in `tools/validate_matrix.py`, wired into
 `scripts/run_daily.sh`, and covered by `tests/test_validate_matrix.py`.
+
+---
+
+## 5. A weekly report cannot cover a week that has not finished
+
+**Chose:** run the weekly digest on **Monday**, reporting the ISO week that has just ended, and
+resolve that week from the day before the run rather than from the run's own date.
+
+**Considered:** leaving it on Friday and simply printing the true coverage in the header, so the
+gap is disclosed rather than removed. Also considered running it late on Sunday, which covers the
+week but puts an automated job in the one window nobody is watching.
+
+**Why:** the daily agent reads *yesterday's* calls. A weekly that fires midday on Friday has
+therefore only ever seen Monday to Thursday, and a weekly that fires late on Friday has still not
+seen that day's calls. Either way it is named for a week whose last day it structurally cannot
+contain. This is not a rare edge: it is every single run, and the last day of a week is not a quiet
+one. The failure is invisible in the worst way — the report arrives on schedule, the numbers are
+internally consistent, and nothing anywhere says a fifth of the week is missing. It surfaced only
+when a reader compared two editions of the same week and found one covering three days and the
+other covering seven.
+
+Disclosure was rejected as the primary fix. A header reading "calls of the 10th to the 12th" on a
+document titled with the whole week is honest, and it is still a document that answers the wrong
+question — the reader wants the week, and no amount of accurate labelling supplies the two days
+that were never read.
+
+**What it costs:** the digest arrives after the weekend rather than before it, so a decision it
+would have prompted on Friday afternoon waits until Monday. That is a real cost and worth stating
+plainly: this trades latency for completeness. Take the other side of the trade if your week's
+decisions genuinely cannot wait — but then change what the digest claims to cover, so the missing
+days are visible rather than implied.
+
+**The trap that comes with the fix.** A Monday belongs to the *new* ISO week. A run that resolves
+its reporting period from its own date will name the file for a week that is one day old, and it
+will do this correctly-looking every time. Resolve from the day before the run — the Sunday that
+just ended — and the week number falls out right. `config.example.yml` ships `weekly_weekday: 1`
+for this reason, and `templates/cron.md` matches it.
+
+**The generalisation:** *a report's name is a claim about coverage, and the schedule either honours
+it or quietly breaks it.* Any recurring summary whose inputs lag by a day cannot run inside the
+period it summarises. The question to ask of any scheduled report is not "when is this convenient
+to read" but "by the time this fires, has everything it claims to describe actually arrived".
+
+**Implementation status:** Implemented here as configuration and documentation —
+`config.example.yml` and `templates/cron.md` ship the Monday schedule, and
+[`docs/pm-routine.md`](docs/pm-routine.md) states the reasoning. The backwards week resolution is
+**guidance rather than enforcement**: nothing in this repo fails a run whose digest is named for the
+week it is running in. Production lesson.

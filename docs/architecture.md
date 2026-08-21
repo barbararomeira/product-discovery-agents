@@ -12,7 +12,7 @@ Everything below is rendered by GitHub — no images to keep in sync.
 | **Agent 1 — Discovery** | daily | **Opus 5** — judgement, and the merge is irreversible | Classify each call, judge each signal against the roadmap, merge into the matrix, write the briefing | read a transcript itself; guess when unsure |
 | **Transcript helpers** | one per call, ≤5 at a time | **Sonnet 5** — long input, mechanical extraction, runs ~250×/year | Read one transcript, translate, return signals + importance + one quote each | write to the matrix or make a classification decision |
 | **Agent 2 — Synthesis** | weekly | **Opus 5** — decisions someone will act on | Compare to last week, decide what crossed the threshold, draft briefs, write the digest | touch the ledger or re-extract from calls |
-| **You** | 2 min daily · 30 min Friday | — | Resolve open questions, promote or park, forward the questions to the team | get asked to read the matrix end to end |
+| **You** | 2 min daily · 30 min Monday | — | Resolve open questions, promote or park, forward the questions to the team | get asked to read the matrix end to end |
 
 The model split is deliberate: the cheap model does the reading, the strong model makes the two
 decisions that are hard to undo — what a signal means, and whether it is the same need as an

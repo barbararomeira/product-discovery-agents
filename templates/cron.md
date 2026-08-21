@@ -10,8 +10,8 @@ crontab -e
 # Daily discovery at 10:00
 0 10 * * *  CONFIG=/path/to/config.yml /path/to/product-discovery-agents/scripts/run_daily.sh
 
-# Weekly digest on Friday at 12:05
-5 12 * * 5  CONFIG=/path/to/config.yml /path/to/product-discovery-agents/scripts/run_weekly.sh
+# Weekly digest on Monday at 12:05 — the week it reports on has finished by then
+5 12 * * 1  CONFIG=/path/to/config.yml /path/to/product-discovery-agents/scripts/run_weekly.sh
 ```
 
 Two things that bite people:
